@@ -2,6 +2,7 @@
 
 namespace App\User\Application\Actions;
 
+use App\User\Application\Authentication\Token;
 use App\User\Domain\Exception\UserNotFound;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -16,6 +17,7 @@ class UserLoginAction extends UserAction
         if (null === $user) {
             throw new UserNotFound();
         }
-        return $this->respondWithData();
+        $token = Token::createToken($user);
+        return $this->respondWithData(['token' => $token]);
     }
 }

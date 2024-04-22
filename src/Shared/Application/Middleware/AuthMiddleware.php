@@ -2,36 +2,25 @@
 
 namespace App\Shared\Application\Middleware;
 
-use Firebase\JWT\JWT;
-use Psr\Http\Message\ResponseInterface as Response;
+use App\User\Application\Authentication\Token;
+use Exception;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface as Middleware;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Slim\Psr7\Response;
 
 class AuthMiddleware implements Middleware
 {
-    public function process(Request $request, RequestHandler $handler): Response
+    public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
-        $token = $this->getTokenFromHeader($request);
-        if ($token) {
-            try {
-                $decoded = JWT::decode($token, $this->jwtSecret, ['HS256']);
-                // Aquí puedes realizar cualquier validación adicional del token si es necesario
-                $request = $request->withAttribute('session', $decoded);
-            } catch (\Exception $e) {
-                // Manejo de errores si el token es inválido
-                // Puedes devolver una respuesta de error 401 Unauthorized aquí
-            }
+        $response = new Response();
+        try {
+            $request = Token::validateToken($request);
+        } catch (Exception $e) {
+            $response->getBody()->write(json_encode(['error' => $e->getMessage()]));
+            return $response->withStatus(401);
         }
-
         return $handler->handle($request);
-    }
-    private function getTokenFromHeader(Request $request): ?string
-    {
-        $header = $request->getHeaderLine('Authorization');
-        if (preg_match('/Bearer\s+(.*)$/i', $header, $matches)) {
-            return $matches[1];
-        }
-        return null;
     }
 }

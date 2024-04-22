@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\User\Application\Authentication;
 
 use App\User\Domain\User;
+use Exception;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 final class Token
@@ -21,28 +23,29 @@ final class Token
             'sub' => $user->getId(),
             'email' => $user->getEmail(),
             'iat' => time(),
-            'exp' => time() + getenv('JWT_EXP') ?? 3600,
+            'exp' => time() + 120 //getenv('JWT_EXP') ?? 3600,
         ];
 
         return JWT::encode($payload, Token::getSecret(), 'HS256');
     }
 
+    /**
+     * @throws NoTokenProvided
+     * @throws InvalidToken
+     */
     public static function validateToken(Request $request): Request
     {
         $token = self::getTokenFromHeader($request);
         if ($token) {
             try {
-                $decoded = JWT::decode($token, self::getSecret(), ['HS256']);
-                // Si el token es válido, puedes agregar los datos decodificados como un atributo en la solicitud
+                $decoded = JWT::decode($token, new Key(self::getSecret(), 'HS256'));
+                // TODO: investigate about this:
                 return $request->withAttribute('jwt_payload', (array) $decoded);
-            } catch (\Exception $e) {
-                // Manejo de errores si el token es inválido
-                // Aquí puedes devolver una respuesta de error o lanzar una excepción
-                throw new \Exception('Token inválido: ' . $e->getMessage());
+            } catch (Exception $e) {
+                throw new InvalidToken('Invalid Token: ' . $e->getMessage());
             }
         } else {
-            // Si no se proporciona un token en el encabezado de autorización, también puedes manejarlo aquí
-            throw new \Exception('Token no encontrado en el encabezado de autorización');
+            throw new NoTokenProvided();
         }
     }
 
@@ -54,5 +57,4 @@ final class Token
         }
         return null;
     }
-
 }

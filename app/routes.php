@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Shared\Application\Middleware\AuthMiddleware;
 use App\User\Application\Actions\UserLoginAction;
 use App\User\Application\Actions\UserRegisterAction;
-use App\User\Application\Actions\UsersListAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -29,5 +29,5 @@ return function (App $app) {
     $app->get('/test', function (Request $request, Response $response) {
         $response->getBody()->write('prueba');
         return $response;
-    });
+    })->addMiddleware(new AuthMiddleware());
 };
