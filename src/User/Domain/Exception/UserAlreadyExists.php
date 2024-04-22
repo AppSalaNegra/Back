@@ -2,9 +2,9 @@
 
 namespace App\User\Domain\Exception;
 
-use App\Shared\Domain\DomainException\DomainRecordNotFoundException;
+use App\Shared\Domain\DomainException\DomainException;
 
-class UserAlreadyExists extends DomainRecordNotFoundException
+class UserAlreadyExists extends DomainException
 {
-    public $message = 'That email is already registered.';
+    public $message = 'The email provided is already registered.';
 }

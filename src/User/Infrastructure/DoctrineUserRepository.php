@@ -8,9 +8,8 @@ use App\User\Domain\User;
 use App\User\Domain\UserRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
-use phpDocumentor\Reflection\Types\This;
 
-class MongoUserRepository implements UserRepository
+class DoctrineUserRepository implements UserRepository
 {
     public function __construct(private readonly DocumentManager $manager)
     {
