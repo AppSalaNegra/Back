@@ -6,7 +6,9 @@ volumes:
 
 services:
     slim:
-        image: php:7-alpine
+        build:
+            context: .
+            dockerfile: Dockerfile
         working_dir: /var/www
         command: php -S 0.0.0.0:8080 -t public
         environment:

@@ -39,8 +39,7 @@ return function (ContainerBuilder $containerBuilder) {
             $config->setHydratorNamespace('Hydrators');
             $config->setDefaultDB('sala');
             $config->setMetadataDriverImpl(AnnotationDriver::create([__DIR__ . '../src/User/Domain',__DIR__ . '../src/Event/Domain']));
-
-            $uri = 'mongodb://localhost:57017';
+            $uri = 'mongodb+srv://slimm1:KfWbDK2wgiEvPzJx@appdb.wsfpnnm.mongodb.net/?retryWrites=true&w=majority&appName=appDb';
             $apiVersion = new ServerApi((string)ServerApi::V1);
             $options = [
                 'serverApi' => $apiVersion,
