@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\User\Domain;
+namespace App\User\Domain\Exception;
 
 use App\Shared\Domain\DomainException\DomainRecordNotFoundException;
 
-class UserNotFoundException extends DomainRecordNotFoundException
+class UserNotFound extends DomainRecordNotFoundException
 {
     public $message = 'The user you requested does not exist.';
 }

@@ -2,7 +2,8 @@
 
 namespace App\User\Application\Actions;
 
-use App\User\Domain\UserNotFoundException;
+use App\User\Application\Authentication\Token;
+use App\User\Domain\Exception\UserNotFound;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class UserLoginAction extends UserAction
@@ -12,10 +13,11 @@ class UserLoginAction extends UserAction
         $data = $this->getFormData();
         $email = $data['email'];
         $password = hash('sha256', $data['password']);
-        $user = $this->userRepository->findUserByEmailAndPassword($email, $password);
-        if (null !== $user) {
-            return $this->respondWithData();
+        $user = $this->userRepository->findByEmailAndPassword($email, $password);
+        if (null === $user) {
+            throw new UserNotFound();
         }
-        throw new UserNotFoundException();
+        $token = Token::createToken($user);
+        return $this->respondWithData(['token' => $token]);
     }
 }
