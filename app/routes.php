@@ -21,8 +21,7 @@ return function (App $app) {
         return $response;
     });
 
-    $app->group('/users', function (Group $group) {
-        $group->get('', UsersListAction::class);
+    $app->group('/user', function (Group $group) {
         $group->post('/login', UserLoginAction::class);
         $group->post('/register', UserRegisterAction::class);
     });

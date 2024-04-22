@@ -7,8 +7,8 @@ namespace Tests\Application\Actions\User;
 use App\Shared\Application\Actions\ActionError;
 use App\Shared\Application\Actions\ActionPayload;
 use App\Shared\Application\Handlers\HttpErrorHandler;
+use App\User\Domain\Exception\UserNotFound;
 use App\User\Domain\User;
-use App\User\Domain\UserNotFoundException;
 use App\User\Domain\UserRepository;
 use DI\Container;
 use Slim\Middleware\ErrorMiddleware;
@@ -62,7 +62,7 @@ class ViewUserActionTest extends TestCase
         $userRepositoryProphecy = $this->prophesize(UserRepository::class);
         $userRepositoryProphecy
             ->findUserOfId(1)
-            ->willThrow(new UserNotFoundException())
+            ->willThrow(new UserNotFound())
             ->shouldBeCalledOnce();
 
         $container->set(UserRepository::class, $userRepositoryProphecy->reveal());

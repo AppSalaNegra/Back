@@ -7,31 +7,31 @@ namespace App\User\Infrastructure;
 use App\User\Domain\User;
 use App\User\Domain\UserRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\MongoDBException;
+use phpDocumentor\Reflection\Types\This;
 
 class MongoUserRepository implements UserRepository
 {
-    public function __construct(private readonly DocumentManager $dm)
+    public function __construct(private readonly DocumentManager $manager)
     {
     }
 
-    #[\Override] public function findAll(): array
+    public function findByEmailAndPassword(string $email, string $password): ?User
     {
-        return $this->dm->getRepository(User::class)->findAll();
+        return $this->manager->getRepository(User::class)->findOneBy(['email' => $email, 'password' => $password]);
     }
 
-    #[\Override] public function findUserOfId(int $id): User
+    public function findByEmail(string $email): ?User
     {
-        return new User('tini.ramonda@gmail.com', 'Martin', 'Ramonda', '1234', []);
+        return $this->manager->getRepository(User::class)->findOneBy(['email' => $email]);
     }
 
-    #[\Override] public function findUserByEmailAndPassword(string $email, string $password): ?User
-    {
-        return $this->dm->getRepository(User::class)->findOneBy(['email' => $email, 'password' => $password]);
-    }
-
+    /**
+     * @throws MongoDBException
+     */
     public function save(User $user): void
     {
-        $this->dm->persist($user);
-        $this->dm->flush();
+        $this->manager->persist($user);
+        $this->manager->flush();
     }
 }
