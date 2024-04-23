@@ -19,7 +19,7 @@ class UserRegisterAction extends UserAction
         $user = new User($email, $firstName, $lastName, hash('sha256', $password), []);
         $this->userRepository->save($user);
 
-        return $this->respondWithData();
+        return $this->respondWithData(['registered' => 'ok']);
     }
 
     /**
