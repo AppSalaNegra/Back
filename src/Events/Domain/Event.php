@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Event\Domain;
+namespace App\Events\Domain;
 
 use DateTime;
 use JsonSerializable;
 
-/** @ODM\Document*/
+/** @ODM\Document */
 class Event implements JsonSerializable
 {
     /** @ODM\Id(strategy="AUTO") */
