@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Posts\Application\Actions\GetAllPostsAction;
 use App\Shared\Application\Middleware\AuthMiddleware;
-use App\User\Application\Actions\UserLoginAction;
-use App\User\Application\Actions\UserRegisterAction;
+use App\Users\Application\Actions\UserLoginAction;
+use App\Users\Application\Actions\UserRegisterAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -20,6 +21,8 @@ return function (App $app) {
         $response->getBody()->write('Hello world!');
         return $response;
     });
+
+    $app->get('/posts', GetAllPostsAction::class)->addMiddleware(new AuthMiddleware());
 
     $app->group('/user', function (Group $group) {
         $group->post('/login', UserLoginAction::class);

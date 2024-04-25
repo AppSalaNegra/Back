@@ -2,7 +2,7 @@
 
 namespace App\Shared\Application\Middleware;
 
-use App\User\Application\Authentication\Token;
+use App\Users\Application\Authentication\Token;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;

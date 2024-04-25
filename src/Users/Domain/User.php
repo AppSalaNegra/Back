@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Users\Domain;
 
-use JsonSerializable;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use MongoDB\BSON\ObjectId;
 
 /** @ODM\Document(collection="users") */
 final class User

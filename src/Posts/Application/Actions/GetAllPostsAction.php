@@ -3,25 +3,19 @@
 namespace App\Posts\Application\Actions;
 
 use App\Posts\Domain\Post;
-use App\Posts\Domain\PostsRepository;
+use App\Posts\Domain\PostNotSavedException;
+use DateTime;
+use Exception;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 final class GetAllPostsAction extends PostAction
 {
-    private SerializerInterface $serializer;
-    public function __construct(LoggerInterface $logger, PostsRepository $repository, SerializerInterface $serializer)
-    {
-        parent::__construct($logger, $repository);
-        $this->serializer = $serializer;
-    }
-
     protected function action(): Response
     {
+        $this->updateDbFromPublicApi();
         $posts = $this->repository->getAll();
-        return $this->respondWithData(['posts' => $posts]);
+        return $this->respondWithData($posts);
     }
 
     private function updateDbFromPublicApi(): void
@@ -30,13 +24,22 @@ final class GetAllPostsAction extends PostAction
         $response = $client->request('POST', 'https://sala-negra.com/actua_public_api_v1/get_posts');
         if ($response->getStatusCode() === 200) {
             $data = $response->getBody()->getContents();
-            $postsData = json_decode($data, true);
-            foreach ($postsData as $postData) {
-                /** @var Post $post */
-                $post = $this->serializer->deserialize(json_encode($postData), Post::class, 'json');
-                if (null !== $this->repository->findByTitle($post->getTitle())) {
-                    $this->repository->save($post);
-                }
+            $dataArray = json_decode($data, true);
+            $this->persistIfNotExists($dataArray['posts']);
+        }
+    }
+
+    private function persistIfNotExists(array $postsArray): void
+    {
+        foreach ($postsArray as $postData) {
+            $dateTime = DateTime::createFromFormat("Y-m-d\TH:i:s", $postData['dateTime']);
+            $title = $postData['title'];
+            $excerpt = $postData['excerpt'];
+            $url = $postData['url'];
+            $thumbnail_url = $postData['thumbnail_url'];
+            $post = new Post($dateTime, $title, $excerpt, $url, $thumbnail_url);
+            if (null === $this->repository->findByTitle($post->getTitle())) {
+                $this->repository->save($post);
             }
         }
     }

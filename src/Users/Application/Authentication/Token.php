@@ -23,7 +23,7 @@ final class Token
             'sub' => $user->getId(),
             'email' => $user->getEmail(),
             'iat' => time(),
-            'exp' => time() + 120 //getenv('JWT_EXP') ?? 3600,
+            'exp' => time() + 1800 //getenv('JWT_EXP') ?? 3600,
         ];
 
         return JWT::encode($payload, Token::getSecret(), 'HS256');
