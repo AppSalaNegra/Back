@@ -20,10 +20,11 @@ class DoctrinePostsRepository implements PostsRepository
     public function save(Post $post): void
     {
         $this->manager->persist($post);
+        $this->manager->flush();
     }
 
     public function findByTitle(string $title): ?Post
     {
-        $this->manager->getRepository(Post::class)->findOneBy(['title' => $title]);
+        return $this->manager->getRepository(Post::class)->findOneBy(['title' => $title]);
     }
 }

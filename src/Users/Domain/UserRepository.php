@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\User\Domain;
+namespace App\Users\Domain;
 
 interface UserRepository
 {
     public function findByEmailAndPassword(string $email, string $password): ?User;
     public function findByEmail(string $email): ?User;
+    public function findById(string $id): ?User;
     public function save(User $user): void;
 }

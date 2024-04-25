@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\User\Infrastructure;
+namespace App\Users\Infrastructure;
 
-use App\User\Domain\User;
-use App\User\Domain\UserRepository;
+use App\Users\Domain\User;
+use App\Users\Domain\UserRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 
@@ -13,6 +13,11 @@ class DoctrineUserRepository implements UserRepository
 {
     public function __construct(private readonly DocumentManager $manager)
     {
+    }
+
+    public function findById(string $id): ?User
+    {
+        return $this->manager->getRepository(User::class)->findOneBy(['id' => $id]);
     }
 
     public function findByEmailAndPassword(string $email, string $password): ?User

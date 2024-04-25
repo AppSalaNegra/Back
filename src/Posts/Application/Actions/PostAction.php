@@ -10,9 +10,8 @@ abstract class PostAction extends Action
 {
     protected PostsRepository $repository;
 
-    public function __construct(LoggerInterface $logger, PostsRepository $repository)
+    public function __construct(PostsRepository $repository)
     {
-        parent::__construct($logger);
         $this->repository = $repository;
     }
 }

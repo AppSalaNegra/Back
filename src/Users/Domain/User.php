@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\User\Domain;
+namespace App\Users\Domain;
 
-use JsonSerializable;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use MongoDB\BSON\ObjectId;
 
-/** @ODM\Document(collection="users")*/
-class User implements JsonSerializable
+/** @ODM\Document(collection="users") */
+final class User
 {
     /** @ODM\Id(strategy="AUTO") */
     private $id;
@@ -66,14 +66,5 @@ class User implements JsonSerializable
     public function getLikedShows(): array
     {
         return $this->likedShows;
-    }
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize(): array
-    {
-        return [
-            'username' => $this->email,
-            'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
-        ];
     }
 }

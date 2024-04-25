@@ -3,13 +3,15 @@
 namespace App\Posts\Domain;
 
 use DateTime;
+use JsonSerializable;
 use MongoDB\BSON\ObjectId;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /** @ODM\Document(collection="posts") */
-final class Post
+final class Post implements JsonSerializable
 {
     /** @ODM\Id(strategy="AUTO") */
-    private ObjectId $id;
+    private $id;
     /** @ODM\Field(type="date") */
     private DateTime $dateTime;
     /** @ODM\Field(type="string") */
@@ -65,5 +67,16 @@ final class Post
     public function getThumbnailUrl(): string
     {
         return $this->thumbnail_url;
+    }
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'dateTime' => $this->dateTime->format(DateTime::ISO8601),
+            'title' => $this->title,
+            'excerpt' => $this->excerpt,
+            'url' => $this->url,
+            'thumbnail_url' => $this->thumbnail_url,
+        ];
     }
 }
