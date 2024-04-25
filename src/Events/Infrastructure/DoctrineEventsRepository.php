@@ -18,6 +18,11 @@ class DoctrineEventsRepository implements EventsRepository
         return $this->manager->getRepository(Event::class)->findOneBy(['id' => $id]);
     }
 
+    public function findByTitle(string $title): ?Event
+    {
+        return $this->manager->getRepository(Event::class)->findOneBy(['title' => $title]);
+    }
+
     public function getAll(): array
     {
         return $this->manager->getRepository(Event::class)->findAll();
