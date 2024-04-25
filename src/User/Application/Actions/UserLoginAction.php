@@ -10,10 +10,10 @@ class UserLoginAction extends UserAction
 {
     protected function action(): Response
     {
-        $data = $this->getFormData();
-        $email = $data['email'];
+        $data     = $this->getFormData();
+        $email    = $data['email'];
         $password = hash('sha256', $data['password']);
-        $user = $this->userRepository->findByEmailAndPassword($email, $password);
+        $user     = $this->userRepository->findByEmailAndPassword($email, $password);
         if (null === $user) {
             throw new UserNotFound();
         }

@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\User\Domain;
 
 use JsonSerializable;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
-/** @ODM\Document(collection="users")*/
+/** @ODM\Document(collection="users") */
 class User implements JsonSerializable
 {
     /** @ODM\Id(strategy="AUTO") */
@@ -20,17 +19,14 @@ class User implements JsonSerializable
     private string $lastName;
     /** @ODM\Field(type="string") */
     private string $password;
-    /** @ODM\Field(type="collection") */
-    private array $likedShows;
 
 
-    public function __construct(string $email, string $firstName, string $lastName, string $password, array $likedShows)
+    public function __construct(string $email, string $firstName, string $lastName, string $password)
     {
-        $this->email = strtolower($email);
+        $this->email     = strtolower($email);
         $this->firstName = ucfirst($firstName);
-        $this->lastName = ucfirst($lastName);
-        $this->password = $password;
-        $this->likedShows = $likedShows;
+        $this->lastName  = ucfirst($lastName);
+        $this->password  = $password;
     }
 
     public function getId()
@@ -63,17 +59,14 @@ class User implements JsonSerializable
         return $this->password;
     }
 
-    public function getLikedShows(): array
-    {
-        return $this->likedShows;
-    }
-    #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         return [
-            'username' => $this->email,
+            'id'        => $this->id,
+            'email'     => $this->email,
             'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
+            'lastName'  => $this->lastName,
+            'password'  => $this->password,
         ];
     }
 }
