@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\User\Domain;
+namespace App\Users\Domain;
 
 use JsonSerializable;
 
 /** @ODM\Document(collection="users") */
-class User implements JsonSerializable
+final class User
 {
     /** @ODM\Id(strategy="AUTO") */
     private $id;
@@ -19,14 +19,17 @@ class User implements JsonSerializable
     private string $lastName;
     /** @ODM\Field(type="string") */
     private string $password;
+    /** @ODM\Field(type="collection") */
+    private array $likedShows;
 
 
-    public function __construct(string $email, string $firstName, string $lastName, string $password)
+    public function __construct(string $email, string $firstName, string $lastName, string $password, array $likedShows)
     {
-        $this->email     = strtolower($email);
+        $this->email = strtolower($email);
         $this->firstName = ucfirst($firstName);
-        $this->lastName  = ucfirst($lastName);
-        $this->password  = $password;
+        $this->lastName = ucfirst($lastName);
+        $this->password = $password;
+        $this->likedShows = $likedShows;
     }
 
     public function getId()
@@ -59,14 +62,8 @@ class User implements JsonSerializable
         return $this->password;
     }
 
-    public function jsonSerialize(): array
+    public function getLikedShows(): array
     {
-        return [
-            'id'        => $this->id,
-            'email'     => $this->email,
-            'firstName' => $this->firstName,
-            'lastName'  => $this->lastName,
-            'password'  => $this->password,
-        ];
+        return $this->likedShows;
     }
 }

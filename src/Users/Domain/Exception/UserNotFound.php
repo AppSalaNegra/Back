@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\User\Domain\Exception;
+namespace App\Users\Domain\Exception;
 
 use App\Shared\Domain\DomainException\DomainRecordNotFoundException;
 

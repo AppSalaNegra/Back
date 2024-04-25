@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\User\Application\Authentication;
+namespace App\Users\Application\Authentication;
 
-use App\User\Domain\User;
+use App\Users\Domain\User;
 use Exception;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\User\Infrastructure;
+namespace App\Users\Infrastructure;
 
-use App\User\Domain\User;
-use App\User\Domain\UserRepository;
+use App\Users\Domain\User;
+use App\Users\Domain\UserRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 

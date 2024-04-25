@@ -1,9 +1,9 @@
 <?php
 
-namespace App\User\Application\Actions;
+namespace App\Users\Application\Actions;
 
-use App\User\Application\Authentication\Token;
-use App\User\Domain\Exception\UserNotFound;
+use App\Users\Application\Authentication\Token;
+use App\Users\Domain\Exception\UserNotFound;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class UserLoginAction extends UserAction
@@ -13,7 +13,7 @@ class UserLoginAction extends UserAction
         $data     = $this->getFormData();
         $email    = $data['email'];
         $password = hash('sha256', $data['password']);
-        $user     = $this->userRepository->findByEmailAndPassword($email, $password);
+        $user     = $this->repository->findByEmailAndPassword($email, $password);
         if (null === $user) {
             throw new UserNotFound();
         }

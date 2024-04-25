@@ -1,9 +1,9 @@
 <?php
 
-namespace App\User\Application\Actions;
+namespace App\Users\Application\Actions;
 
-use App\User\Domain\Exception\UserAlreadyExists;
-use App\User\Domain\User;
+use App\Users\Domain\Exception\UserAlreadyExists;
+use App\Users\Domain\User;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class UserRegisterAction extends UserAction
@@ -17,7 +17,7 @@ class UserRegisterAction extends UserAction
         $password  = $data['password'];
         $this->ensureEmailIsUnique($email);
         $user = new User($email, $firstName, $lastName, hash('sha256', $password));
-        $this->userRepository->save($user);
+        $this->repository->save($user);
 
         return $this->respondWithData(['registered' => 'ok']);
     }
@@ -27,7 +27,7 @@ class UserRegisterAction extends UserAction
      */
     private function ensureEmailIsUnique(string $email): void
     {
-        $user = $this->userRepository->findByEmail($email);
+        $user = $this->repository->findByEmail($email);
         if (null !== $user) {
             throw new UserAlreadyExists();
         }
