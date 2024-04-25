@@ -34,8 +34,11 @@ final class GetAllEventsAction extends EventAction
             $data = $response->getBody()->getContents();
             $eventsData = json_decode($data, true);
             foreach ($eventsData as $eventData) {
+                /** @var Event $event */
                 $event = $this->serializer->deserialize(json_encode($eventData), Event::class, 'json');
-                $this->repository->save($event);
+                if (null !== $this->repository->findByTitle($event->getTitle())) {
+                    $this->repository->save($event);
+                }
             }
         }
     }
