@@ -3,22 +3,12 @@
 namespace App\Events\Application\Actions;
 
 use App\Events\Domain\Event;
-use App\Events\Domain\EventsRepository;
+use DateTime;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 final class GetAllEventsAction extends EventAction
 {
-    private SerializerInterface $serializer;
-
-    public function __construct(LoggerInterface $logger, EventsRepository $repository, SerializerInterface $serializer)
-    {
-        parent::__construct($logger, $repository);
-        $this->serializer = $serializer;
-    }
-
     protected function action(): Response
     {
         $this->updateDbFromPublicApi();
@@ -28,17 +18,28 @@ final class GetAllEventsAction extends EventAction
 
     private function updateDbFromPublicApi(): void
     {
-        $client = new Client();
+        $client   = new Client();
         $response = $client->request('POST', 'https://sala-negra.com/actua_public_api_v1/get_events');
         if ($response->getStatusCode() === 200) {
-            $data = $response->getBody()->getContents();
-            $eventsData = json_decode($data, true);
-            foreach ($eventsData as $eventData) {
-                /** @var Event $event */
-                $event = $this->serializer->deserialize(json_encode($eventData), Event::class, 'json');
-                if (null !== $this->repository->findByTitle($event->getTitle())) {
-                    $this->repository->save($event);
-                }
+            $data      = $response->getBody()->getContents();
+            $dataArray = json_decode($data, true);
+            $this->persistIfNotExists($dataArray['events']);
+        }
+    }
+
+    private function persistIfNotExists(array $eventsArray): void
+    {
+        foreach ($eventsArray as $eventData) {
+            $startDateTime  = DateTime::createFromFormat("Y-m-d\TH:i:s", $eventData['startDateTime']);
+            $finishDateTime = DateTime::createFromFormat("Y-m-d\TH:i:s", $eventData['finishDateTime']);
+            $title          = $eventData['title'];
+            $excerpt        = $eventData['excerpt'];
+            $url            = $eventData['url'];
+            $thumbnail_url  = $eventData['thumbnail_url'];
+            $cats           = $eventData['cats'];
+            $post           = new Event($startDateTime, $finishDateTime, $title, $excerpt, $url, $thumbnail_url, $cats);
+            if (null === $this->repository->findByTitle($post->getTitle())) {
+                $this->repository->save($post);
             }
         }
     }
