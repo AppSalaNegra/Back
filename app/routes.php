@@ -29,6 +29,10 @@ return function (App $app) {
         $group->post('/register', UserRegisterAction::class);
     });
 
+    $app->group('/events', function (Group $group){
+        //$group->
+    });
+
     $app->get('/test', function (Request $request, Response $response) {
         $response->getBody()->write('prueba');
         return $response;
