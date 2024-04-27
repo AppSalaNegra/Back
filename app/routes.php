@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Posts\Application\Actions\GetAllPostsAction;
+use App\Posts\Application\GetAllPostsAction;
 use App\Shared\Application\Middleware\AuthMiddleware;
-use App\Users\Application\Actions\UserLoginAction;
-use App\Users\Application\Actions\UserRegisterAction;
+use App\Users\Application\Login\UserLoginAction;
+use App\Users\Application\UserRegisterAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;

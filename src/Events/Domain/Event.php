@@ -38,13 +38,12 @@ class Event implements JsonSerializable
     public function __construct(
         DateTime $startDateTime,
         DateTime $finishDateTime,
-        string   $title,
-        string   $excerpt,
-        string   $url,
-        string   $thumbnail_url,
-        array    $cats
-    )
-    {
+        string $title,
+        string $excerpt,
+        string $url,
+        string $thumbnail_url,
+        array $cats
+    ) {
         $this->startDateTime = $startDateTime;
         $this->finishDateTime = $finishDateTime;
         $this->title = $title;
@@ -96,6 +95,15 @@ class Event implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [];
+        return [
+            'id' => $this->id,
+            'startDateTime' => $this->startDateTime->format('Y-m-d\TH:i:s'),
+            'finishDateTime' => $this->finishDateTime->format('Y-m-d\TH:i:s'),
+            'title' => $this->title,
+            'excerpt' => $this->excerpt,
+            'url' => $this->url,
+            'thumbnail_url' => $this->thumbnail_url,
+            'cats' => $this->cats,
+        ];
     }
 }
