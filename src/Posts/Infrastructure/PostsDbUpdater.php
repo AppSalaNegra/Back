@@ -9,7 +9,7 @@ use App\Posts\Domain\PostsRepository;
 use App\Shared\Infrastructure\ActuaApiHandler;
 use DateTime;
 
-class PostsDataUpdater
+class PostsDbUpdater
 {
     private ActuaApiHandler $apiHandler;
     public function __construct()

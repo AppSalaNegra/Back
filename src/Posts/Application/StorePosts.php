@@ -3,17 +3,17 @@
 namespace App\Posts\Application;
 
 use App\Posts\Domain\PostsRepository;
-use App\Posts\Infrastructure\PostsDataUpdater;
+use App\Posts\Infrastructure\PostsDbUpdater;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class StorePosts extends PostAction
 {
-    private PostsDataUpdater $updater;
+    private PostsDbUpdater $updater;
 
     public function __construct(PostsRepository $repository)
     {
         parent::__construct($repository);
-        $this->updater = new PostsDataUpdater();
+        $this->updater = new PostsDbUpdater();
     }
 
     protected function action(): Response

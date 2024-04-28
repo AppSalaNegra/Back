@@ -6,8 +6,9 @@ use App\Events\Domain\Event;
 use App\Events\Domain\EventsRepository;
 use App\Shared\Infrastructure\ActuaApiHandler;
 use DateTime;
+use phpDocumentor\Reflection\Types\Boolean;
 
-class EventsDataUpdater
+class EventsDbUpdater
 {
     private ActuaApiHandler $apiHandler;
     public function __construct()
@@ -24,6 +25,9 @@ class EventsDataUpdater
             $url = $eventData['url'];
             $thumbnail_url = $eventData['thumbnail_url'];
             $cats = $eventData['cats'];
+            if (is_bool($cats)) {
+                $cats = [];
+            }
             $event = new Event($startDateTime, $finishDateTime, $title, $excerpt, $url, $thumbnail_url, $cats);
             if (null === $repository->findByTitle($event->getTitle())) {
                 $repository->save($event);

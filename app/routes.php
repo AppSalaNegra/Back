@@ -2,9 +2,15 @@
 
 declare(strict_types=1);
 
+use App\Events\Application\GetAllEventsAction;
+use App\Events\Application\StoreEvents;
 use App\Posts\Application\GetAllPostsAction;
+use App\Posts\Application\StorePosts;
 use App\Shared\Application\Middleware\AuthMiddleware;
 use App\Users\Application\Login\UserLoginAction;
+use App\Users\Application\UserDislikeEvent;
+use App\Users\Application\UserLikeEvent;
+use App\Users\Application\UserGetLikedShowsAction;
 use App\Users\Application\UserRegisterAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -17,24 +23,21 @@ return function (App $app) {
         return $response;
     });
 
-    $app->get('/', function (Request $request, Response $response) {
-        $response->getBody()->write('Hello world!');
-        return $response;
+    $app->group('/posts', function (Group $group) {
+        $group->put('/store', StorePosts::class);
+        $group->get('/get', GetAllPostsAction::class)->addMiddleware(new AuthMiddleware());
     });
 
-    $app->get('/posts', GetAllPostsAction::class)->addMiddleware(new AuthMiddleware());
+    $app->group('/events', function (Group $group) {
+        $group->put('/store', StoreEvents::class);
+        $group->get('/get', GetAllEventsAction::class);
+    });
 
-    $app->group('/user', function (Group $group) {
+    $app->group('/users', function (Group $group) {
         $group->post('/login', UserLoginAction::class);
         $group->post('/register', UserRegisterAction::class);
+        $group->get('/get-liked-shows', UserGetLikedShowsAction::class);
+        $group->put('/like', UserLikeEvent::class);
+        $group->put('/dislike', UserDislikeEvent::class);
     });
-
-    $app->group('/events', function (Group $group){
-        //$group->
-    });
-
-    $app->get('/test', function (Request $request, Response $response) {
-        $response->getBody()->write('prueba');
-        return $response;
-    })->addMiddleware(new AuthMiddleware());
 };

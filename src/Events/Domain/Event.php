@@ -6,7 +6,7 @@ use DateTime;
 use JsonSerializable;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
-/** @ODM\Document */
+/** @ODM\Document(collection="events")*/
 class Event implements JsonSerializable
 {
     /** @ODM\Id(strategy="AUTO") */

@@ -3,17 +3,17 @@
 namespace App\Events\Application;
 
 use App\Events\Domain\EventsRepository;
-use App\Events\Infrastructure\EventsDataUpdater;
+use App\Events\Infrastructure\EventsDbUpdater;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class StoreEvents extends EventAction
 {
-    private EventsDataUpdater $updater;
+    private EventsDbUpdater $updater;
 
     public function __construct(EventsRepository $repository)
     {
         parent::__construct($repository);
-        $this->updater = new EventsDataUpdater();
+        $this->updater = new EventsDbUpdater();
     }
 
     protected function action(): Response

@@ -67,4 +67,17 @@ final class User
     {
         return $this->likedShows;
     }
+
+    public function addLikedEvent(string $eventId): void
+    {
+        $this->likedShows[] = $eventId;
+    }
+
+    public function removeLikedEvent(string $eventId): void
+    {
+        $position = array_search($eventId, $this->likedShows);
+        if ($position !== false) {
+            unset($this->likedShows[$position]);
+        }
+    }
 }
