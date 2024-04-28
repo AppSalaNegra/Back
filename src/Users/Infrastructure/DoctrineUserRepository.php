@@ -17,7 +17,7 @@ class DoctrineUserRepository implements UserRepository
 
     public function findById(string $id): ?User
     {
-        return $this->manager->getRepository(User::class)->findOneBy(['id' => $id]);
+        return $this->manager->getRepository(User::class)->findOneBy(['_id' => $id]);
     }
 
     public function findByEmailAndPassword(string $email, string $password): ?User

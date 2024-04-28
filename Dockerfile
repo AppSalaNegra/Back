@@ -12,3 +12,15 @@ RUN apk add --no-cache \
 # Instalar el controlador de MongoDB para PHP con soporte de SSL
 RUN pecl install mongodb && \
     docker-php-ext-enable mongodb
+
+# Copiar el script de cron job al contenedor
+COPY cron.sh /usr/src/cron.sh
+
+# Dar permisos de ejecución al script de cron
+RUN chmod +x /usr/src/cron.sh
+
+# Configurar el cron job
+RUN echo "0 0 * * * /usr/src/cron.sh" | crontab -
+
+# Ejecutar PHP-FPM
+CMD ["php-fpm"]

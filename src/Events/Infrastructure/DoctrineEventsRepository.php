@@ -15,7 +15,7 @@ class DoctrineEventsRepository implements EventsRepository
 
     public function findById(string $id): ?Event
     {
-        return $this->manager->getRepository(Event::class)->findOneBy(['id' => $id]);
+        return $this->manager->getRepository(Event::class)->findOneBy(['_id' => $id]);
     }
 
     public function findByTitle(string $title): ?Event
@@ -41,8 +41,12 @@ class DoctrineEventsRepository implements EventsRepository
         return $result->toArray();
     }
 
+    /**
+     * @throws MongoDBException
+     */
     public function save(Event $event): void
     {
         $this->manager->persist($event);
+        $this->manager->flush();
     }
 }

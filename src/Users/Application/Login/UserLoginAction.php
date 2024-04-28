@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Users\Application\Actions;
+namespace App\Users\Application\Login;
 
 use App\Users\Application\Authentication\Token;
+use App\Users\Application\UserAction;
 use App\Users\Domain\Exception\UserNotFound;
 use Psr\Http\Message\ResponseInterface as Response;
 

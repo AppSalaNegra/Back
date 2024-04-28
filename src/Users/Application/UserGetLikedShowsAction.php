@@ -2,28 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Users\Application\Actions;
+namespace App\Users\Application;
 
-use App\Events\Domain\EventsRepository;
+use App\Events\Application\FindEventById;
 use App\Users\Domain\Exception\UserNotFound;
 use App\Users\Domain\User;
 use App\Users\Domain\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
-use Symfony\Component\Serializer\SerializerInterface;
 
 final class UserGetLikedShowsAction extends UserAction
 {
-    private SerializerInterface $serializer;
-    private EventsRepository $eventsRepository;
-
-    public function __construct(
-        UserRepository $repository,
-        EventsRepository $eventsRepository,
-        SerializerInterface $serializer
-    ) {
+    public function __construct(UserRepository $repository, private readonly FindEventById $eventFinder)
+    {
         parent::__construct($repository);
-        $this->serializer = $serializer;
-        $this->eventsRepository = $eventsRepository;
     }
 
     protected function action(): Response
@@ -42,11 +33,9 @@ final class UserGetLikedShowsAction extends UserAction
         if (empty($user->getLikedShows())) {
             return [];
         }
-        $events = [];
-        foreach ($user->getLikedShows() as $eventId) {
-            $event = $this->eventsRepository->findById($eventId);
-            $events[] = $this->serializer->serialize($event, 'json');
-        }
-        return $events;
+        return array_map(function ($eventId) {
+            $event = $this->eventFinder->findEventById($eventId);
+            return $event->jsonSerialize();
+        }, $user->getLikedShows());
     }
 }

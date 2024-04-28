@@ -72,7 +72,7 @@ final class Post implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'dateTime' => $this->dateTime->format(DateTime::ISO8601),
+            'dateTime' => $this->dateTime->format('Y-m-d\TH:i:s'),
             'title' => $this->title,
             'excerpt' => $this->excerpt,
             'url' => $this->url,
