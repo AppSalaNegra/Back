@@ -41,6 +41,7 @@ class ActuaApiHandler
     {
         $today = new DateTime();
         $period = $today->modify('-2 months');
+        $today = new DateTime();
         $apiUrl = 'https://sala-negra.com/actua_public_api_v1/get_events?start=' . $period->format('Y-m-d') . '&finish=' . $today->format('Y-m-d');
         $response = $this->client->request('POST', $apiUrl);
         if ($response->getStatusCode() === 200) {

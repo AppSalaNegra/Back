@@ -24,10 +24,10 @@ final class ParentEventsDbUpdater
             $excerpt        = $eventData['excerpt'];
             $url            = $eventData['url'];
             $slug           = $eventData['slug'];
-            $thumbnail_url  = is_bool($eventData['thumbnail_url']) ? "" : $eventData['thumbnail_url'];
+            $thumbnail_url  = $eventData['thumbnail_url'];
             $cats           = is_bool($eventData['cats']) ? [] : $eventData['cats'];
             $status         = $eventData['status'];
-            $hierarchy      = is_bool($eventData['hierarchy']) ? "" : $eventData['hierarchy'];
+            $hierarchy      = $eventData['hierarchy'];
             $type           = $eventData['type'];
             $event          = new Event(
                 $startDateTime,
@@ -42,7 +42,7 @@ final class ParentEventsDbUpdater
                 $hierarchy,
                 $type
             );
-            if (null === $repository->findByTitle($event->getTitle())) {
+            if (null === $repository->findByTitle($event->title())) {
                 $repository->save($event);
             }
         }

@@ -43,7 +43,7 @@ class UpcomingEventsDbUpdater
                 $hierarchy,
                 $type
             );
-            if (null === $repository->findByTitle($event->getTitle())) {
+            if (null === $repository->findByTitle($event->title())) {
                 $repository->save($event);
             }
         }

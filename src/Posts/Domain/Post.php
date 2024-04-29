@@ -24,18 +24,11 @@ final class Post implements JsonSerializable
     private string $slug;
     /** @ODM\Field(type="string") */
     private string $thumbnail_url;
-    /** @ODM\Field(type="array") */
+    /** @ODM\Field(type="collection") */
     private array $cats;
     /** @ODM\Field(type="string") */
     private string $status;
 
-    /**
-     * @param DateTime $dateTime
-     * @param string $title
-     * @param string $excerpt
-     * @param string $url
-     * @param string $thumbnail_url
-     */
     public function __construct(
         DateTime $dateTime,
         string $title,

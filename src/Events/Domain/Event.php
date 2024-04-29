@@ -47,50 +47,50 @@ class Event implements JsonSerializable
         string $hierarchy,
         string $type
     ) {
-        $this->startDateTime  = $startDateTime;
+        $this->startDateTime = $startDateTime;
         $this->finishDateTime = $finishDateTime;
-        $this->title          = $title;
-        $this->excerpt        = $excerpt;
-        $this->url            = $url;
-        $this->slug           = $slug;
-        $this->thumbnail_url  = $thumbnail_url;
-        $this->cats           = $cats;
-        $this->status         = $status;
-        $this->hierarchy      = $hierarchy;
-        $this->type           = $type;
+        $this->title = $title;
+        $this->excerpt = $excerpt;
+        $this->url = $url;
+        $this->slug = $slug;
+        $this->thumbnail_url = $thumbnail_url;
+        $this->cats = $cats;
+        $this->status = $status;
+        $this->hierarchy = $hierarchy;
+        $this->type = $type;
     }
 
-    public function getStartDateTime(): DateTime
+    public function startDateTime(): DateTime
     {
         return $this->startDateTime;
     }
 
-    public function getFinishDateTime(): DateTime
+    public function finishDateTime(): DateTime
     {
         return $this->finishDateTime;
     }
 
-    public function getTitle(): string
+    public function title(): string
     {
         return $this->title;
     }
 
-    public function getId()
+    public function id()
     {
         return $this->id;
     }
 
-    public function getExcerpt(): string
+    public function excerpt(): string
     {
         return $this->excerpt;
     }
 
-    public function getUrl(): string
+    public function url(): string
     {
         return $this->url;
     }
 
-    public function getThumbnailUrl(): string
+    public function thumbnailUrl(): string
     {
         return $this->thumbnail_url;
     }
@@ -100,7 +100,7 @@ class Event implements JsonSerializable
         return $this->hierarchy;
     }
 
-    public function getCats(): array
+    public function cats(): array
     {
         return $this->cats;
     }
@@ -120,17 +120,28 @@ class Event implements JsonSerializable
         return $this->type;
     }
 
+    public function setParentAttributes(string $excerpt, string $thumbnail_url, array $cats): void
+    {
+        $this->excerpt = $excerpt;
+        $this->thumbnail_url = $thumbnail_url;
+        $this->cats = $cats;
+    }
+
     public function jsonSerialize(): array
     {
         return [
-            'id'             => $this->id,
-            'startDateTime'  => $this->startDateTime->format('Y-m-d\TH:i:s'),
+            'id' => $this->id,
+            'startDateTime' => $this->startDateTime->format('Y-m-d\TH:i:s'),
             'finishDateTime' => $this->finishDateTime->format('Y-m-d\TH:i:s'),
-            'title'          => $this->title,
-            'excerpt'        => $this->excerpt,
-            'url'            => $this->url,
-            'thumbnail_url'  => $this->thumbnail_url,
-            'cats'           => $this->cats,
+            'title' => $this->title,
+            'excerpt' => $this->excerpt,
+            'url' => $this->url,
+            'slug' => $this->slug,
+            'thumbnail_url' => $this->thumbnail_url,
+            'cats' => $this->cats,
+            'status' => $this->status,
+            'hierarchy' => $this->hierarchy,
+            'type' => $this->type,
         ];
     }
 }
