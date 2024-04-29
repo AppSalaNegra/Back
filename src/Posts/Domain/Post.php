@@ -21,7 +21,13 @@ final class Post implements JsonSerializable
     /** @ODM\Field(type="string") */
     private string $url;
     /** @ODM\Field(type="string") */
+    private string $slug;
+    /** @ODM\Field(type="string") */
     private string $thumbnail_url;
+    /** @ODM\Field(type="array") */
+    private array $cats;
+    /** @ODM\Field(type="string") */
+    private string $status;
 
     /**
      * @param DateTime $dateTime
@@ -30,13 +36,24 @@ final class Post implements JsonSerializable
      * @param string $url
      * @param string $thumbnail_url
      */
-    public function __construct(DateTime $dateTime, string $title, string $excerpt, string $url, string $thumbnail_url)
-    {
+    public function __construct(
+        DateTime $dateTime,
+        string $title,
+        string $excerpt,
+        string $url,
+        string $slug,
+        string $thumbnail_url,
+        array $cats,
+        string $status
+    ) {
         $this->dateTime = $dateTime;
         $this->title = $title;
         $this->excerpt = $excerpt;
         $this->url = $url;
+        $this->slug = $slug;
         $this->thumbnail_url = $thumbnail_url;
+        $this->cats = $cats;
+        $this->status = $status;
     }
 
     public function getId(): ObjectId
@@ -68,6 +85,22 @@ final class Post implements JsonSerializable
     {
         return $this->thumbnail_url;
     }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function getCats(): array
+    {
+        return $this->cats;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
     public function jsonSerialize(): array
     {
         return [

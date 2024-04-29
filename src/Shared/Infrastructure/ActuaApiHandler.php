@@ -2,7 +2,9 @@
 
 namespace App\Shared\Infrastructure;
 
+use DateTime;
 use GuzzleHttp\Client;
+use http\Env\Response;
 
 class ActuaApiHandler
 {
@@ -24,7 +26,7 @@ class ActuaApiHandler
         return [];
     }
 
-    public function getEventsData(): array
+    public function getUpcomingEventsData(): array
     {
         $response = $this->client->request('POST', 'https://sala-negra.com/actua_public_api_v1/get_events');
         if ($response->getStatusCode() === 200) {
@@ -35,8 +37,28 @@ class ActuaApiHandler
         return [];
     }
 
-    public function getParentEvents(): array
+    public function getParentEventsTwoMonthsAgo(): array
     {
-        $client = new Client();
+        $today = new DateTime();
+        $period = $today->modify('-2 months');
+        $apiUrl = 'https://sala-negra.com/actua_public_api_v1/get_events?start=' . $period->format('Y-m-d') . '&finish=' . $today->format('Y-m-d');
+        $response = $this->client->request('POST', $apiUrl);
+        if ($response->getStatusCode() === 200) {
+            $data      = $response->getBody()->getContents();
+            $dataArray = json_decode($data, true);
+            return $this->selectOnlyParentEvents($dataArray['events']);
+        }
+        return [];
+    }
+
+    private function selectOnlyParentEvents(array $eventsData): array
+    {
+        $parentArray = [];
+        foreach ($eventsData as $event) {
+            if ($event['hierarchy'] === 'parent') {
+                $parentArray [] = $event;
+            }
+        }
+        return $parentArray;
     }
 }
