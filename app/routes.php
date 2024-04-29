@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 use App\Events\Application\GetAllEventsAction;
-use App\Events\Application\StoreEvents;
+use App\Events\Application\StoreParentEvents;
+use App\Events\Application\StoreUpcomingEvents;
 use App\Posts\Application\GetAllPostsAction;
 use App\Posts\Application\StorePosts;
 use App\Shared\Application\Middleware\AuthMiddleware;
@@ -29,7 +30,8 @@ return function (App $app) {
     });
 
     $app->group('/events', function (Group $group) {
-        $group->put('/store', StoreEvents::class);
+        $group->put('/storeUpcoming', StoreUpcomingEvents::class);
+        $group->put('/storeParents', StoreParentEvents::class);
         $group->get('/get', GetAllEventsAction::class);
     });
 
