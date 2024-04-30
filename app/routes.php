@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Events\Application\GetAllEventsAction;
+use App\Events\Application\GetEventsByCatAction;
 use App\Events\Application\StoreParentEvents;
 use App\Events\Application\StoreUpcomingEvents;
 use App\Posts\Application\GetAllPostsAction;
@@ -33,6 +34,7 @@ return function (App $app) {
         $group->put('/storeUpcoming', StoreUpcomingEvents::class);
         $group->put('/storeParents', StoreParentEvents::class);
         $group->get('/get', GetAllEventsAction::class);
+        $group->get('/getByCat', GetEventsByCatAction::class);
     });
 
     $app->group('/users', function (Group $group) {

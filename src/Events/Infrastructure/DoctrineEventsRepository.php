@@ -4,6 +4,7 @@ namespace App\Events\Infrastructure;
 
 use App\Events\Domain\Event;
 use App\Events\Domain\EventsRepository;
+use DateTime;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 
@@ -23,9 +24,12 @@ class DoctrineEventsRepository implements EventsRepository
         return $this->manager->getRepository(Event::class)->findOneBy(['title' => $title]);
     }
 
-    public function getAll(): array
+    public function getFromToday(DateTime $dateToday): array
     {
-        return $this->manager->getRepository(Event::class)->findAll();
+        $repository = $this->manager->getRepository(Event::class);
+        $qb = $repository->createQueryBuilder();
+        $qb->field('finishDateTime')->gt($dateToday);
+        return $qb->getQuery()->execute()->toArray();
     }
 
     /**
@@ -33,11 +37,11 @@ class DoctrineEventsRepository implements EventsRepository
      */
     public function getByCat(string $cat): array
     {
-        $qb = $this->manager->createQueryBuilder(Event::class);
-        $query = $qb->field('cats')->equals($cat)->getQuery();
-
+        $repository = $this->manager->getRepository(Event::class);
+        $qb = $repository->createQueryBuilder();
+        $qb->field('cats')->elemMatch(['$eq' => $cat]);
+        $query = $qb->getQuery();
         $result = $query->execute();
-
         return $result->toArray();
     }
 

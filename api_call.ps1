@@ -13,3 +13,5 @@ function Invoke-ApiPut {
 Invoke-ApiPut -Url $urlPost
 Invoke-ApiPut -Url $urlEvent
 Invoke-ApiPut -Url $urlStoreParents
+
+#añadir log de ejecucion del script

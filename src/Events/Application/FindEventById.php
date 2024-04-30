@@ -6,7 +6,7 @@ use App\Events\Domain\Event;
 use App\Events\Domain\EventNotFound;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class FindEventById extends EventAction
+final class FindEventById extends EventAction
 {
     protected function action(): Response
     {

@@ -13,9 +13,7 @@ use Slim\Exception\HttpNotFoundException;
 abstract class Action
 {
     protected Request $request;
-
     protected Response $response;
-
     protected array $args;
 
     /**
