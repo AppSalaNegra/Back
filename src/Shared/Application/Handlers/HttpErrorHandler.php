@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Application\Handlers;
 
+use App\Events\Domain\EncodeFailed;
 use App\Shared\Application\Actions\ActionError;
 use App\Shared\Application\Actions\ActionPayload;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -30,6 +31,9 @@ class HttpErrorHandler extends SlimErrorHandler
             ActionError::SERVER_ERROR,
             'An internal error has occurred while processing your request.'
         );
+        if ($exception instanceof EncodeFailed) {
+            $this->checkEncodeError($exception);
+        }
 
         if ($exception instanceof HttpException) {
             $statusCode = $exception->getCode();
@@ -57,6 +61,25 @@ class HttpErrorHandler extends SlimErrorHandler
         ) {
             $error->setDescription($exception->getMessage());
         }
+
+        $payload = new ActionPayload($statusCode, null, $error);
+        $encodedPayload = json_encode($payload, JSON_PRETTY_PRINT);
+
+        $response = $this->responseFactory->createResponse($statusCode);
+        $response->getBody()->write($encodedPayload);
+
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    private function checkEncodeError(Throwable $exception): Response
+    {
+        $statusCode = $exception->getCode();
+        $error = new ActionError(
+            ActionError::SERVER_ERROR,
+            'An internal error has occurred during encoding.'
+        );
+        $error->setDescription($exception->getMessage());
+        $error->setType(ActionError::ENCODE_FAILED);
 
         $payload = new ActionPayload($statusCode, null, $error);
         $encodedPayload = json_encode($payload, JSON_PRETTY_PRINT);

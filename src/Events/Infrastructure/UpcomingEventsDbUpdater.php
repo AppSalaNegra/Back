@@ -5,7 +5,6 @@ namespace App\Events\Infrastructure;
 use App\Events\Domain\Event;
 use App\Events\Domain\EventsRepository;
 use App\Shared\Infrastructure\ActuaApiHandler;
-use DateTime;
 
 class UpcomingEventsDbUpdater
 {

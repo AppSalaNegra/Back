@@ -4,16 +4,20 @@ namespace App\Events\Application;
 
 use App\Events\Domain\Event;
 use App\Events\Domain\EventNotFound;
-use Psr\Http\Message\ResponseInterface as Response;
+use App\Events\Domain\EventsRepository;
 
-final class FindEventById extends EventAction
+final class FindEventById
 {
-    protected function action(): Response
+    public function __construct(private readonly EventsRepository $repository)
     {
-        return $this->respondWithData();
     }
-    public function findEventById(string $eventId): ?Event
+
+    public function findEventById(string $eventId): Event
     {
-        return $this->repository->findById($eventId);
+        $event = $this->repository->findById($eventId);
+        if (null === $event) {
+            throw new EventNotFound();
+        }
+        return $event;
     }
 }

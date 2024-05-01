@@ -24,10 +24,10 @@ class DoctrineEventsRepository implements EventsRepository
         return $this->manager->getRepository(Event::class)->findOneBy(['title' => $title]);
     }
 
-    public function getFromToday(DateTime $dateToday): array
+    public function getFromToday(): array
     {
         $qb = $this->manager->createQueryBuilder(Event::class);
-        $qb->field('finishDateTime')->gt($dateToday);
+        $qb->field('finishDateTime')->gt(new DateTime());
         return $qb->getQuery()->execute()->toArray();
     }
 

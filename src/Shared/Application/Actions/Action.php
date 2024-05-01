@@ -18,7 +18,6 @@ abstract class Action
 
     /**
      * @throws HttpNotFoundException
-     * @throws HttpBadRequestException
      */
     public function __invoke(Request $request, Response $response, array $args): Response
     {

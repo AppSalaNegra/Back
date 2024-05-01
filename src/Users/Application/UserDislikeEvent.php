@@ -22,19 +22,11 @@ final class UserDislikeEvent extends UserAction
         $userId = $data['userId'];
         $eventId = $data['eventId'];
 
-        $this->ensureEventExists($eventId);
         $user = $this->ensureUserExists($userId);
+        $this->eventFinder->findEventById($eventId);
         $user->removeLikedEvent($eventId);
         $this->repository->save($user);
         return $this->respondWithData();
-    }
-
-    private function ensureEventExists(string $eventId): void
-    {
-        $event = $this->eventFinder->findEventById($eventId);
-        if (null === $event) {
-            throw new EventNotFound();
-        }
     }
 
     private function ensureUserExists(string $userId): User

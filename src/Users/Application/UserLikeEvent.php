@@ -24,18 +24,10 @@ final class UserLikeEvent extends UserAction
         $eventId = $data['eventId'];
 
         $user = $this->ensureUserExists($userId);
-        $this->ensureEventExists($eventId);
+        $this->eventFinder->findEventById($eventId);
         $user->addLikedEvent($eventId);
         $this->repository->save($user);
         return $this->respondWithData();
-    }
-
-    private function ensureEventExists(string $eventId): void
-    {
-        $event = $this->eventFinder->findEventById($eventId);
-        if (null === $event) {
-            throw new EventNotFound();
-        }
     }
 
     private function ensureUserExists(string $userId): User

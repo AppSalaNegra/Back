@@ -2,10 +2,8 @@
 
 namespace App\Events\Infrastructure;
 
-use App\Events\Domain\Event;
 use App\Events\Domain\EventsRepository;
 use App\Shared\Infrastructure\ActuaApiHandler;
-use DateTime;
 
 final class ParentEventsDbUpdater
 {
@@ -18,7 +16,7 @@ final class ParentEventsDbUpdater
 
     public function persistIfNotExists(EventsRepository $repository): void
     {
-        foreach ($this->apiHandler->getParentEventsTwoMonthsAgo() as $eventData) {
+        foreach ($this->apiHandler->getParentEvents() as $eventData) {
             if (null === $repository->findByTitle($eventData['title'])) {
                 $event = EventEncoder::parseDataToEvent($eventData);
                 $repository->save($event);

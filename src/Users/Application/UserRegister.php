@@ -6,7 +6,7 @@ use App\Users\Domain\Exception\UserAlreadyExists;
 use App\Users\Domain\User;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class UserRegisterAction extends UserAction
+class UserRegister extends UserAction
 {
     protected function action(): Response
     {
