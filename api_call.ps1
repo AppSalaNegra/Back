@@ -1,7 +1,7 @@
 #programador de tareas en windows
+$urlStoreParents = "http://localhost:8080/events/storeParents"
 $urlPost = "http://localhost:8080/posts/store"
 $urlEvent = "http://localhost:8080/events/storeUpcoming"
-$urlStoreParents = "http://localhost:8080/events/storeParents"
 
 function Invoke-ApiPut {
     param (

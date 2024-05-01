@@ -26,8 +26,7 @@ class DoctrineEventsRepository implements EventsRepository
 
     public function getFromToday(DateTime $dateToday): array
     {
-        $repository = $this->manager->getRepository(Event::class);
-        $qb = $repository->createQueryBuilder();
+        $qb = $this->manager->createQueryBuilder(Event::class);
         $qb->field('finishDateTime')->gt($dateToday);
         return $qb->getQuery()->execute()->toArray();
     }
@@ -37,9 +36,9 @@ class DoctrineEventsRepository implements EventsRepository
      */
     public function getByCat(string $cat): array
     {
-        $repository = $this->manager->getRepository(Event::class);
-        $qb = $repository->createQueryBuilder();
-        $qb->field('cats')->elemMatch(['$eq' => $cat]);
+        $qb = $this->manager->createQueryBuilder(Event::class);
+        $qb->field('cats.' . $cat)->exists(true);
+        $qb->field('finishDateTime')->gt(new DateTime());
         $query = $qb->getQuery();
         $result = $query->execute();
         return $result->toArray();
