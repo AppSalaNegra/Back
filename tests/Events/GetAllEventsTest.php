@@ -4,6 +4,8 @@ namespace Tests\Events;
 
 use App\Events\Domain\EventsRepository;
 use App\Shared\Application\Actions\ActionPayload;
+use App\Users\Application\Authentication\Token;
+use App\Users\Domain\User;
 use DI\Container;
 use Tests\TestCase;
 
@@ -23,7 +25,8 @@ final class GetAllEventsTest extends TestCase
 
         $container->set(EventsRepository::class, $eventsProphecy->reveal());
 
-        $request = $this->createRequest('GET', '/events/get');
+        $token = Token::createToken(new User("", "", "", "", []));
+        $request = $this->createRequest('GET', '/events/get')->withHeader('Authorization', 'Bearer ' . $token);
         $response = $app->handle($request);
 
         $payload = (string) $response->getBody();

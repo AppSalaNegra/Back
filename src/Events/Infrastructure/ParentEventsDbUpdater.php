@@ -5,7 +5,7 @@ namespace App\Events\Infrastructure;
 use App\Events\Domain\EventsRepository;
 use App\Shared\Infrastructure\ActuaApiHandler;
 
-final class ParentEventsDbUpdater
+class ParentEventsDbUpdater
 {
     private ActuaApiHandler $apiHandler;
 

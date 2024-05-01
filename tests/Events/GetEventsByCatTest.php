@@ -6,6 +6,8 @@ use App\Events\Domain\Event;
 use App\Events\Domain\EventsRepository;
 use App\Events\Domain\UnknowCategory;
 use App\Shared\Application\Actions\ActionPayload;
+use App\Users\Application\Authentication\Token;
+use App\Users\Domain\User;
 use DateTime;
 use DI\Container;
 use Tests\TestCase;
@@ -29,7 +31,10 @@ final class GetEventsByCatTest extends TestCase
 
         $container->set(EventsRepository::class, $eventsProphecy->reveal());
 
-        $request = $this->createRequest('GET', '/events/getByCat')->withParsedBody(['cat' => 'Canalla']);
+        $token = Token::createToken(new User("", "", "", "", []));
+        $request = $this->createRequest('GET', '/events/getByCat')
+            ->withParsedBody(['cat' => 'Canalla'])
+            ->withHeader('Authorization', 'Bearer ' . $token);
         $response = $app->handle($request);
 
         $payload = (string)$response->getBody();
@@ -43,7 +48,10 @@ final class GetEventsByCatTest extends TestCase
     {
         $app = $this->getAppInstance();
         $this->expectException(UnknowCategory::class);
-        $request = $this->createRequest('GET', '/events/getByCat')->withParsedBody(['cat' => 'other']);
+        $token = Token::createToken(new User("", "", "", "", []));
+        $request = $this->createRequest('GET', '/events/getByCat')
+            ->withParsedBody(['cat' => 'other'])
+            ->withHeader('Authorization', 'Bearer ' . $token);
         $app->handle($request);
     }
 }

@@ -3,16 +3,19 @@
 namespace App\Users\Application;
 
 use App\Events\Application\FindEventById;
-use App\Events\Domain\EventNotFound;
 use App\Users\Domain\Exception\UserNotFound;
+use App\Users\Domain\FindUserById;
 use App\Users\Domain\User;
-use App\Users\Domain\UserRepository;
+use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 
 final class UserDislikeEvent extends UserAction
 {
-    public function __construct(UserRepository $repository, private readonly FindEventById $eventFinder)
-    {
+    public function __construct(
+        UsersRepository $repository,
+        private readonly FindEventById $eventFinder,
+        private readonly FindUserById $userFinder
+    ) {
         parent::__construct($repository);
     }
 
@@ -22,19 +25,10 @@ final class UserDislikeEvent extends UserAction
         $userId = $data['userId'];
         $eventId = $data['eventId'];
 
-        $user = $this->ensureUserExists($userId);
+        $user = $this->userFinder->findUserById($userId);
         $this->eventFinder->findEventById($eventId);
         $user->removeLikedEvent($eventId);
         $this->repository->save($user);
         return $this->respondWithData();
-    }
-
-    private function ensureUserExists(string $userId): User
-    {
-        $user = $this->repository->findById($userId);
-        if (null === $user) {
-            throw new UserNotFound();
-        }
-        return $user;
     }
 }

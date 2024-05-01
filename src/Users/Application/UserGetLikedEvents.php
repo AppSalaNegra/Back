@@ -6,14 +6,18 @@ namespace App\Users\Application;
 
 use App\Events\Application\FindEventById;
 use App\Users\Domain\Exception\UserNotFound;
+use App\Users\Domain\FindUserById;
 use App\Users\Domain\User;
-use App\Users\Domain\UserRepository;
+use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 
 final class UserGetLikedEvents extends UserAction
 {
-    public function __construct(UserRepository $repository, private readonly FindEventById $eventFinder)
-    {
+    public function __construct(
+        UsersRepository $repository,
+        private readonly FindEventById $eventFinder,
+        private readonly FindUserById $userFinder
+    ) {
         parent::__construct($repository);
     }
 
@@ -21,10 +25,7 @@ final class UserGetLikedEvents extends UserAction
     {
         $data = $this->getFormData();
         $userId = $data['id'];
-        $user = $this->repository->findById($userId);
-        if (null === $user) {
-            throw new UserNotFound();
-        }
+        $user = $this->userFinder->findUserById($userId);
         return $this->respondWithData(['userEvents' => $this->getAllUserEvents($user)]);
     }
 

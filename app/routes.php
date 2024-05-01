@@ -25,23 +25,27 @@ return function (App $app) {
         return $response;
     });
 
-    $app->group('/posts', function (Group $group) {
-        $group->put('/store', StorePosts::class);
-        $group->get('/get', GetAllPosts::class)->addMiddleware(new AuthMiddleware());
+    $app->group('/store', function (Group $group) {
+        $group->put('/posts', StorePosts::class);
+        $group->put('/upcomingEvents', StoreUpcomingEvents::class);
+        $group->put('/parentEvents', StoreParentEvents::class);
     });
 
-    $app->group('/events', function (Group $group) {
-        $group->put('/storeUpcoming', StoreUpcomingEvents::class);
-        $group->put('/storeParents', StoreParentEvents::class);
-        $group->get('/get', GetAllEvents::class);
-        $group->get('/getByCat', GetEventsByCat::class);
-    });
-
-    $app->group('/users', function (Group $group) {
+    $app->group('/session', function (Group $group) {
         $group->post('/login', UserLogin::class);
         $group->post('/register', UserRegister::class);
+    });
+
+    $app->get('/posts', GetAllPosts::class)->addMiddleware(new AuthMiddleware());
+
+    $app->group('/events', function (Group $group) {
+        $group->get('/get', GetAllEvents::class);
+        $group->get('/getByCat', GetEventsByCat::class);
+    })->addMiddleware(new AuthMiddleware());
+
+    $app->group('/users', function (Group $group) {
         $group->get('/get-liked-shows', UserGetLikedEvents::class);
         $group->put('/like', UserLikeEvent::class);
         $group->put('/dislike', UserDislikeEvent::class);
-    });
+    })->addMiddleware(new AuthMiddleware());
 };

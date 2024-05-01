@@ -1,37 +1,38 @@
 <?php
 
-namespace Tests\Posts;
+namespace Tests\Users;
 
-use App\Posts\Domain\PostsRepository;
 use App\Shared\Application\Actions\ActionPayload;
 use App\Users\Application\Authentication\Token;
 use App\Users\Domain\User;
+use App\Users\Domain\UsersRepository;
 use DI\Container;
-use Firebase\JWT\JWT;
 use Tests\TestCase;
 
-class GetAllPostsTest extends TestCase
+class UserDislikeEventTest extends TestCase
 {
-    public function testActionCallsRepositoryAndReturnsArray(): void
+    public function testItShouldRemoveLikedEvent(): void
     {
         $app = $this->getAppInstance();
         /** @var Container $container */
         $container = $app->getContainer();
-        $posts = [];
-        $eventsProphecy = $this->prophesize(PostsRepository::class);
-        $eventsProphecy
-            ->getAll()
-            ->willReturn($posts)
+        $user = new User("", "", "", "", []);
+        $userProphecy = $this->prophesize(UsersRepository::class);
+        $userProphecy
+            ->save($user)
             ->shouldBeCalledOnce();
 
-        $container->set(PostsRepository::class, $eventsProphecy->reveal());
+        $container->set(UsersRepository::class, $userProphecy->reveal());
 
         $token = Token::createToken(new User("", "", "", "", []));
-        $request = $this->createRequest('GET', '/posts')->withHeader('Authorization', 'Bearer ' . $token);
+        $request = $this->createRequest('PUT', '/users/dislike')
+            ->withParsedBody(['userId' => 'Canalla', 'eventId' => 'x'])
+            ->withHeader('Authorization', 'Bearer ' . $token);
+
         $response = $app->handle($request);
 
         $payload = (string)$response->getBody();
-        $expectedPayload = new ActionPayload(200, $posts);
+        $expectedPayload = new ActionPayload(200);
         $serializedPayload = json_encode($expectedPayload, JSON_PRETTY_PRINT);
 
         $this->assertEquals($serializedPayload, $payload);
