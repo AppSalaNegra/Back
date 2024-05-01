@@ -7,7 +7,7 @@ use App\Users\Application\UserAction;
 use App\Users\Domain\Exception\UserNotFound;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class UserLoginAction extends UserAction
+class UserLogin extends UserAction
 {
     protected function action(): Response
     {

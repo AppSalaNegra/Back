@@ -10,7 +10,7 @@ use App\Users\Domain\User;
 use App\Users\Domain\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 
-final class UserGetLikedShowsAction extends UserAction
+final class UserGetLikedEvents extends UserAction
 {
     public function __construct(UserRepository $repository, private readonly FindEventById $eventFinder)
     {

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Shared\Application\Settings\SettingsInterface;
+use App\Shared\Domain\AppConstants;
 use DI\ContainerBuilder;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -37,11 +38,11 @@ return function (ContainerBuilder $containerBuilder) {
             $config->setProxyNamespace('Proxies');
             $config->setHydratorDir(__DIR__ . '/Hydrators');
             $config->setHydratorNamespace('Hydrators');
-            $config->setDefaultDB('sala');
+            $config->setDefaultDB(AppConstants::$DEFAULT_DB);
             $config->setMetadataDriverImpl(
-                AnnotationDriver::create([__DIR__ . '../src/Users/Domain',__DIR__ . '../src/Events/Domain'])
+                AnnotationDriver::create([__DIR__ . '../src/Users/Domain', __DIR__ . '../src/Events/Domain'])
             );
-            $uri = 'mongodb+srv://slimm1:KfWbDK2wgiEvPzJx@appdb.wsfpnnm.mongodb.net/?retryWrites=true&w=majority&appName=appDb';
+            $uri = AppConstants::$DB_HOST . AppConstants::$DB_USER . AppConstants::$DB_PASS . AppConstants::$DB_CONFIG;
             $apiVersion = new ServerApi((string)ServerApi::V1);
             $options = [
                 'serverApi' => $apiVersion,

@@ -13,14 +13,11 @@ use Slim\Exception\HttpNotFoundException;
 abstract class Action
 {
     protected Request $request;
-
     protected Response $response;
-
     protected array $args;
 
     /**
      * @throws HttpNotFoundException
-     * @throws HttpBadRequestException
      */
     public function __invoke(Request $request, Response $response, array $args): Response
     {
