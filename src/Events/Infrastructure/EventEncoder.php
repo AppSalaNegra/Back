@@ -14,7 +14,7 @@ final class EventEncoder
         try {
             $startDateTime = DateTime::createFromFormat("Y-m-d\TH:i:s", $eventData['startDateTime']);
             $finishDateTime = DateTime::createFromFormat("Y-m-d\TH:i:s", $eventData['finishDateTime']);
-            $title = $eventData['title'];
+            $title = $eventData['tile'];
             $excerpt = $eventData['excerpt'];
             $url = $eventData['url'];
             $slug = $eventData['slug'];

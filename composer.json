@@ -1,5 +1,5 @@
 {
-    "name": "app_salanegra",
+    "name": "slim/slim-skeleton",
     "description": "backend para la aplicación móvil de la sala negra",
     "keywords": [
         "microframework",
@@ -11,7 +11,7 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Martín Ramonda",
+            "name": "martín Ramonda",
             "email": "mramonda96@gmail.com",
             "homepage": "http://www.martinramonda.com"
         }
@@ -28,7 +28,8 @@
         "monolog/monolog": "^2.8",
         "php-di/php-di": "^6.4",
         "slim/psr7": "^1.5",
-        "slim/slim": "^4.10"
+        "slim/slim": "^4.10",
+        "phpmailer/phpmailer": "^6.9.1"
     },
     "require-dev": {
         "jangregor/phpstan-prophecy": "^1.0.0",
