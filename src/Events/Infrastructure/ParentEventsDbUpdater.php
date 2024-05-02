@@ -7,19 +7,20 @@ use App\Shared\Infrastructure\ActuaApiHandler;
 
 final class ParentEventsDbUpdater
 {
-    private ActuaApiHandler $apiHandler;
-
-    public function __construct()
+    public function __construct(
+        private readonly EventsRepository $repository,
+        private readonly ActuaApiHandler $apiHandler
+    )
     {
-        $this->apiHandler = new ActuaApiHandler();
     }
 
-    public function persistIfNotExists(EventsRepository $repository): void
+    public function persistIfNotExists(): void
     {
-        foreach ($this->apiHandler->getParentEvents() as $eventData) {
-            if (null === $repository->findByTitle($eventData['title'])) {
+        $events = $this->apiHandler->getParentEvents();
+        foreach ($events as $eventData) {
+            if (null === $this->repository->findByTitle($eventData['title'])) {
                 $event = EventEncoder::parseDataToEvent($eventData);
-                $repository->save($event);
+                $this->repository->save($event);
             }
         }
     }
