@@ -9,9 +9,9 @@ class ParentEventsDbUpdater
 {
     public function __construct(
         private readonly EventsRepository $repository,
-        private readonly ActuaApiHandler $apiHandler
-    )
-    {
+        private readonly ActuaApiHandler $apiHandler,
+        private readonly EventEncoder $encoder
+    ) {
     }
 
     public function persistIfNotExists(): void
@@ -19,7 +19,7 @@ class ParentEventsDbUpdater
         $events = $this->apiHandler->getParentEvents();
         foreach ($events as $eventData) {
             if (null === $this->repository->findByTitle($eventData['title'])) {
-                $event = EventEncoder::parseDataToEvent($eventData);
+                $event = $this->encoder->parseDataToEvent($eventData);
                 $this->repository->save($event);
             }
         }

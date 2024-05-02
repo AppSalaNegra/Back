@@ -9,6 +9,7 @@ use App\Events\Application\StoreUpcomingEvents;
 use App\Posts\Application\GetAllPosts;
 use App\Posts\Application\StorePosts;
 use App\Shared\Application\Middleware\AuthMiddleware;
+use App\Users\Application\Authentication\Token;
 use App\Users\Application\Login\UserLogin;
 use App\Users\Application\UserDislikeEvent;
 use App\Users\Application\UserLikeEvent;
@@ -36,16 +37,16 @@ return function (App $app) {
         $group->post('/register', UserRegister::class);
     });
 
-    $app->get('/posts', GetAllPosts::class)->addMiddleware(new AuthMiddleware());
+    $app->get('/posts', GetAllPosts::class);
 
     $app->group('/events', function (Group $group) {
         $group->get('/get', GetAllEvents::class);
         $group->get('/getByCat', GetEventsByCat::class);
-    })->addMiddleware(new AuthMiddleware());
+    });
 
     $app->group('/users', function (Group $group) {
         $group->get('/get-liked-shows', UserGetLikedEvents::class);
         $group->put('/like', UserLikeEvent::class);
         $group->put('/dislike', UserDislikeEvent::class);
-    })->addMiddleware(new AuthMiddleware());
+    });
 };

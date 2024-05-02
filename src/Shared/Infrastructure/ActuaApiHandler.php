@@ -8,11 +8,8 @@ use GuzzleHttp\Client;
 
 class ActuaApiHandler
 {
-    private Client $client;
-
-    public function __construct()
+    public function __construct(private readonly Client $client)
     {
-        $this->client = new Client();
     }
 
     public function getPostsData(): array
@@ -23,7 +20,7 @@ class ActuaApiHandler
             $dataArray = json_decode($data, true);
             return $dataArray['posts'];
         }
-        return [];
+        throw new ActuaApiFailed();
     }
 
     public function getUpcomingEventsData(): array
@@ -34,7 +31,7 @@ class ActuaApiHandler
             $dataArray = json_decode($data, true);
             return $dataArray['events'];
         }
-        return [];
+        throw new ActuaApiFailed();
     }
 
     public function getParentEvents(): array
@@ -50,7 +47,7 @@ class ActuaApiHandler
             $dataArray = json_decode($data, true);
             return $this->selectOnlyParentEvents($dataArray['events']);
         }
-        return [];
+        throw new ActuaApiFailed();
     }
 
     private function selectOnlyParentEvents(array $eventsData): array

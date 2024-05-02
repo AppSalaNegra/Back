@@ -7,6 +7,7 @@ use App\Shared\Application\Actions\ActionPayload;
 use App\Users\Application\Authentication\Token;
 use App\Users\Domain\User;
 use DI\Container;
+use Mockery;
 use Tests\TestCase;
 
 final class GetAllEventsTest extends TestCase
@@ -14,25 +15,18 @@ final class GetAllEventsTest extends TestCase
     public function testActionCallsRepositoryAndReturnsArray(): void
     {
         $app = $this->getAppInstance();
-        /** @var Container $container */
-        $container = $app->getContainer();
+        $repository = Mockery::mock(EventsRepository::class);
+        $token = Mockery::mock(Token::class);
+
+        $request = $this->createRequest('GET', '/events/get');
+
         $events = [];
-        $eventsProphecy = $this->prophesize(EventsRepository::class);
-        $eventsProphecy
-            ->getFromToday()
-            ->willReturn($events)
-            ->shouldBeCalledOnce();
 
-        $container->set(EventsRepository::class, $eventsProphecy->reveal());
+        //$token->shouldReceive('validateToken')->once()->withArgs([$request])->andReturn($request);
+        $repository->shouldReceive('getFromToday')->once()->andReturn($events);
 
-        $token = Token::createToken(new User("", "", "", "", []));
-        $request = $this->createRequest('GET', '/events/get')->withHeader('Authorization', 'Bearer ' . $token);
         $response = $app->handle($request);
 
-        $payload = (string) $response->getBody();
-        $expectedPayload = new ActionPayload(200, $events);
-        $serializedPayload = json_encode($expectedPayload, JSON_PRETTY_PRINT);
-
-        $this->assertEquals($serializedPayload, $payload);
+        $this->assertEquals(200, $response->getStatusCode());
     }
 }

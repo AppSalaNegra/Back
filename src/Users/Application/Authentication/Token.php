@@ -10,14 +10,14 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-final class Token
+class Token
 {
-    private static function getSecret(): string
+    private function getSecret(): string
     {
         return getenv('JWT_SECRET') ?: 'secret';
     }
 
-    public static function createToken(User $user): string
+    public function createToken(User $user): string
     {
         $payload = [
             'sub' => $user->getId(),
@@ -33,13 +33,12 @@ final class Token
      * @throws NoTokenProvided
      * @throws InvalidToken
      */
-    public static function validateToken(Request $request): Request
+    public function validateToken(Request $request): Request
     {
         $token = self::getTokenFromHeader($request);
         if ($token) {
             try {
                 $decoded = JWT::decode($token, new Key(self::getSecret(), 'HS256'));
-                // TODO: investigate about this:
                 return $request->withAttribute('jwt_payload', (array) $decoded);
             } catch (Exception $e) {
                 throw new InvalidToken('Invalid Token: ' . $e->getMessage());
@@ -49,7 +48,7 @@ final class Token
         }
     }
 
-    private static function getTokenFromHeader(Request $request): ?string
+    private function getTokenFromHeader(Request $request): ?string
     {
         $header = $request->getHeaderLine('Authorization');
         if (preg_match('/Bearer\s+(.*)$/i', $header, $matches)) {

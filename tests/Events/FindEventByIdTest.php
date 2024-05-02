@@ -6,31 +6,34 @@ use App\Events\Application\FindEventById;
 use App\Events\Domain\Event;
 use App\Events\Domain\EventNotFound;
 use App\Events\Domain\EventsRepository;
-use DateTime;
-use MongoDB\BSON\ObjectId;
+use Mockery;
 use Tests\TestCase;
 
 final class FindEventByIdTest extends TestCase
 {
     public function testItShouldFindEvent(): void
     {
-        $id = new ObjectId();
-        $expectedEvent = new Event(new DateTime(), new DateTime(), "", "", "", "", "", [], "", "", "");
-        $mockRepository = $this->createMock(EventsRepository::class);
-        $mockRepository->method('findById')->with($id)->willReturn($expectedEvent);
+        $repository = Mockery::mock(EventsRepository::class);
+        $finder = new FindEventById($repository);
 
-        $findEventById = new FindEventById($mockRepository);
-        $resultEvent = $findEventById->findEventById($id);
-        $this->assertSame($expectedEvent, $resultEvent);
+        $id = 'randomId';
+        $event = Mockery::mock(Event::class);
+
+        $repository->shouldReceive('findById')->withArgs([$id])->andReturn($event);
+        $resultEvent = $finder->findEventById($id);
+
+        $this->assertEquals($event, $resultEvent);
     }
 
     public function testItShouldThrowExceptionWhenEventNotFound(): void
     {
-        $id = new ObjectId();
-        $mockRepository = $this->createMock(EventsRepository::class);
-        $mockRepository->method('findById')->with($id)->willReturn(null);
-        $findEventById = new FindEventById($mockRepository);
         $this->expectException(EventNotFound::class);
-        $findEventById->findEventById($id);
+        $repository = Mockery::mock(EventsRepository::class);
+        $finder = new FindEventById($repository);
+
+        $id = 'randomId';
+
+        $repository->shouldReceive('findById')->withArgs([$id])->andThrow(EventNotFound::class);
+        $finder->findEventById($id);
     }
 }
