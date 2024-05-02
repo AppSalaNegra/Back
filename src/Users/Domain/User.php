@@ -7,7 +7,7 @@ namespace App\Users\Domain;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /** @ODM\Document(collection="users") */
-final class User
+class User
 {
     /** @ODM\Id(strategy="AUTO") */
     private $id;

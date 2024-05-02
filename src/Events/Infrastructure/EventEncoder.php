@@ -7,14 +7,14 @@ use App\Events\Domain\Event;
 use DateTime;
 use Throwable;
 
-final class EventEncoder
+class EventEncoder
 {
-    public static function parseDataToEvent(array $eventData): Event
+    public function parseDataToEvent(array $eventData): Event
     {
         try {
             $startDateTime = DateTime::createFromFormat("Y-m-d\TH:i:s", $eventData['startDateTime']);
             $finishDateTime = DateTime::createFromFormat("Y-m-d\TH:i:s", $eventData['finishDateTime']);
-            $title = $eventData['tile'];
+            $title = $eventData['title'];
             $excerpt = $eventData['excerpt'];
             $url = $eventData['url'];
             $slug = $eventData['slug'];
