@@ -27,18 +27,46 @@ class UserGetLikedEventsTest extends TestCase
 
         $userFinder->shouldReceive('findUserById')->once();
         $repository->shouldReceive('findById')->once()->andReturn($user);
-        $user->shouldReceive('likedEvents')->once()->andReturn([$event]);
-        $eventFinder->shouldReceive('findEventById')->once()->andReturn($event);
+        $user->shouldReceive('likedEvents')->once()->andReturn(['string']);
+        $eventFinder->shouldReceive('findEventById')->once();
+        $eventsRepository->shouldReceive('findById')->once()->andReturn($event);
+        $event->shouldReceive('jsonSerialize')->once();
 
         $container->set(UsersRepository::class, $repository);
         $container->set(EventsRepository::class, $eventsRepository);
 
-        $request = $this->createRequest('GET', '/users/getLikedShows')->withParsedBody([
+        $request = $this->createRequest('GET', '/users/getLikedEvents')->withParsedBody([
             'id' => 'userId'
         ]);
         $response = $app->handle($request);
-        $payload = (string) $response->getBody();
-        $expectedPayload = new ActionPayload(200);
+        $payload = (string)$response->getBody();
+        $expectedPayload = new ActionPayload(200, [[]]);
+        $serializedPayload = json_encode($expectedPayload, JSON_PRETTY_PRINT);
+
+        $this->assertEquals($serializedPayload, $payload);
+    }
+    public function testItShouldGetEmptyLikedEvents(): void
+    {
+        $app = $this->getAppInstance();
+        $container = $app->getContainer();
+        $repository = Mockery::mock(UsersRepository::class);
+        $eventsRepository = Mockery::mock(EventsRepository::class);
+        $userFinder = Mockery::mock(FindUserById::class);
+        $user = Mockery::mock(User::class);
+
+        $userFinder->shouldReceive('findUserById')->once();
+        $repository->shouldReceive('findById')->once()->andReturn($user);
+        $user->shouldReceive('likedEvents')->once()->andReturn([]);
+
+        $container->set(UsersRepository::class, $repository);
+        $container->set(EventsRepository::class, $eventsRepository);
+
+        $request = $this->createRequest('GET', '/users/getLikedEvents')->withParsedBody([
+            'id' => 'userId'
+        ]);
+        $response = $app->handle($request);
+        $payload = (string)$response->getBody();
+        $expectedPayload = new ActionPayload(200, []);
         $serializedPayload = json_encode($expectedPayload, JSON_PRETTY_PRINT);
 
         $this->assertEquals($serializedPayload, $payload);

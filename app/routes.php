@@ -8,8 +8,6 @@ use App\Events\Application\StoreParentEvents;
 use App\Events\Application\StoreUpcomingEvents;
 use App\Posts\Application\GetAllPosts;
 use App\Posts\Application\StorePosts;
-use App\Shared\Application\Middleware\AuthMiddleware;
-use App\Users\Application\Authentication\Token;
 use App\Users\Application\Login\UserLogin;
 use App\Users\Application\UserDislikeEvent;
 use App\Users\Application\UserLikeEvent;
@@ -45,7 +43,7 @@ return function (App $app) {
     });
 
     $app->group('/users', function (Group $group) {
-        $group->get('/getLikedShows', UserGetLikedEvents::class);
+        $group->get('/getLikedEvents', UserGetLikedEvents::class);
         $group->put('/like', UserLikeEvent::class);
         $group->put('/dislike', UserDislikeEvent::class);
     });

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Users\Application;
 
 use App\Events\Application\FindEventById;
-use App\Users\Domain\Exception\UserNotFound;
 use App\Users\Domain\FindUserById;
 use App\Users\Domain\User;
 use App\Users\Domain\UsersRepository;
@@ -24,9 +23,9 @@ final class UserGetLikedEvents extends UserAction
     protected function action(): Response
     {
         $data = $this->getFormData();
-        $userId = $data['id'];
-        $user = $this->userFinder->findUserById($userId);
-        return $this->respondWithData(['userEvents' => $this->getAllUserEvents($user)]);
+        $id = $data['id'];
+        $user = $this->userFinder->findUserById($id);
+        return $this->respondWithData($this->getAllUserEvents($user));
     }
 
     private function getAllUserEvents(User $user): array

@@ -23,7 +23,6 @@ class User implements JsonSerializable
     /** @ODM\Field(type="collection") */
     private array $likedEvents;
 
-
     public function __construct(
         string $email,
         string $firstName,
@@ -88,7 +87,7 @@ class User implements JsonSerializable
             'email' => $this->email,
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
-            'likedEvents' => $this->likedEvents
+            'likedEvents' => $this->likedEvents,
         ];
     }
 }
