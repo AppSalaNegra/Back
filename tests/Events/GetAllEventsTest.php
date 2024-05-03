@@ -4,7 +4,10 @@ namespace Tests\Events;
 
 use App\Events\Domain\EventsRepository;
 use App\Shared\Application\Actions\ActionPayload;
+use App\Users\Application\Authentication\Token;
+use Firebase\JWT\JWT;
 use Mockery;
+use MongoDB\BSON\ObjectId;
 use Tests\TestCase;
 
 final class GetAllEventsTest extends TestCase
@@ -14,10 +17,13 @@ final class GetAllEventsTest extends TestCase
         $app = $this->getAppInstance();
         $container = $app->getContainer();
         $repository = Mockery::mock(EventsRepository::class);
-        $repository->shouldReceive('getFromToday')->once()->andReturn([]);
+        $jwt = JWT::encode([], 'secret', 'HS256');
         $container->set(EventsRepository::class, $repository);
 
-        $request = $this->createRequest('GET', '/events/get');
+        $request = $this->createRequest('GET', '/events/get')
+            ->withHeader('Authorization', 'Bearer ' . $jwt);
+
+        $repository->shouldReceive('getFromToday')->once()->andReturn([]);
         $response = $app->handle($request);
 
         $payload = (string) $response->getBody();

@@ -9,6 +9,7 @@ use App\Shared\Application\Actions\ActionPayload;
 use App\Users\Domain\FindUserById;
 use App\Users\Domain\User;
 use App\Users\Domain\UsersRepository;
+use Firebase\JWT\JWT;
 use Mockery;
 use Tests\TestCase;
 
@@ -24,6 +25,7 @@ class UserDislikeEventTest extends TestCase
         $eventFinder = Mockery::mock(FindEventById::class);
         $user = Mockery::mock(User::class);
         $event = Mockery::mock(Event::class);
+        $jwt = JWT::encode([], 'secret', 'HS256');
 
         $userFinder->shouldReceive('findUserById')->once();
         $repository->shouldReceive('findById')->once()->andReturn($user);
@@ -35,10 +37,11 @@ class UserDislikeEventTest extends TestCase
         $container->set(UsersRepository::class, $repository);
         $container->set(EventsRepository::class, $eventsRepository);
 
-        $request = $this->createRequest('PUT', '/users/dislike')->withParsedBody([
-            'userId' => 'userId',
-            'eventId' => 'eventId',
-        ]);
+        $request = $this->createRequest('PUT', '/users/dislike')
+            ->withParsedBody([
+                'userId' => 'userId',
+                'eventId' => 'eventId'])
+            ->withHeader('Authorization', 'Bearer ' . $jwt);
         $response = $app->handle($request);
 
         $payload = (string) $response->getBody();

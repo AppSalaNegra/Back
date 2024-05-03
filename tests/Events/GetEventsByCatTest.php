@@ -10,6 +10,7 @@ use App\Users\Application\Authentication\Token;
 use App\Users\Domain\User;
 use DateTime;
 use DI\Container;
+use Firebase\JWT\JWT;
 use Mockery;
 use Tests\TestCase;
 
@@ -20,11 +21,14 @@ final class GetEventsByCatTest extends TestCase
         $app = $this->getAppInstance();
         $container = $app->getContainer();
         $repository = Mockery::mock(EventsRepository::class);
+        $jwt = JWT::encode([], 'secret', 'HS256');
+
         $repository->shouldReceive('getByCat')->once()->andReturn([]);
         $container->set(EventsRepository::class, $repository);
 
         $request = $this->createRequest('GET', '/events/getByCat')
-            ->withParsedBody(['cat' => 'Destacado']);
+            ->withParsedBody(['cat' => 'Destacado'])
+            ->withHeader('Authorization', 'Bearer ' . $jwt);
         $response = $app->handle($request);
 
         $payload = (string) $response->getBody();
@@ -38,9 +42,11 @@ final class GetEventsByCatTest extends TestCase
     {
         $app = $this->getAppInstance();
         $this->expectException(UnknowCategory::class);
+        $jwt = JWT::encode([], 'secret', 'HS256');
 
         $request = $this->createRequest('GET', '/events/getByCat')
-            ->withParsedBody(['cat' => 'other']);
+            ->withParsedBody(['cat' => 'other'])
+            ->withHeader('Authorization', 'Bearer ' . $jwt);
         $app->handle($request);
     }
 }

@@ -7,4 +7,3 @@ require_once App\Events\Infrastructure\UpcomingEventsDbUpdater::class;
 require_once App\Posts\Infrastructure\PostsDbUpdater::class;
 require_once App\Events\Domain\EventsRepository::class;
 
-//$parentEventsUpdater = new ParentEventsDbUpdater();
