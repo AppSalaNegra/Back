@@ -31,12 +31,13 @@ final class UserGetLikedEvents extends UserAction
 
     private function getAllUserEvents(User $user): array
     {
-        if (empty($user->getLikedShows())) {
+        $likedEvents = $user->likedEvents();
+        if (empty($likedEvents)) {
             return [];
         }
         return array_map(function ($eventId) {
             $event = $this->eventFinder->findEventById($eventId);
             return $event->jsonSerialize();
-        }, $user->getLikedShows());
+        }, $likedEvents);
     }
 }

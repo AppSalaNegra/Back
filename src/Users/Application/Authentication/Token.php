@@ -20,8 +20,8 @@ class Token
     public function createToken(User $user): string
     {
         $payload = [
-            'sub' => $user->getId(),
-            'email' => $user->getEmail(),
+            'sub' => $user->id(),
+            'email' => $user->email(),
             'iat' => time(),
             'exp' => time() + 1800 //getenv('JWT_EXP') ?? 3600,
         ];

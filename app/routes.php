@@ -45,7 +45,7 @@ return function (App $app) {
     });
 
     $app->group('/users', function (Group $group) {
-        $group->get('/get-liked-shows', UserGetLikedEvents::class);
+        $group->get('/getLikedShows', UserGetLikedEvents::class);
         $group->put('/like', UserLikeEvent::class);
         $group->put('/dislike', UserDislikeEvent::class);
     });

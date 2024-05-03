@@ -2,12 +2,45 @@
 
 namespace Tests\Users;
 
+use App\Events\Application\FindEventById;
+use App\Events\Domain\Event;
+use App\Events\Domain\EventsRepository;
+use App\Shared\Application\Actions\ActionPayload;
+use App\Users\Domain\FindUserById;
+use App\Users\Domain\User;
+use App\Users\Domain\UsersRepository;
+use Mockery;
 use Tests\TestCase;
 
 class UserGetLikedEventsTest extends TestCase
 {
     public function testItShouldGetLikedEvents(): void
     {
+        $app = $this->getAppInstance();
+        $container = $app->getContainer();
+        $repository = Mockery::mock(UsersRepository::class);
+        $eventsRepository = Mockery::mock(EventsRepository::class);
+        $userFinder = Mockery::mock(FindUserById::class);
+        $eventFinder = Mockery::mock(FindEventById::class);
+        $user = Mockery::mock(User::class);
+        $event = Mockery::mock(Event::class);
 
+        $userFinder->shouldReceive('findUserById')->once();
+        $repository->shouldReceive('findById')->once()->andReturn($user);
+        $user->shouldReceive('likedEvents')->once()->andReturn([$event]);
+        $eventFinder->shouldReceive('findEventById')->once()->andReturn($event);
+
+        $container->set(UsersRepository::class, $repository);
+        $container->set(EventsRepository::class, $eventsRepository);
+
+        $request = $this->createRequest('GET', '/users/getLikedShows')->withParsedBody([
+            'id' => 'userId'
+        ]);
+        $response = $app->handle($request);
+        $payload = (string) $response->getBody();
+        $expectedPayload = new ActionPayload(200);
+        $serializedPayload = json_encode($expectedPayload, JSON_PRETTY_PRINT);
+
+        $this->assertEquals($serializedPayload, $payload);
     }
 }
