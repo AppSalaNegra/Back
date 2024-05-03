@@ -12,9 +12,9 @@ use App\Users\Domain\UsersRepository;
 use Mockery;
 use Tests\TestCase;
 
-class UserLikeEventTest extends TestCase
+class UserDislikeEventTest extends TestCase
 {
-    public function testItShouldAddLikedEvent(): void
+    public function testItShouldRemoveLikedEvent(): void
     {
         $app = $this->getAppInstance();
         $container = $app->getContainer();
@@ -29,13 +29,13 @@ class UserLikeEventTest extends TestCase
         $repository->shouldReceive('findById')->once()->andReturn($user);
         $eventFinder->shouldReceive('findEventById')->once();
         $eventsRepository->shouldReceive('findById')->once()->andReturn($event);
-        $user->shouldReceive('addLikedEvent')->once();
+        $user->shouldReceive('removeLikedEvent')->once();
         $repository->shouldReceive('save')->once();
 
         $container->set(UsersRepository::class, $repository);
         $container->set(EventsRepository::class, $eventsRepository);
 
-        $request = $this->createRequest('PUT', '/users/like')->withParsedBody([
+        $request = $this->createRequest('PUT', '/users/dislike')->withParsedBody([
             'userId' => 'userId',
             'eventId' => 'eventId',
         ]);

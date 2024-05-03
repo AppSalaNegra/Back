@@ -4,7 +4,7 @@ namespace Tests\Events;
 
 use App\Events\Domain\EventsRepository;
 use App\Shared\Application\Actions\ActionPayload;
-use DI\Container;
+use Mockery;
 use Tests\TestCase;
 
 final class GetAllEventsTest extends TestCase
@@ -12,22 +12,16 @@ final class GetAllEventsTest extends TestCase
     public function testActionCallsRepositoryAndReturnsArray(): void
     {
         $app = $this->getAppInstance();
-        /** @var Container $container */
         $container = $app->getContainer();
-        $events = [];
-        $eventsProphecy = $this->prophesize(EventsRepository::class);
-        $eventsProphecy
-            ->getFromToday()
-            ->willReturn($events)
-            ->shouldBeCalledOnce();
-
-        $container->set(EventsRepository::class, $eventsProphecy->reveal());
+        $repository = Mockery::mock(EventsRepository::class);
+        $repository->shouldReceive('getFromToday')->once()->andReturn([]);
+        $container->set(EventsRepository::class, $repository);
 
         $request = $this->createRequest('GET', '/events/get');
         $response = $app->handle($request);
 
         $payload = (string) $response->getBody();
-        $expectedPayload = new ActionPayload(200, $events);
+        $expectedPayload = new ActionPayload(200, []);
         $serializedPayload = json_encode($expectedPayload, JSON_PRETTY_PRINT);
 
         $this->assertEquals($serializedPayload, $payload);

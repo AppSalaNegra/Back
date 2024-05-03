@@ -8,30 +8,31 @@ use App\Shared\Infrastructure\ActuaApiHandler;
 
 class UpcomingEventsDbUpdater
 {
-    private ActuaApiHandler $apiHandler;
-
-    public function __construct()
-    {
-        $this->apiHandler = new ActuaApiHandler();
+    public function __construct(
+        private readonly EventsRepository $repository,
+        private readonly ActuaApiHandler $apiHandler,
+        private readonly EventEncoder $encoder
+    ) {
     }
 
-    public function persistIfNotExists(EventsRepository $repository): void
+    public function persistIfNotExists(): void
     {
-        foreach ($this->apiHandler->getUpcomingEventsData() as $eventData) {
-            if (null === $repository->findByTitle($eventData['title'])) {
-                $event = EventEncoder::parseDataToEvent($eventData);
+        $events = $this->apiHandler->getUpcomingEventsData();
+        foreach ($events as $eventData) {
+            if (null === $this->repository->findByTitle($eventData['title'])) {
+                $event = $this->encoder->parseDataToEvent($eventData);
                 if ($event->hierarchy() === 'child') {
-                    $this->findParent($event, $repository);
+                    $this->findParent($event);
                 }
-                $repository->save($event);
+                $this->repository->save($event);
             }
         }
     }
 
-    private function findParent(Event $event, EventsRepository $repository): void
+    private function findParent(Event $event): void
     {
         $title = $event->title();
-        $parent = $repository->findByTitle(substr($title, 0, strrpos($title, ' ')));
+        $parent = $this->repository->findByTitle(substr($title, 0, strrpos($title, ' ')));
         if (null !== $parent) {
             $event->setParentAttributes($parent->excerpt(), $parent->thumbnailUrl(), $parent->cats());
         }

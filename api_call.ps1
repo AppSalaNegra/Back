@@ -1,7 +1,7 @@
 # Script powershell para automatizar abastecimiento de mi base de datos en máquinas windows
-$urlStoreParents = "http://localhost:8080/events/storeParents"
-$urlPost = "http://localhost:8080/posts/store"
-$urlEvent = "http://localhost:8080/events/storeUpcoming"
+$urlStoreParents = "http://localhost:8080/store/parentEvents"
+$urlPost = "http://localhost:8080/store/posts"
+$urlEvent = "http://localhost:8080/store/upcomingEvents"
 
 #definicion de ruta del log para el mismo directorio en el que se encuentyra el script
 $scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition

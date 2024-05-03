@@ -5,37 +5,38 @@ declare(strict_types=1);
 namespace App\Users\Application;
 
 use App\Events\Application\FindEventById;
-use App\Users\Domain\Exception\UserNotFound;
+use App\Users\Domain\FindUserById;
 use App\Users\Domain\User;
-use App\Users\Domain\UserRepository;
+use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 
 final class UserGetLikedEvents extends UserAction
 {
-    public function __construct(UserRepository $repository, private readonly FindEventById $eventFinder)
-    {
+    public function __construct(
+        UsersRepository $repository,
+        private readonly FindEventById $eventFinder,
+        private readonly FindUserById $userFinder
+    ) {
         parent::__construct($repository);
     }
 
     protected function action(): Response
     {
         $data = $this->getFormData();
-        $userId = $data['id'];
-        $user = $this->repository->findById($userId);
-        if (null === $user) {
-            throw new UserNotFound();
-        }
-        return $this->respondWithData(['userEvents' => $this->getAllUserEvents($user)]);
+        $id = $data['id'];
+        $user = $this->userFinder->findUserById($id);
+        return $this->respondWithData($this->getAllUserEvents($user));
     }
 
     private function getAllUserEvents(User $user): array
     {
-        if (empty($user->getLikedShows())) {
+        $likedEvents = $user->likedEvents();
+        if (empty($likedEvents)) {
             return [];
         }
         return array_map(function ($eventId) {
             $event = $this->eventFinder->findEventById($eventId);
             return $event->jsonSerialize();
-        }, $user->getLikedShows());
+        }, $likedEvents);
     }
 }

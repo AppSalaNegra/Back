@@ -2,14 +2,14 @@
 
 namespace App\Events\Infrastructure;
 
-use App\Events\Domain\EncodeFailed;
+use App\Events\Domain\EventEncodeFailed;
 use App\Events\Domain\Event;
 use DateTime;
 use Throwable;
 
-final class EventEncoder
+class EventEncoder
 {
-    public static function parseDataToEvent(array $eventData): Event
+    public function parseDataToEvent(array $eventData): Event
     {
         try {
             $startDateTime = DateTime::createFromFormat("Y-m-d\TH:i:s", $eventData['startDateTime']);
@@ -37,7 +37,7 @@ final class EventEncoder
                 $type
             );
         } catch (Throwable) {
-            throw new EncodeFailed("Error occurred during encoding", 500);
+            throw new EventEncodeFailed();
         }
     }
 }

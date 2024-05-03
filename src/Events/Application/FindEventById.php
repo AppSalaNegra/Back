@@ -6,7 +6,7 @@ use App\Events\Domain\Event;
 use App\Events\Domain\EventNotFound;
 use App\Events\Domain\EventsRepository;
 
-final class FindEventById
+class FindEventById
 {
     public function __construct(private readonly EventsRepository $repository)
     {

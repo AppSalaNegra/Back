@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Users\Domain;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use JsonSerializable;
 
 /** @ODM\Document(collection="users") */
-final class User
+class User implements JsonSerializable
 {
     /** @ODM\Id(strategy="AUTO") */
     private $id;
@@ -20,34 +21,38 @@ final class User
     /** @ODM\Field(type="string") */
     private string $password;
     /** @ODM\Field(type="collection") */
-    private array $likedShows;
+    private array $likedEvents;
 
-
-    public function __construct(string $email, string $firstName, string $lastName, string $password, array $likedShows)
-    {
+    public function __construct(
+        string $email,
+        string $firstName,
+        string $lastName,
+        string $password,
+        array $likedEvents
+    ) {
         $this->email = strtolower($email);
         $this->firstName = ucfirst($firstName);
         $this->lastName = ucfirst($lastName);
         $this->password = $password;
-        $this->likedShows = $likedShows;
+        $this->likedEvents = $likedEvents;
     }
 
-    public function getId()
+    public function id()
     {
         return $this->id;
     }
 
-    public function getEmail(): string
+    public function email(): string
     {
         return $this->email;
     }
 
-    public function getFirstName(): string
+    public function firstName(): string
     {
         return $this->firstName;
     }
 
-    public function getLastName(): string
+    public function lastName(): string
     {
         return $this->lastName;
     }
@@ -57,26 +62,32 @@ final class User
         return $this->password;
     }
 
-    public function getPassword(): string
+    public function likedEvents(): array
     {
-        return $this->password;
-    }
-
-    public function getLikedShows(): array
-    {
-        return $this->likedShows;
+        return $this->likedEvents;
     }
 
     public function addLikedEvent(string $eventId): void
     {
-        $this->likedShows[] = $eventId;
+        $this->likedEvents[] = $eventId;
     }
 
     public function removeLikedEvent(string $eventId): void
     {
-        $position = array_search($eventId, $this->likedShows);
+        $position = array_search($eventId, $this->likedEvents);
         if ($position !== false) {
-            unset($this->likedShows[$position]);
+            unset($this->likedEvents[$position]);
         }
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
+            'likedEvents' => $this->likedEvents,
+        ];
     }
 }

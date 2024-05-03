@@ -12,11 +12,15 @@ use Slim\Psr7\Response;
 
 class AuthMiddleware implements Middleware
 {
+    public function __construct(private readonly Token $token)
+    {
+    }
+
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
         $response = new Response();
         try {
-            $request = Token::validateToken($request);
+            $request = $this->token->validateToken($request);
         } catch (Exception $e) {
             $response->getBody()->write(json_encode(['error' => $e->getMessage()]));
             return $response->withStatus(401);

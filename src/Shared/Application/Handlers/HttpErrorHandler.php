@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Application\Handlers;
 
-use App\Events\Domain\EncodeFailed;
+use App\Events\Domain\EventEncodeFailed;
 use App\Shared\Application\Actions\ActionError;
 use App\Shared\Application\Actions\ActionPayload;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -31,7 +31,7 @@ class HttpErrorHandler extends SlimErrorHandler
             ActionError::SERVER_ERROR,
             'An internal error has occurred while processing your request.'
         );
-        if ($exception instanceof EncodeFailed) {
+        if ($exception instanceof EventEncodeFailed) {
             $this->checkEncodeError($exception);
         }
 

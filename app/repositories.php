@@ -6,8 +6,8 @@ use App\Events\Domain\EventsRepository;
 use App\Events\Infrastructure\DoctrineEventsRepository;
 use App\Posts\Domain\PostsRepository;
 use App\Posts\Infrastructure\DoctrinePostsRepository;
-use App\Users\Domain\UserRepository;
-use App\Users\Infrastructure\DoctrineUserRepository;
+use App\Users\Domain\UsersRepository;
+use App\Users\Infrastructure\DoctrineUsersRepository;
 use DI\ContainerBuilder;
 
 use function DI\autowire;
@@ -15,7 +15,7 @@ use function DI\autowire;
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions(
         [
-            UserRepository::class => autowire(DoctrineUserRepository::class),
+            UsersRepository::class => autowire(DoctrineUsersRepository::class),
             EventsRepository::class => autowire(DoctrineEventsRepository::class),
             PostsRepository::class => autowire(DoctrinePostsRepository::class)
         ]

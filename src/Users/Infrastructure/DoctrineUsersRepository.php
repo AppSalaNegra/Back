@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Users\Infrastructure;
 
 use App\Users\Domain\User;
-use App\Users\Domain\UserRepository;
+use App\Users\Domain\UsersRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 
-class DoctrineUserRepository implements UserRepository
+class DoctrineUsersRepository implements UsersRepository
 {
     public function __construct(private readonly DocumentManager $manager)
     {

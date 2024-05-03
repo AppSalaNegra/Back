@@ -95,16 +95,16 @@ class AppUsersDomainUserHydrator implements HydratorInterface
         }
 
         /** @Field(type="collection") */
-        if (isset($data['likedShows']) || (! empty($this->class->fieldMappings['likedShows']['nullable']) && array_key_exists('likedShows', $data))) {
-            $value = $data['likedShows'];
+        if (isset($data['likedEvents']) || (! empty($this->class->fieldMappings['likedEvents']['nullable']) && array_key_exists('likedEvents', $data))) {
+            $value = $data['likedEvents'];
             if ($value !== null) {
-                $typeIdentifier = $this->class->fieldMappings['likedShows']['type'];
+                $typeIdentifier = $this->class->fieldMappings['likedEvents']['type'];
                 $return = $value;
             } else {
                 $return = null;
             }
-            $this->class->reflFields['likedShows']->setValue($document, $return);
-            $hydratedData['likedShows'] = $return;
+            $this->class->reflFields['likedEvents']->setValue($document, $return);
+            $hydratedData['likedEvents'] = $return;
         }
         return $hydratedData;
     }
