@@ -8,7 +8,7 @@ use MongoDB\BSON\ObjectId;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /** @ODM\Document(collection="posts") */
-final class Post implements JsonSerializable
+class Post implements JsonSerializable
 {
     /** @ODM\Id(strategy="AUTO") */
     private $id;

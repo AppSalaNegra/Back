@@ -10,15 +10,17 @@ class UpcomingEventsDbUpdater
 {
     public function __construct(
         private readonly EventsRepository $repository,
-        private readonly ActuaApiHandler $apiHandler
+        private readonly ActuaApiHandler $apiHandler,
+        private readonly EventEncoder $encoder
     ) {
     }
 
     public function persistIfNotExists(): void
     {
-        foreach ($this->apiHandler->getUpcomingEventsData() as $eventData) {
+        $events = $this->apiHandler->getUpcomingEventsData();
+        foreach ($events as $eventData) {
             if (null === $this->repository->findByTitle($eventData['title'])) {
-                $event = EventEncoder::parseDataToEvent($eventData);
+                $event = $this->encoder->parseDataToEvent($eventData);
                 if ($event->hierarchy() === 'child') {
                     $this->findParent($event);
                 }

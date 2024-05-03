@@ -2,11 +2,14 @@
 
 namespace Tests\Users;
 
+use App\Events\Application\FindEventById;
+use App\Events\Domain\Event;
+use App\Events\Domain\EventsRepository;
 use App\Shared\Application\Actions\ActionPayload;
-use App\Users\Application\Authentication\Token;
+use App\Users\Domain\FindUserById;
 use App\Users\Domain\User;
 use App\Users\Domain\UsersRepository;
-use DI\Container;
+use Mockery;
 use Tests\TestCase;
 
 class UserDislikeEventTest extends TestCase
@@ -14,24 +17,31 @@ class UserDislikeEventTest extends TestCase
     public function testItShouldRemoveLikedEvent(): void
     {
         $app = $this->getAppInstance();
-        /** @var Container $container */
         $container = $app->getContainer();
-        $user = new User("", "", "", "", []);
-        $userProphecy = $this->prophesize(UsersRepository::class);
-        $userProphecy
-            ->save($user)
-            ->shouldBeCalledOnce();
+        $repository = Mockery::mock(UsersRepository::class);
+        $eventsRepository = Mockery::mock(EventsRepository::class);
+        $userFinder = Mockery::mock(FindUserById::class);
+        $eventFinder = Mockery::mock(FindEventById::class);
+        $user = Mockery::mock(User::class);
+        $event = Mockery::mock(Event::class);
 
-        $container->set(UsersRepository::class, $userProphecy->reveal());
+        $userFinder->shouldReceive('findUserById')->once();
+        $repository->shouldReceive('findById')->once()->andReturn($user);
+        $eventFinder->shouldReceive('findEventById')->once();
+        $eventsRepository->shouldReceive('findById')->once()->andReturn($event);
+        $user->shouldReceive('removeLikedEvent')->once();
+        $repository->shouldReceive('save')->once();
 
-        $token = Token::createToken(new User("", "", "", "", []));
-        $request = $this->createRequest('PUT', '/users/dislike')
-            ->withParsedBody(['userId' => 'Canalla', 'eventId' => 'x'])
-            ->withHeader('Authorization', 'Bearer ' . $token);
+        $container->set(UsersRepository::class, $repository);
+        $container->set(EventsRepository::class, $eventsRepository);
 
+        $request = $this->createRequest('PUT', '/users/dislike')->withParsedBody([
+            'userId' => 'userId',
+            'eventId' => 'eventId',
+        ]);
         $response = $app->handle($request);
 
-        $payload = (string)$response->getBody();
+        $payload = (string) $response->getBody();
         $expectedPayload = new ActionPayload(200);
         $serializedPayload = json_encode($expectedPayload, JSON_PRETTY_PRINT);
 

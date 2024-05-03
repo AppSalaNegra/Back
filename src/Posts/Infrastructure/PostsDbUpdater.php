@@ -9,33 +9,21 @@ use DateTime;
 
 class PostsDbUpdater
 {
-    private ActuaApiHandler $apiHandler;
-
-    public function __construct()
-    {
-        $this->apiHandler = new ActuaApiHandler();
+    public function __construct(
+        private readonly PostsRepository $repository,
+        private readonly ActuaApiHandler $apiHandler,
+        private readonly PostEncoder $encoder
+    ) {
     }
 
-    public function persistIfNotExists(PostsRepository $repository): void
+    public function persistIfNotExists(): void
     {
-        foreach ($this->apiHandler->getPostsData() as $postData) {
-            if (null == $repository->findByTitle($postData['title'])) {
-                $post = $this->encodePostData($postData);
-                $repository->save($post);
+        $posts = $this->apiHandler->getPostsData();
+        foreach ($posts as $postData) {
+            if (null == $this->repository->findByTitle($postData['title'])) {
+                $post = $this->encoder->parseDataToPost($postData);
+                $this->repository->save($post);
             }
         }
-    }
-
-    private function encodePostData(array $postData): Post
-    {
-        $dateTime = DateTime::createFromFormat("Y-m-d\TH:i:s", $postData['dateTime']);
-        $title = $postData['title'];
-        $excerpt = $postData['excerpt'];
-        $url = $postData['url'];
-        $slug = $postData['slug'];
-        $thumbnail_url = $postData['thumbnail_url'];
-        $cats = is_bool($postData['cats']) ? [] : $postData['cats'];
-        $status = $postData['status'];
-        return new Post($dateTime, $title, $excerpt, $url, $slug, $thumbnail_url, $cats, $status);
     }
 }

@@ -8,6 +8,7 @@ use App\Users\Application\Authentication\Token;
 use App\Users\Domain\User;
 use DI\Container;
 use Firebase\JWT\JWT;
+use Mockery;
 use Tests\TestCase;
 
 class GetAllPostsTest extends TestCase
@@ -15,23 +16,16 @@ class GetAllPostsTest extends TestCase
     public function testActionCallsRepositoryAndReturnsArray(): void
     {
         $app = $this->getAppInstance();
-        /** @var Container $container */
         $container = $app->getContainer();
-        $posts = [];
-        $eventsProphecy = $this->prophesize(PostsRepository::class);
-        $eventsProphecy
-            ->getAll()
-            ->willReturn($posts)
-            ->shouldBeCalledOnce();
+        $repository = Mockery::mock(PostsRepository::class);
+        $repository->shouldReceive('getAll')->once()->andReturn([]);
+        $container->set(PostsRepository::class, $repository);
 
-        $container->set(PostsRepository::class, $eventsProphecy->reveal());
-
-        $token = Token::createToken(new User("", "", "", "", []));
-        $request = $this->createRequest('GET', '/posts')->withHeader('Authorization', 'Bearer ' . $token);
+        $request = $this->createRequest('GET', '/posts');
         $response = $app->handle($request);
 
-        $payload = (string)$response->getBody();
-        $expectedPayload = new ActionPayload(200, $posts);
+        $payload = (string) $response->getBody();
+        $expectedPayload = new ActionPayload(200, []);
         $serializedPayload = json_encode($expectedPayload, JSON_PRETTY_PRINT);
 
         $this->assertEquals($serializedPayload, $payload);

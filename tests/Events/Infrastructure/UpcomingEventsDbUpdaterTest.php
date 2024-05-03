@@ -6,13 +6,13 @@ use App\Events\Domain\EventEncodeFailed;
 use App\Events\Domain\Event;
 use App\Events\Domain\EventsRepository;
 use App\Events\Infrastructure\EventEncoder;
-use App\Events\Infrastructure\ParentEventsDbUpdater;
+use App\Events\Infrastructure\UpcomingEventsDbUpdater;
 use App\Shared\Infrastructure\ActuaApiFailed;
 use App\Shared\Infrastructure\ActuaApiHandler;
 use Mockery;
 use Tests\TestCase;
 
-class ParentEventsDbUpdaterTest extends TestCase
+class UpcomingEventsDbUpdaterTest extends TestCase
 {
     private array $events = [
         [
@@ -30,19 +30,22 @@ class ParentEventsDbUpdaterTest extends TestCase
         ]
     ];
 
-    public function testItShouldPersistParentEventData(): void
+    public function testItShouldPersistUpcomingEventData(): void
     {
         $repository = Mockery::mock(EventsRepository::class);
         $apiHandler = Mockery::mock(ActuaApiHandler::class);
         $encoder = Mockery::mock(EventEncoder::class);
-        $updater = new ParentEventsDbUpdater($repository, $apiHandler, $encoder);
+        $updater = new UpcomingEventsDbUpdater($repository, $apiHandler, $encoder);
 
         $event = Mockery::mock(Event::class);
         $title = $this->events[0]['title'];
 
-        $apiHandler->shouldReceive('getParentEvents')->once()->andReturn($this->events);
+        $apiHandler->shouldReceive('getUpcomingEventsData')->once()->andReturn($this->events);
         $repository->shouldReceive('findByTitle')->withArgs([$title])->once()->andReturn(null);
         $encoder->shouldReceive('parseDataToEvent')->withArgs($this->events)->once()->andReturn($event);
+        $event->shouldReceive('hierarchy')->once()->andReturn('child');
+        $event->shouldReceive('title')->once();
+        $repository->shouldReceive('findByTitle')->once()->andReturnNull();
         $repository->shouldReceive('save')->once()->andReturnNull();
 
         $updater->persistIfNotExists();
@@ -50,18 +53,19 @@ class ParentEventsDbUpdaterTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testItShouldThrowExceptionWhenEncodeParentEventFailed(): void
+
+    public function testItShouldThrowExceptionWhenEncodeUpcomingEventFailed(): void
     {
         $this->expectException(EventEncodeFailed::class);
 
         $repository = Mockery::mock(EventsRepository::class);
         $apiHandler = Mockery::mock(ActuaApiHandler::class);
         $encoder = Mockery::mock(EventEncoder::class);
-        $updater = new ParentEventsDbUpdater($repository, $apiHandler, $encoder);
+        $updater = new UpcomingEventsDbUpdater($repository, $apiHandler, $encoder);
 
         $title = $this->events[0]['title'];
 
-        $apiHandler->shouldReceive('getParentEvents')->once()->andReturn($this->events);
+        $apiHandler->shouldReceive('getUpcomingEventsData')->once()->andReturn($this->events);
         $repository->shouldReceive('findByTitle')->withArgs([$title])->once()->andReturn(null);
         $encoder->shouldReceive('parseDataToEvent')
             ->withArgs($this->events)
@@ -71,16 +75,16 @@ class ParentEventsDbUpdaterTest extends TestCase
         $updater->persistIfNotExists();
     }
 
-    public function testItShouldThrowExceptionWhenApiFailsOnGetFilterEvents(): void
+    public function testItShouldThrowExceptionWhenApiFailsOnPostGetEvents(): void
     {
         $this->expectException(ActuaApiFailed::class);
 
         $repository = Mockery::mock(EventsRepository::class);
         $apiHandler = Mockery::mock(ActuaApiHandler::class);
         $encoder = Mockery::mock(EventEncoder::class);
-        $updater = new ParentEventsDbUpdater($repository, $apiHandler, $encoder);
+        $updater = new UpcomingEventsDbUpdater($repository, $apiHandler, $encoder);
 
-        $apiHandler->shouldReceive('getParentEvents')->once()->andThrow(ActuaApiFailed::class);
+        $apiHandler->shouldReceive('getUpcomingEventsData')->once()->andThrow(ActuaApiFailed::class);
 
         $updater->persistIfNotExists();
     }

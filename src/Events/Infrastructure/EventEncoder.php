@@ -2,7 +2,7 @@
 
 namespace App\Events\Infrastructure;
 
-use App\Events\Domain\EncodeFailed;
+use App\Events\Domain\EventEncodeFailed;
 use App\Events\Domain\Event;
 use DateTime;
 use Throwable;
@@ -37,7 +37,7 @@ class EventEncoder
                 $type
             );
         } catch (Throwable) {
-            throw new EncodeFailed("Error occurred during encoding", 500);
+            throw new EventEncodeFailed();
         }
     }
 }
