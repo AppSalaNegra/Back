@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Shared\Application\Middleware\AuthMiddleware;
 use App\Shared\Application\Middleware\SessionMiddleware;
 use Slim\App;
 

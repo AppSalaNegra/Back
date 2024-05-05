@@ -3,9 +3,7 @@
 namespace App\Users\Application;
 
 use App\Events\Application\FindEventById;
-use App\Users\Domain\Exception\UserNotFound;
 use App\Users\Domain\FindUserById;
-use App\Users\Domain\User;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 

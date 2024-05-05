@@ -22,7 +22,7 @@ class AuthMiddleware implements Middleware
         try {
             $request = $this->token->validateToken($request);
         } catch (Exception $e) {
-            $response->getBody()->write(json_encode(['error' => $e->getMessage()]));
+            $response->getBody()->write(json_encode([$e->getMessage()]));
             return $response->withStatus(401);
         }
         return $handler->handle($request);

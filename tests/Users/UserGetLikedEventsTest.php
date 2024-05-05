@@ -9,6 +9,7 @@ use App\Shared\Application\Actions\ActionPayload;
 use App\Users\Domain\FindUserById;
 use App\Users\Domain\User;
 use App\Users\Domain\UsersRepository;
+use Firebase\JWT\JWT;
 use Mockery;
 use Tests\TestCase;
 
@@ -24,6 +25,7 @@ class UserGetLikedEventsTest extends TestCase
         $eventFinder = Mockery::mock(FindEventById::class);
         $user = Mockery::mock(User::class);
         $event = Mockery::mock(Event::class);
+        $jwt = JWT::encode([], 'secret', 'HS256');
 
         $userFinder->shouldReceive('findUserById')->once();
         $repository->shouldReceive('findById')->once()->andReturn($user);
@@ -35,9 +37,12 @@ class UserGetLikedEventsTest extends TestCase
         $container->set(UsersRepository::class, $repository);
         $container->set(EventsRepository::class, $eventsRepository);
 
-        $request = $this->createRequest('GET', '/users/getLikedEvents')->withParsedBody([
-            'id' => 'userId'
-        ]);
+        $request = $this->createRequest('GET', '/users/getLikedEvents')
+            ->withParsedBody([
+                'id' => 'userId'
+            ])
+            ->withHeader('Authorization', 'Bearer ' . $jwt);
+
         $response = $app->handle($request);
         $payload = (string)$response->getBody();
         $expectedPayload = new ActionPayload(200, [[]]);
@@ -53,6 +58,7 @@ class UserGetLikedEventsTest extends TestCase
         $eventsRepository = Mockery::mock(EventsRepository::class);
         $userFinder = Mockery::mock(FindUserById::class);
         $user = Mockery::mock(User::class);
+        $jwt = JWT::encode([], 'secret', 'HS256');
 
         $userFinder->shouldReceive('findUserById')->once();
         $repository->shouldReceive('findById')->once()->andReturn($user);
@@ -62,8 +68,10 @@ class UserGetLikedEventsTest extends TestCase
         $container->set(EventsRepository::class, $eventsRepository);
 
         $request = $this->createRequest('GET', '/users/getLikedEvents')->withParsedBody([
-            'id' => 'userId'
-        ]);
+                'id' => 'userId'
+            ])
+            ->withHeader('Authorization', 'Bearer ' . $jwt);
+
         $response = $app->handle($request);
         $payload = (string)$response->getBody();
         $expectedPayload = new ActionPayload(200, []);
