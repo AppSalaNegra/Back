@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Shared\Application\Middleware\AuthMiddleware;
 use App\Shared\Application\Settings\SettingsInterface;
 use App\Shared\Domain\AppConstants;
-use App\Users\Application\Authentication\Token;
 use DI\ContainerBuilder;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
