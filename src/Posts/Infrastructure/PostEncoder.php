@@ -7,6 +7,9 @@ use App\Posts\Domain\PostEncodeFailed;
 use DateTime;
 use Throwable;
 
+/*
+ * Clase que se encarga de parsear los datos de la API de Actua a mi modelo de datos. Si falla tira excepción
+*/
 class PostEncoder
 {
     public function parseDataToPost(array $postData): Post

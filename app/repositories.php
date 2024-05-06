@@ -12,6 +12,9 @@ use DI\ContainerBuilder;
 
 use function DI\autowire;
 
+/*
+ * Aqui se registran los repositorios de la aplicación y sus respectivas implementaciones.
+ * */
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions(
         [

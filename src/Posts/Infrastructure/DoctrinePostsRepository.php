@@ -6,6 +6,9 @@ use App\Posts\Domain\Post;
 use App\Posts\Domain\PostsRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
+/*
+ * Implementación de la interfaz PostsRepository utilizando Doctrine. Recoge el mapeo definido en la entidad Post
+ * */
 class DoctrinePostsRepository implements PostsRepository
 {
     public function __construct(private readonly DocumentManager $manager)

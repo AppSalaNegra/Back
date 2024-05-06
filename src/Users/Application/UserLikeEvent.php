@@ -7,6 +7,9 @@ use App\Users\Domain\FindUserById;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/*
+ * Acción de un usuario de dar me gusta a un evento. Añade el evento a la lista de eventos que le gustan al usuario.
+ * */
 final class UserLikeEvent extends UserAction
 {
     public function __construct(

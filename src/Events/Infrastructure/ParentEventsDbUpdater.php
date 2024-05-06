@@ -5,6 +5,11 @@ namespace App\Events\Infrastructure;
 use App\Events\Domain\EventsRepository;
 use App\Shared\Infrastructure\ActuaApiHandler;
 
+/*
+ * Clase que realiza la lógica de actualización de eventos en la base de datos. Obtiene los eventos de la API de Actua
+ * y los persiste en la base de datos si no existen.
+ */
+
 class ParentEventsDbUpdater
 {
     public function __construct(

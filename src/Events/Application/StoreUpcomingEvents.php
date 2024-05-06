@@ -8,6 +8,10 @@ use App\Events\Infrastructure\UpcomingEventsDbUpdater;
 use App\Shared\Infrastructure\ActuaApiHandler;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/*
+ * Endpoint para absteciemiento de mi base de datos con los eventos de la api de Actua en un lapso de tiempo.
+ * La acción se realiza a través de la clase UpcomingEventsDbUpdater.
+ * */
 class StoreUpcomingEvents extends EventAction
 {
     private UpcomingEventsDbUpdater $updater;

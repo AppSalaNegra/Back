@@ -8,6 +8,10 @@ use App\Users\Domain\Exception\UserNotFound;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/*
+ *  Endpoint para el login de usuarios. Se encarga de autenticar a un usuario y devolver un token de autenticación.
+ * */
+
 class UserLogin extends UserAction
 {
     public function __construct(UsersRepository $repository, private readonly Token $token)

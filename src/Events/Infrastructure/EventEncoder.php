@@ -7,6 +7,9 @@ use App\Events\Domain\Event;
 use DateTime;
 use Throwable;
 
+/*
+ *  Clase para parsear los eventos obtenidos de la api de Actua a mi modelo de datos
+*/
 class EventEncoder
 {
     public function parseDataToEvent(array $eventData): Event

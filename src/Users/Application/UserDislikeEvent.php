@@ -7,6 +7,10 @@ use App\Users\Domain\FindUserById;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/*
+ * Endpoint para cuando un usuario pulsa el botón de dislike en un evento.
+ * Se elimina dicho evento de la lista de eventos del usuario.
+ * */
 final class UserDislikeEvent extends UserAction
 {
     public function __construct(

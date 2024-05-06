@@ -5,6 +5,10 @@ namespace App\Events\Application;
 use App\Events\Domain\UnknowCategory;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/*
+ * Caso de uso para obtener los eventos de la base de datos que coincidan con la categoría proporcionada.
+ * También comprueba que la categoría proporcionada sea válida.
+ * */
 final class GetEventsByCat extends EventAction
 {
     protected function action(): Response

@@ -7,6 +7,11 @@ use App\Posts\Domain\PostsRepository;
 use App\Shared\Infrastructure\ActuaApiHandler;
 use DateTime;
 
+/*
+ * Esta clase incluye la lógica para actualizar la base de datos de posts.
+ * Se encarga de obtener los datos de la API, parsearlos y persistirlos en la base de datos si no existen.
+ * */
+
 class PostsDbUpdater
 {
     public function __construct(
