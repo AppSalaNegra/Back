@@ -8,6 +8,9 @@ use App\Posts\Infrastructure\PostsDbUpdater;
 use App\Shared\Infrastructure\ActuaApiHandler;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/*
+ * Endpoint de abastecimiento de mi base de datos. Se encarga de actualizar la base de datos con los posts de Actua.
+ * */
 class StorePosts extends PostAction
 {
     private PostsDbUpdater $updater;

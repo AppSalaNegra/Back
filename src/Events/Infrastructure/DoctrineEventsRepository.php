@@ -8,6 +8,9 @@ use DateTime;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 
+/*
+ * Implementación del repositorio de eventos con Doctrine. Utiliza el mapeo por etiquetas definido en la entidad Event.
+ * */
 class DoctrineEventsRepository implements EventsRepository
 {
     public function __construct(private readonly DocumentManager $manager)

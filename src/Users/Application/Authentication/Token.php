@@ -10,13 +10,18 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+/*
+ * Clase que incluye lógica para la creación y validación de tokens JWT
+*/
 class Token
 {
+    //Obtiene la clave secreta para firmar los tokens
     private function getSecret(): string
     {
         return getenv('JWT_SECRET') ?: 'secret';
     }
 
+    //Crea un token JWT a partir de un usuario
     public function createToken(User $user): string
     {
         $payload = [
@@ -32,6 +37,7 @@ class Token
     /**
      * @throws NoTokenProvided
      * @throws InvalidToken
+     * Validar un token JWT a partir de una petición HTTP
      */
     public function validateToken(Request $request): Request
     {
@@ -48,6 +54,7 @@ class Token
         }
     }
 
+    //Obtiene el token de la cabecera de la petición
     private function getTokenFromHeader(Request $request): ?string
     {
         $header = $request->getHeaderLine('Authorization');

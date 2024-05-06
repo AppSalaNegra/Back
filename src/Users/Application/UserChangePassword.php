@@ -7,6 +7,11 @@ use App\Users\Domain\FindUserById;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/*
+ * Endpoint para cambio de contraseña de un usuario.
+ * Primero valida que el usuario exista y que la contraseña actual sea correcta.
+ * */
+
 class UserChangePassword extends UserAction
 {
     public function __construct(UsersRepository $repository, private readonly FindUserById $finder)

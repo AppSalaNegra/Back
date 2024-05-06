@@ -21,7 +21,7 @@ use Throwable;
 class HttpErrorHandler extends SlimErrorHandler
 {
     /**
-     * @inheritdoc
+     * @inheritdoc Gestiona como Slim maneja las excepciones. Devuelve una respuesta JSON con un error.
      */
     protected function respond(): Response
     {

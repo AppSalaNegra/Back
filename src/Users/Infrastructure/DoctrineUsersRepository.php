@@ -9,6 +9,9 @@ use App\Users\Domain\UsersRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 
+/*
+ * Implementación de un repositorio de usuarios utilizando Doctrine. Emplea el mapeo definido en la entidad User.
+ * */
 class DoctrineUsersRepository implements UsersRepository
 {
     public function __construct(private readonly DocumentManager $manager)

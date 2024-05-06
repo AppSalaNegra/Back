@@ -6,6 +6,10 @@ use App\Events\Domain\Event;
 use App\Events\Domain\EventsRepository;
 use App\Shared\Infrastructure\ActuaApiHandler;
 
+/*
+ * Esta clase se encarga de actualizar la base de datos con los eventos que se obtienen de la API de Actua.
+ * Además comprueba si el evento tiene un evento padre y si es así le asigna las propiedades del padre.
+ * */
 class UpcomingEventsDbUpdater
 {
     public function __construct(

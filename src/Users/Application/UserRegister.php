@@ -6,6 +6,9 @@ use App\Users\Domain\Exception\UserAlreadyExists;
 use App\Users\Domain\User;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/*
+ * Registra un nuevo usuario en el sistema siempre y cuando no exista ya un usuario con el mismo email.
+ * */
 class UserRegister extends UserAction
 {
     protected function action(): Response

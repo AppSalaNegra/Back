@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Users\Application;
 
+/*
+ *  Devuelve la lista de eventos que le han gustado a un usuario.
+ * */
+
 use App\Events\Application\FindEventById;
 use App\Users\Domain\FindUserById;
 use App\Users\Domain\User;

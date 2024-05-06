@@ -2,7 +2,9 @@
 
 namespace App\Events\Domain;
 
-use DateTime;
+/*
+ * EventsRepository for Event db operations
+ * */
 
 interface EventsRepository
 {

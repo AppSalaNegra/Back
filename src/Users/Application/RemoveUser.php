@@ -6,6 +6,9 @@ use App\Users\Domain\FindUserById;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/*
+ * Caso de uso "Eliminar usuario". Elimina un usuario de la base de datos.
+ */
 class RemoveUser extends UserAction
 {
     public function __construct(UsersRepository $repository, private readonly FindUserById $finder)

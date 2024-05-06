@@ -23,6 +23,11 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
 return function (App $app) {
 
+/*
+ * Este es el corazón de la aplicación, aquí se definen las rutas de la API,
+ * las acciones que se ejecutarán en cada una de ellas y los middlewares que se aplicarán a cada una de ellas.
+ * */
+
     $app->options('/{routes:.*}', function (Request $request, Response $response) {
         return $response;
     });

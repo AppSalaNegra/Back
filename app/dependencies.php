@@ -16,6 +16,10 @@ use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
+/*
+ * Aquí se definen las dependencias que el contenedor no puede levantar por sí mismo.
+ * En esta clase defino el DocumentManager de Doctrine y el Logger de Monolog.
+ * */
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
         LoggerInterface::class => function (ContainerInterface $c) {
