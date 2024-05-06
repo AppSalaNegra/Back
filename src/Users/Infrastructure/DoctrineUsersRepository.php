@@ -38,4 +38,10 @@ class DoctrineUsersRepository implements UsersRepository
         $this->manager->persist($user);
         $this->manager->flush();
     }
+
+    public function remove(User $user): void
+    {
+        $this->manager->remove($user);
+        $this->manager->flush();
+    }
 }

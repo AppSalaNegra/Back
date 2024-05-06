@@ -2,9 +2,6 @@
 
 namespace Tests\Users;
 
-use App\Events\Application\FindEventById;
-use App\Events\Domain\Event;
-use App\Events\Domain\EventsRepository;
 use App\Shared\Application\Actions\ActionPayload;
 use App\Users\Domain\FindUserById;
 use App\Users\Domain\User;
@@ -13,34 +10,31 @@ use Firebase\JWT\JWT;
 use Mockery;
 use Tests\TestCase;
 
-class UserLikeEventTest extends TestCase
+class UserChangePasswordTest extends TestCase
 {
-    public function testItShouldAddLikedEvent(): void
+    public function testItShouldChangePassword(): void
     {
         $app = $this->getAppInstance();
         $container = $app->getContainer();
         $repository = Mockery::mock(UsersRepository::class);
-        $eventsRepository = Mockery::mock(EventsRepository::class);
         $userFinder = Mockery::mock(FindUserById::class);
-        $eventFinder = Mockery::mock(FindEventById::class);
         $user = Mockery::mock(User::class);
-        $event = Mockery::mock(Event::class);
         $jwt = JWT::encode([], 'secret', 'HS256');
 
-        $userFinder->shouldReceive('findUserById')->once();
+        $userFinder->shouldReceive('findById')->once();
         $repository->shouldReceive('findById')->once()->andReturn($user);
-        $eventFinder->shouldReceive('findEventById')->once();
-        $eventsRepository->shouldReceive('findById')->once()->andReturn($event);
-        $user->shouldReceive('addLikedEvent')->once();
+        $user->shouldReceive('email')->once()->andReturn('email');
+        $repository->shouldReceive('findByEmailAndPassword')->once()->andReturn($user);
+        $user->shouldReceive('changePassword')->once();
         $repository->shouldReceive('save')->once();
 
         $container->set(UsersRepository::class, $repository);
-        $container->set(EventsRepository::class, $eventsRepository);
 
-        $request = $this->createRequest('PUT', '/users/like')
+        $request = $this->createRequest('POST', '/users/changePassword')
             ->withParsedBody([
                 'id' => 'userId',
-                'eventId' => 'eventId',
+                'password' => 'password',
+                'newPassword' => 'newPassword',
             ])
             ->withHeader('Authorization', 'Bearer ' . $jwt);
 
