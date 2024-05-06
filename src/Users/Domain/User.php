@@ -80,6 +80,11 @@ class User implements JsonSerializable
         }
     }
 
+    public function changePassword(string $newPassword): void
+    {
+        $this->password = $newPassword;
+    }
+
     public function jsonSerialize(): array
     {
         return [

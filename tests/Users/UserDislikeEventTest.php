@@ -39,7 +39,7 @@ class UserDislikeEventTest extends TestCase
 
         $request = $this->createRequest('PUT', '/users/dislike')
             ->withParsedBody([
-                'userId' => 'userId',
+                'id' => 'id',
                 'eventId' => 'eventId'])
             ->withHeader('Authorization', 'Bearer ' . $jwt);
         $response = $app->handle($request);

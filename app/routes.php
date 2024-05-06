@@ -10,6 +10,8 @@ use App\Posts\Application\GetAllPosts;
 use App\Posts\Application\StorePosts;
 use App\Shared\Application\Middleware\AuthMiddleware;
 use App\Users\Application\Login\UserLogin;
+use App\Users\Application\RemoveUser;
+use App\Users\Application\UserChangePassword;
 use App\Users\Application\UserDislikeEvent;
 use App\Users\Application\UserLikeEvent;
 use App\Users\Application\UserGetLikedEvents;
@@ -47,5 +49,7 @@ return function (App $app) {
         $group->get('/getLikedEvents', UserGetLikedEvents::class);
         $group->put('/like', UserLikeEvent::class);
         $group->put('/dislike', UserDislikeEvent::class);
+        $group->post('/changePassword', UserChangePassword::class);
+        $group->put('/remove', RemoveUser::class);
     })->add(AuthMiddleware::class);
 };

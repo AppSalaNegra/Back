@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Users\Application\Login;
+namespace App\Users\Application;
 
-use App\Users\Application\Authentication\Token;
-use App\Users\Application\UserAction;
 use App\Users\Domain\Exception\UserNotFound;
+use App\Users\Domain\FindUserById;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class UserLogin extends UserAction
+class UserChangePassword extends UserAction
 {
-    public function __construct(UsersRepository $repository, private readonly Token $token)
+    public function __construct(UsersRepository $repository, private readonly FindUserById $finder)
     {
         parent::__construct($repository);
     }
@@ -18,13 +17,17 @@ class UserLogin extends UserAction
     protected function action(): Response
     {
         $data = $this->getFormData();
-        $email = $data['email'];
+        $userId = $data['id'];
         $password = hash('sha256', $data['password']);
+        $newPassword = $data['newPassword'];
+
+        $email = $this->finder->findUserById($userId)->email();
         $user = $this->repository->findByEmailAndPassword($email, $password);
         if (null === $user) {
             throw new UserNotFound();
         }
-        $token = $this->token->createToken($user);
-        return $this->respondWithData(['token' => $token, 'id' => $user->id()]);
+        $user->changePassword(hash('sha256', $newPassword));
+        $this->repository->save($user);
+        return $this->respondWithData();
     }
 }

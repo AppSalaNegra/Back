@@ -20,7 +20,7 @@ final class UserLikeEvent extends UserAction
     protected function action(): Response
     {
         $data = $this->getFormData();
-        $userId = $data['userId'];
+        $userId = $data['id'];
         $eventId = $data['eventId'];
 
         $user = $this->userFinder->findUserById($userId);
