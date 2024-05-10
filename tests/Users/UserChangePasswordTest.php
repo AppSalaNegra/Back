@@ -2,7 +2,7 @@
 
 namespace Tests\Users;
 
-use App\Shared\Application\Actions\ActionPayload;
+use App\Shared\Infrastructure\Actions\ActionPayload;
 use App\Users\Domain\FindUserById;
 use App\Users\Domain\User;
 use App\Users\Domain\UsersRepository;

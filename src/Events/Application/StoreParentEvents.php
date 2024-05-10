@@ -7,6 +7,7 @@ use App\Events\Infrastructure\EventEncoder;
 use App\Events\Infrastructure\ParentEventsDbUpdater;
 use App\Shared\Infrastructure\ActuaApiHandler;
 use Psr\Http\Message\ResponseInterface as Response;
+use OpenApi\Annotations as OA;
 
 /*
  * Endpoint para absteciemiento de mi base de datos con los eventos padres de la api de Actua.
@@ -14,6 +15,15 @@ use Psr\Http\Message\ResponseInterface as Response;
  * */
 final class StoreParentEvents extends EventAction
 {
+    /**
+     * @OA\Put(
+     *     path="/store/parentEvents",
+     *     tags={"Store"},
+     *     summary="Endpoint de abstecimiento de la base de datos.Almacena eventos principales",
+     *     @OA\Response(response="200", description="Operación exitosa"),
+     *     @OA\Response(response="500", description="Internal server error")
+     * )
+     */
     private readonly ParentEventsDbUpdater $updater;
 
     public function __construct(EventsRepository $repository, ActuaApiHandler $apiHandler, EventEncoder $encoder)

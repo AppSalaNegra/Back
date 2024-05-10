@@ -3,7 +3,7 @@
 namespace App\Posts\Application;
 
 use App\Posts\Domain\PostsRepository;
-use App\Shared\Application\Actions\Action;
+use App\Shared\Infrastructure\Actions\Action;
 
 /*
  * Clase de la que heredan todos los endpoints de posts.

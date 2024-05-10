@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Application\Actions;
+namespace App\Shared\Infrastructure\Actions;
 
 use JsonSerializable;
 

@@ -13,9 +13,60 @@ use App\Users\Domain\FindUserById;
 use App\Users\Domain\User;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
+use OpenApi\Annotations as OA;
 
 final class UserGetLikedEvents extends UserAction
 {
+    /**
+     * @OA\Get(
+     *     path="/users/getLikedEvents",
+     *     tags={"Users"},
+     *     summary="Devuelve una lista de eventos que le gustan al usuario que envía la petición",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Datos necesarios para eliminar un evento de la lista de eventos gustados del usuario",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 required={"id"},
+     *                 @OA\Property(property="id", type="string", format="uuid", description="ID del usuario"),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Lista de eventos que le han gustado al usuario",
+     *         @OA\JsonContent(
+     *             @OA\Examples(
+     *                 example="0",
+     *                 summary="Encontrados eventos!",
+     *                 value={
+     *                     {
+     *                         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+     *                         "startDateTime": "dateTime",
+     *                         "finishDateTime": "dateTime",
+     *                         "title": "string",
+     *                         "excerpt": "string",
+     *                         "url": "string",
+     *                         "slug": "string",
+     *                         "thumbnail_url": "string",
+     *                         "cats": "collection",
+     *                         "status": "string",
+     *                         "hierarchy": "string",
+     *                         "type": "string"
+     *                     }
+     *                 }
+     *             ),
+     *             @OA\Examples(
+     *                 example="1",
+     *                 summary="No se encontraron eventos",
+     *                 value={}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response="400", description="Faltan parámetros en la solicitud")
+     * )
+     */
     public function __construct(
         UsersRepository $repository,
         private readonly FindEventById $eventFinder,

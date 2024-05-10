@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Shared\Application\Settings\SettingsInterface;
 use App\Shared\Domain\AppConstants;
+use App\Shared\Infrastructure\Settings\SettingsInterface;
 use DI\ContainerBuilder;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -38,9 +38,9 @@ return function (ContainerBuilder $containerBuilder) {
         },
         DocumentManager::class => function (ContainerInterface $c) {
             $config = new Configuration();
-            $config->setProxyDir(__DIR__ . '/Proxies');
+            $config->setProxyDir(__DIR__ . '../src/Shared/Infrastructure/Proxies');
             $config->setProxyNamespace('Proxies');
-            $config->setHydratorDir(__DIR__ . '/Hydrators');
+            $config->setHydratorDir(__DIR__ . '../src/Shared/Infrastructure/Doctrine');
             $config->setHydratorNamespace('Hydrators');
             $config->setDefaultDB(AppConstants::$DEFAULT_DB);
             $config->setMetadataDriverImpl(

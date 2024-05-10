@@ -3,7 +3,7 @@
 namespace Tests\Posts;
 
 use App\Posts\Domain\PostsRepository;
-use App\Shared\Application\Actions\ActionPayload;
+use App\Shared\Infrastructure\Actions\ActionPayload;
 use Firebase\JWT\JWT;
 use Mockery;
 use Tests\TestCase;

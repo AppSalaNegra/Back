@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Application\Handlers;
+namespace App\Shared\Infrastructure\Handlers;
 
 use App\Events\Domain\EventEncodeFailed;
-use App\Shared\Application\Actions\ActionError;
-use App\Shared\Application\Actions\ActionPayload;
+use App\Shared\Infrastructure\Actions\ActionError;
+use App\Shared\Infrastructure\Actions\ActionPayload;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpException;
