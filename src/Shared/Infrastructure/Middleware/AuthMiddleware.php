@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Application\Middleware;
+namespace App\Shared\Infrastructure\Middleware;
 
 use App\Users\Application\Authentication\Token;
 use Exception;

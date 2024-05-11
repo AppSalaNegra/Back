@@ -6,6 +6,7 @@ use App\Events\Application\FindEventById;
 use App\Users\Domain\FindUserById;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
+use OpenApi\Annotations as OA;
 
 /*
  * Endpoint para cuando un usuario pulsa el botón de dislike en un evento.
@@ -13,6 +14,31 @@ use Psr\Http\Message\ResponseInterface as Response;
  * */
 final class UserDislikeEvent extends UserAction
 {
+    /**
+     * @OA\Put(
+     *     path="/users/dislike",
+     *     tags={"Users"},
+     *     summary="Elimina un evento de la lista de eventos gustados del usuario",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Datos necesarios para eliminar un evento de la lista de eventos gustados del usuario",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 required={"id", "eventId"},
+     *                 @OA\Property(property="id", type="string", format="uuid", description="ID del usuario"),
+     *                 @OA\Property(
+     *                      property="eventId", type="string", format="uuid",
+     *                      description="ID del evento a eliminar de la lista de eventos gustados del usuario"
+     *                  )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Operación exitosa"),
+     *     @OA\Response(response="404", description="Usuario o evento no encontrado"),
+     *     @OA\Response(response="400", description="Faltan parámetros en la solicitud")
+     * )
+     */
     public function __construct(
         UsersRepository $repository,
         private readonly FindEventById $eventFinder,

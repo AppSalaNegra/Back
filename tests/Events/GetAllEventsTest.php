@@ -3,11 +3,9 @@
 namespace Tests\Events;
 
 use App\Events\Domain\EventsRepository;
-use App\Shared\Application\Actions\ActionPayload;
-use App\Users\Application\Authentication\Token;
+use App\Shared\Infrastructure\Actions\ActionPayload;
 use Firebase\JWT\JWT;
 use Mockery;
-use MongoDB\BSON\ObjectId;
 use Tests\TestCase;
 
 final class GetAllEventsTest extends TestCase

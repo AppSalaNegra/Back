@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Application\Handlers;
+namespace App\Shared\Infrastructure\Handlers;
 
-use App\Shared\Application\ResponseEmitter\ResponseEmitter;
+use App\Shared\Infrastructure\ResponseEmitter\ResponseEmitter;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpInternalServerErrorException;
 

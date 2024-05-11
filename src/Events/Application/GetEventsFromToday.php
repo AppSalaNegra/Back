@@ -1,31 +1,32 @@
 <?php
 
-namespace App\Posts\Application;
+namespace App\Events\Application;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use OpenApi\Annotations as OA;
 
 /*
- * Endpoint para la obtención de todos los posts en bd.
+ * Caso de uso sencillo que recoge todos los eventos que haya en la bd desde el día hoy
  * */
-final class GetAllPosts extends PostAction
+final class GetEventsFromToday extends EventAction
 {
     /**
      * @OA\Get(
-     *     path="/posts",
-     *     tags={"Posts"},
-     *     summary="Obtiene todos los posts existentes en la base de datos.",
+     *     path="/events/get",
+     *     tags={"Events"},
+     *     summary="Obtiene todos los eventos desde la fecha de hoy.",
      *       @OA\Response(
      *          response="200",
-     *          description="Lista de posts",
+     *          description="Lista de eventos",
      *          @OA\JsonContent(
      *              @OA\Examples(
      *                  example="0",
-     *                  summary="Encontrados posts!",
+     *                  summary="Encontrados eventos!",
      *                      value={
      *                      {
      *                          "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-     *                          "dateTime": "dateTime",
+     *                          "startDateTime": "dateTime",
+     *                          "finishDateTime": "dateTime",
      *                          "title": "string",
      *                          "excerpt": "string",
      *                          "url": "string",
@@ -33,12 +34,14 @@ final class GetAllPosts extends PostAction
      *                          "thumbnail_url": "string",
      *                          "cats": "collection",
      *                          "status": "string",
+     *                          "hierarchy": "string",
+     *                          "type": "string"
      *                      }
      *                  }
      *              ),
      *              @OA\Examples(
      *                  example="1",
-     *                  summary="No se encontraron posts",
+     *                  summary="No se encontraron eventos",
      *                  value={}
      *              )
      *          )
@@ -53,7 +56,7 @@ final class GetAllPosts extends PostAction
      */
     protected function action(): Response
     {
-        $posts = $this->repository->getAll();
-        return $this->respondWithData($posts);
+        $events = $this->repository->getFromToday();
+        return $this->respondWithData($events);
     }
 }

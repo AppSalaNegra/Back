@@ -2,14 +2,9 @@
 
 namespace Tests\Events;
 
-use App\Events\Domain\Event;
 use App\Events\Domain\EventsRepository;
 use App\Events\Domain\UnknowCategory;
-use App\Shared\Application\Actions\ActionPayload;
-use App\Users\Application\Authentication\Token;
-use App\Users\Domain\User;
-use DateTime;
-use DI\Container;
+use App\Shared\Infrastructure\Actions\ActionPayload;
 use Firebase\JWT\JWT;
 use Mockery;
 use Tests\TestCase;

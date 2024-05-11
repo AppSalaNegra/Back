@@ -2,12 +2,10 @@
 
 namespace Tests\Users;
 
-use App\Shared\Application\Actions\ActionPayload;
 use App\Users\Application\Authentication\Token;
 use App\Users\Domain\Exception\UserNotFound;
 use App\Users\Domain\User;
 use App\Users\Domain\UsersRepository;
-use Firebase\JWT\JWT;
 use Mockery;
 use Slim\Exception\HttpNotFoundException;
 use Tests\TestCase;
