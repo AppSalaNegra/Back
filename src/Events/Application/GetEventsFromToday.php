@@ -48,7 +48,7 @@ final class GetEventsFromToday extends EventAction
      *       ),
      *       @OA\Response(
      *          response="500",
-     *          descption="Server error"
+     *          description="Server error"
      *       )
      *     )
      *   )

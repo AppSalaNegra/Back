@@ -45,7 +45,7 @@ final class GetAllPosts extends PostAction
      *       ),
      *       @OA\Response(
      *          response="500",
-     *          descption="Server error"
+     *          description="Server error"
      *       )
      *     )
      *   )

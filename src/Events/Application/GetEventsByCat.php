@@ -61,7 +61,7 @@ final class GetEventsByCat extends EventAction
      *     ),
      *     @OA\Response(
      *         response="400",
-     *         descption="Bad request: The category provided is unknown"
+     *         description="Bad request: The category provided is unknown"
      *     )
      *   )
      * )

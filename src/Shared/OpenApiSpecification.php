@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Shared;
 
-final class OpenApiSpecification
-{
 /**
  *
  * @OA\Info(
@@ -28,4 +26,7 @@ final class OpenApiSpecification
  *       bearerFormat="JWT",
  *   ),
  **/
+
+final class OpenApiSpecification
+{
 }

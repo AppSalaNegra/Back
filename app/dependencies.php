@@ -38,9 +38,9 @@ return function (ContainerBuilder $containerBuilder) {
         },
         DocumentManager::class => function (ContainerInterface $c) {
             $config = new Configuration();
-            $config->setProxyDir(__DIR__ . '../src/Shared/Infrastructure/Proxies');
+            $config->setProxyDir('../src/Shared/Infrastructure/Proxies');
             $config->setProxyNamespace('Proxies');
-            $config->setHydratorDir(__DIR__ . '../src/Shared/Infrastructure/Doctrine');
+            $config->setHydratorDir('../src/Shared/Infrastructure/Doctrine');
             $config->setHydratorNamespace('Hydrators');
             $config->setDefaultDB(AppConstants::$DEFAULT_DB);
             $config->setMetadataDriverImpl(

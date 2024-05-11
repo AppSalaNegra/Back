@@ -1,0 +1,560 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Sala negra API Documentation",
+        "description": "HTTP methods included in Sala Negra back-end API",
+        "contact": {
+            "name": "Martín Ramonda Sáenz"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://localhost:8080",
+            "description": "Sala Negra App API"
+        }
+    ],
+    "paths": {
+        "/events/getByCat": {
+            "get": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Obtiene eventos cuya categoría coincida con la pasada en la cabecera.",
+                "operationId": "688c54dd2714168999b32543c1c59c13",
+                "requestBody": {
+                    "description": "Datos del evento a crear",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "cat": {
+                                        "description": "Categoría del evento",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lista de eventos que incluyen esa categoría",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "0": {
+                                        "summary": "Encontrados eventos!",
+                                        "value": [
+                                            {
+                                                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                                "startDateTime": "dateTime",
+                                                "finishDateTime": "dateTime",
+                                                "title": "string",
+                                                "excerpt": "string",
+                                                "url": "string",
+                                                "slug": "string",
+                                                "thumbnail_url": "string",
+                                                "cats": "collection",
+                                                "status": "string",
+                                                "hierarchy": "string",
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "1": {
+                                        "summary": "No se encontraron eventos",
+                                        "value": []
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request: The category provided is unknown"
+                    }
+                }
+            }
+        },
+        "/events/get": {
+            "get": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Obtiene todos los eventos desde la fecha de hoy.",
+                "operationId": "61052cc0147ab23db52ed25e56f30712",
+                "responses": {
+                    "200": {
+                        "description": "Lista de eventos",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "0": {
+                                        "summary": "Encontrados eventos!",
+                                        "value": [
+                                            {
+                                                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                                "startDateTime": "dateTime",
+                                                "finishDateTime": "dateTime",
+                                                "title": "string",
+                                                "excerpt": "string",
+                                                "url": "string",
+                                                "slug": "string",
+                                                "thumbnail_url": "string",
+                                                "cats": "collection",
+                                                "status": "string",
+                                                "hierarchy": "string",
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "1": {
+                                        "summary": "No se encontraron eventos",
+                                        "value": []
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/store/parentEvents": {
+            "put": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Endpoint de abstecimiento de la base de datos.Almacena eventos principales",
+                "operationId": "76d1a5f07e9e6cfaab0eaf5608d9d7ed",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/store/upcomingEvents": {
+            "put": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Endpoint de abstecimiento de la base de datos. Almacena eventos futuros",
+                "operationId": "87123ec1df2fb520a779c0ead8da3802",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/posts": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Obtiene todos los posts existentes en la base de datos.",
+                "operationId": "b92c4804f54dfb7fcd13dfb81b9aded6",
+                "responses": {
+                    "200": {
+                        "description": "Lista de posts",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "0": {
+                                        "summary": "Encontrados posts!",
+                                        "value": [
+                                            {
+                                                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                                "dateTime": "dateTime",
+                                                "title": "string",
+                                                "excerpt": "string",
+                                                "url": "string",
+                                                "slug": "string",
+                                                "thumbnail_url": "string",
+                                                "cats": "collection",
+                                                "status": "string"
+                                            }
+                                        ]
+                                    },
+                                    "1": {
+                                        "summary": "No se encontraron posts",
+                                        "value": []
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/store/posts": {
+            "put": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Endpoint de abastecimiento de bd desde la API pública. Almacena Posts.",
+                "operationId": "9358503c3e88f58d9210876261d39ff7",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/session/login": {
+            "post": {
+                "tags": [
+                    "Session"
+                ],
+                "summary": "Inicia sesión de usuario y devuelve un Token jwt",
+                "operationId": "af654d7a6f22353f7d5bcb0131782a97",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    }
+                }
+            }
+        },
+        "/users/remove": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Elimina un usuario de la base de datos.",
+                "operationId": "bdeef0a557def2f1b8914411ee21af50",
+                "requestBody": {
+                    "description": "Datos necesarios para eliminar un usuario",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "description": "ID del usuario a eliminar",
+                                        "type": "string",
+                                        "format": "uuid"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    },
+                    "400": {
+                        "description": "Faltan parámetros en la solicitud"
+                    }
+                }
+            }
+        },
+        "/users/changePassword": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Cambia la contraseña del usuario",
+                "operationId": "5e4820c1dede4bb4fb530d8511d7b510",
+                "requestBody": {
+                    "description": "Datos necesarios para cambiar la contraseña del user. Se presupone que el Id es correcto",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "password",
+                                    "newPassword"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "description": "ID del usuario",
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "password": {
+                                        "description": "Contraseña actual del usuario",
+                                        "type": "string"
+                                    },
+                                    "newPassword": {
+                                        "description": "Nueva contraseña del usuario",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contraseña cambiada exitosamente"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado, la contraseña actual es incorrecta."
+                    },
+                    "400": {
+                        "description": "Faltan parámetros en la solicitud"
+                    }
+                }
+            }
+        },
+        "/users/dislike": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Elimina un evento de la lista de eventos gustados del usuario",
+                "operationId": "3c34686107aea58b6adf4de09776fb72",
+                "requestBody": {
+                    "description": "Datos necesarios para eliminar un evento de la lista de eventos gustados del usuario",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "eventId"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "description": "ID del usuario",
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "eventId": {
+                                        "description": "ID del evento a eliminar de la lista de eventos gustados del usuario",
+                                        "type": "string",
+                                        "format": "uuid"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "404": {
+                        "description": "Usuario o evento no encontrado"
+                    },
+                    "400": {
+                        "description": "Faltan parámetros en la solicitud"
+                    }
+                }
+            }
+        },
+        "/users/getLikedEvents": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Devuelve una lista de eventos que le gustan al usuario que envía la petición",
+                "operationId": "2f9b9b91f75c85b325bec15e84c3631c",
+                "requestBody": {
+                    "description": "Datos necesarios para eliminar un evento de la lista de eventos gustados del usuario",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "description": "ID del usuario",
+                                        "type": "string",
+                                        "format": "uuid"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lista de eventos que le han gustado al usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "0": {
+                                        "summary": "Encontrados eventos!",
+                                        "value": [
+                                            {
+                                                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                                "startDateTime": "dateTime",
+                                                "finishDateTime": "dateTime",
+                                                "title": "string",
+                                                "excerpt": "string",
+                                                "url": "string",
+                                                "slug": "string",
+                                                "thumbnail_url": "string",
+                                                "cats": "collection",
+                                                "status": "string",
+                                                "hierarchy": "string",
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "1": {
+                                        "summary": "No se encontraron eventos",
+                                        "value": []
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Faltan parámetros en la solicitud"
+                    }
+                }
+            }
+        },
+        "/users/like": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Agrega un evento a la lista de eventos gustados del usuario",
+                "operationId": "9f2295e73fe17a9d50fb70e5e0eba8de",
+                "requestBody": {
+                    "description": "Datos necesarios para agregar un evento a la lista de eventos gustados del usuario",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "eventId"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "description": "ID del usuario",
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "eventId": {
+                                        "description": "ID del evento a agregar a la lista de eventos gustados del usuario",
+                                        "type": "string",
+                                        "format": "uuid"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "404": {
+                        "description": "Usuario o evento no encontrado"
+                    },
+                    "400": {
+                        "description": "Faltan parámetros en la solicitud"
+                    }
+                }
+            }
+        },
+        "/session/register": {
+            "post": {
+                "tags": [
+                    "Session"
+                ],
+                "summary": "Registra un nuevo usuario en la base de datos.",
+                "operationId": "8aa5396d3fd28773b474cce502d22b87",
+                "requestBody": {
+                    "description": "Datos necesarios para registrar un nuevo usuario",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "firstName",
+                                    "lastName",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Correo electrónico del usuario",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "firstName": {
+                                        "description": "Nombre del usuario",
+                                        "type": "string"
+                                    },
+                                    "lastName": {
+                                        "description": "Apellido del usuario",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "Contraseña del usuario",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "400": {
+                        "description": "Faltan parámetros en la solicitud"
+                    },
+                    "409": {
+                        "description": "Ya existe un usuario con el mismo correo electrónico"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearer",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
