@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use OpenApi\Annotations as OA;
 
 /*
- * Endpoint para absteciemiento de mi base de datos con los eventos de la api de Actua en un lapso de tiempo.
+ * Endpoint para abastecimiento de mi base de datos con los eventos de la api de Actua en un lapso de tiempo.
  * La acción se realiza a través de la clase UpcomingEventsDbUpdater.
  * */
 class StoreUpcomingEvents extends EventAction

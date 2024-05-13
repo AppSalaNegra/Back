@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use OpenApi\Annotations as OA;
 
 /*
- * Endpoint para absteciemiento de mi base de datos con los eventos padres de la api de Actua.
+ * Endpoint para abastecimiento de mi base de datos con los eventos padres de la api de Actua.
  * Obtiene una lista y la almacena a través de la clase ParentEventsDbUpdater.
  * */
 final class StoreParentEvents extends EventAction
