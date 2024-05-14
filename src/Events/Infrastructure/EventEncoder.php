@@ -2,13 +2,13 @@
 
 namespace App\Events\Infrastructure;
 
-use App\Events\Domain\EventEncodeFailed;
 use App\Events\Domain\Event;
+use App\Events\Domain\Exception\EventEncodeFailed;
 use DateTime;
 use Throwable;
 
 /*
- *  Clase para parsear los eventos obtenidos de la api de Actua a mi modelo de datos
+ * Clase para parsear los eventos obtenidos de la api de Actua a mi modelo de datos
 */
 class EventEncoder
 {

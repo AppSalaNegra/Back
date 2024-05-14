@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Events\Domain;
+namespace App\Events\Domain\Exception;
 
-use App\Shared\Domain\DomainException\DomainRecordNotFoundException;
 use Slim\Exception\HttpBadRequestException;
 
 /*
- * Excepción para cuando se intenta crear un evento con una categoria desconocida
+ * Excepción para cuando se intenta crear un evento con una categoría desconocida
 */
 
 class UnknowCategory extends HttpBadRequestException

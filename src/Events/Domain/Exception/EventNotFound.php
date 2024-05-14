@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\Domain;
+namespace App\Events\Domain\Exception;
 
 use App\Shared\Domain\DomainException\DomainRecordNotFoundException;
 

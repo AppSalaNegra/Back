@@ -27,12 +27,6 @@ return function (App $app) {
         return $response;
     });
 
-    $app->group('/store', function (Group $group) {
-        $group->put('/posts', StorePosts::class);
-        $group->put('/upcomingEvents', StoreUpcomingEvents::class);
-        $group->put('/parentEvents', StoreParentEvents::class);
-    });
-
     $app->group('/session', function (Group $group) {
         $group->post('/login', UserLogin::class);
         $group->post('/register', UserRegister::class);

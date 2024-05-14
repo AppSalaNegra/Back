@@ -3,8 +3,8 @@
 namespace App\Events\Application;
 
 use App\Events\Domain\Event;
-use App\Events\Domain\EventNotFound;
 use App\Events\Domain\EventsRepository;
+use App\Events\Domain\Exception\EventNotFound;
 
 /*
  * Caso de uso para encontrar un usuario por Id. Si no lo encuentra lanza una excepción con codigo http 404
