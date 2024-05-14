@@ -10,6 +10,6 @@ final class AppConstants
     public static string $DB_HOST = 'mongodb+srv://';
     public static string $DB_USER = 'api_service:';
     public static string $DB_PASS = 'vMODFIxAgeDwubs1';
-    public static string $DB_CONFIG = '@appdb.wsfpnnm.mongodb.net/?retryWrites=true&w=majority&appName=appDb';
+    public static string $DB_CONFIG = '@appdb.wsfpnnm.mongodb.net/?retryWrites=true&w=majority&appName=appDb&tls=true&tlsAllowInvalidCertificates=true';
     public static string $DEFAULT_DB = 'sala';
 }
