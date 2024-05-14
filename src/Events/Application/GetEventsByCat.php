@@ -2,9 +2,8 @@
 
 namespace App\Events\Application;
 
-use App\Events\Domain\UnknowCategory;
+use App\Events\Domain\Exception\UnknowCategory;
 use Psr\Http\Message\ResponseInterface as Response;
-use OpenApi\Annotations as OA;
 
 /*
  * Caso de uso para obtener los eventos de la base de datos que coincidan con la categoría proporcionada.

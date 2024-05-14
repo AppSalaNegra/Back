@@ -3,7 +3,7 @@
 namespace Tests\Events;
 
 use App\Events\Domain\EventsRepository;
-use App\Events\Domain\UnknowCategory;
+use App\Events\Domain\Exception\UnknowCategory;
 use App\Shared\Infrastructure\Actions\ActionPayload;
 use Firebase\JWT\JWT;
 use Mockery;

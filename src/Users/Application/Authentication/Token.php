@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Users\Application\Authentication;
 
+use App\Users\Domain\Exception\InvalidToken;
+use App\Users\Domain\Exception\NoTokenProvided;
 use App\Users\Domain\User;
 use Exception;
 use Firebase\JWT\JWT;
