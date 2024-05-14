@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Events\Domain;
+namespace App\Events\Domain\Exception;
 
 use Exception;
-use Throwable;
 
 /*
  * Excepción que controla posible error al codificar un evento

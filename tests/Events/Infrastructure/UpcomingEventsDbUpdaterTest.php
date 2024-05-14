@@ -2,9 +2,9 @@
 
 namespace Tests\Events\Infrastructure;
 
-use App\Events\Domain\EventEncodeFailed;
 use App\Events\Domain\Event;
 use App\Events\Domain\EventsRepository;
+use App\Events\Domain\Exception\EventEncodeFailed;
 use App\Events\Infrastructure\EventEncoder;
 use App\Events\Infrastructure\UpcomingEventsDbUpdater;
 use App\Shared\Infrastructure\ActuaApiFailed;

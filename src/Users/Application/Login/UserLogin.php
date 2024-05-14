@@ -4,6 +4,7 @@ namespace App\Users\Application\Login;
 
 use App\Users\Application\Authentication\Token;
 use App\Users\Application\UserAction;
+use App\Users\Domain\Exception\InvalidUserCredentials;
 use App\Users\Domain\Exception\UserNotFound;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -67,7 +68,7 @@ class UserLogin extends UserAction
         $password = hash('sha256', $data['password']);
         $user = $this->repository->findByEmailAndPassword($email, $password);
         if (null === $user) {
-            throw new UserNotFound();
+            throw new InvalidUserCredentials($this->request);
         }
         $token = $this->token->createToken($user);
         return $this->respondWithData(['token' => $token, 'id' => $user->id()]);

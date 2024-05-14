@@ -4,8 +4,8 @@ namespace Tests\Events;
 
 use App\Events\Application\FindEventById;
 use App\Events\Domain\Event;
-use App\Events\Domain\EventNotFound;
 use App\Events\Domain\EventsRepository;
+use App\Events\Domain\Exception\EventNotFound;
 use Mockery;
 use Tests\TestCase;
 
