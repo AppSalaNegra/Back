@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 use App\Events\Application\GetEventsByCat;
 use App\Events\Application\GetEventsFromToday;
-use App\Events\Application\StoreParentEvents;
-use App\Events\Application\StoreUpcomingEvents;
 use App\Posts\Application\GetAllPosts;
-use App\Posts\Application\StorePosts;
 use App\Shared\Infrastructure\Middleware\AuthMiddleware;
 use App\Users\Application\Login\UserLogin;
 use App\Users\Application\RemoveUser;
