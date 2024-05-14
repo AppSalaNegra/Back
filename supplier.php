@@ -6,6 +6,10 @@ use App\Events\Infrastructure\ParentEventsDbUpdater;
 use App\Events\Infrastructure\UpcomingEventsDbUpdater;
 use App\Posts\Infrastructure\PostsDbUpdater;
 
+/*
+ * Imperativo configurar timestamp y curl en php.ini
+ * */
+
 $container = (require 'public/container.php');
 
 $postUpdater = $container->get(PostsDbUpdater::class);

@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Obtiene el directorio donde se encuentra el script de Bash en ejecución
+# directorio actual del script bash
 scriptDir=$(dirname "$0")
 
-# Ruta relativa al archivo PHP
+# directorio del script php
 phpScriptPath="$scriptDir/script.php"
 
-# Ruta completa al ejecutable de PHP (si es necesario)
+# ruta al ejecutable de php
 phpExecutablePath="/usr/bin/php"
 
-# Ejecuta el script PHP
+# comando
 "$phpExecutablePath" "$phpScriptPath"
