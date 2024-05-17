@@ -59,6 +59,7 @@
     },
     "scripts": {
         "start": "php -S localhost:8080 -t public",
-        "test": "phpunit"
+        "test": "phpunit",
+        "open-api": "./vendor/bin/openapi src -o openapi.json"
     }
 }

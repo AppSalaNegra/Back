@@ -126,40 +126,6 @@
                 }
             }
         },
-        "/store/parentEvents": {
-            "put": {
-                "tags": [
-                    "Store"
-                ],
-                "summary": "Endpoint de abstecimiento de la base de datos.Almacena eventos principales",
-                "operationId": "76d1a5f07e9e6cfaab0eaf5608d9d7ed",
-                "responses": {
-                    "200": {
-                        "description": "Operación exitosa"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
-        "/store/upcomingEvents": {
-            "put": {
-                "tags": [
-                    "Store"
-                ],
-                "summary": "Endpoint de abstecimiento de la base de datos. Almacena eventos futuros",
-                "operationId": "87123ec1df2fb520a779c0ead8da3802",
-                "responses": {
-                    "200": {
-                        "description": "Operación exitosa"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
         "/posts": {
             "get": {
                 "tags": [
@@ -204,23 +170,6 @@
                 }
             }
         },
-        "/store/posts": {
-            "put": {
-                "tags": [
-                    "Store"
-                ],
-                "summary": "Endpoint de abastecimiento de bd desde la API pública. Almacena Posts.",
-                "operationId": "9358503c3e88f58d9210876261d39ff7",
-                "responses": {
-                    "200": {
-                        "description": "Operación exitosa"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
         "/session/login": {
             "post": {
                 "tags": [
@@ -228,9 +177,53 @@
                 ],
                 "summary": "Inicia sesión de usuario y devuelve un Token jwt",
                 "operationId": "af654d7a6f22353f7d5bcb0131782a97",
+                "requestBody": {
+                    "description": "Datos necesarios para loggear en la app",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "firstName",
+                                    "lastName",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Correo electrónico del usuario",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "description": "Contraseña del usuario",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "Operación exitosa"
+                        "description": "Operación exitosa, devuelve un Token JWT y userId",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "0": {
+                                        "summary": "Log in exitoso!",
+                                        "value": [
+                                            {
+                                                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+                                                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
