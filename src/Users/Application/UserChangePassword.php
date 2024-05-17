@@ -21,6 +21,7 @@ class UserChangePassword extends UserAction
      *     path="/users/changePassword",
      *     tags={"Users"},
      *     summary="Cambia la contraseña del usuario",
+     *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         description="Datos necesarios para cambiar la contraseña del user. Se presupone que el Id es correcto",
@@ -36,7 +37,7 @@ class UserChangePassword extends UserAction
      *     ),
      *     @OA\Response(response="200", description="Contraseña cambiada exitosamente"),
      *     @OA\Response(response="404", description="Usuario no encontrado, la contraseña actual es incorrecta."),
-     *     @OA\Response(response="400", description="Faltan parámetros en la solicitud")
+     *     @OA\Response(response="400", description="Bad Request.")
      * )
      */
     public function __construct(UsersRepository $repository, private readonly FindUserById $finder)

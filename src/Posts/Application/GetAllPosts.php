@@ -15,6 +15,7 @@ final class GetAllPosts extends PostAction
      *     path="/posts",
      *     tags={"Posts"},
      *     summary="Obtiene todos los posts existentes en la base de datos.",
+     *     security={{"bearerAuth": {}}},
      *       @OA\Response(
      *          response="200",
      *          description="Lista de posts",
@@ -43,10 +44,7 @@ final class GetAllPosts extends PostAction
      *              )
      *          )
      *       ),
-     *       @OA\Response(
-     *          response="500",
-     *          description="Server error"
-     *       )
+     *       @OA\Response(response="401",description="UNAUTHENTICATED"),
      *     )
      *   )
      * )

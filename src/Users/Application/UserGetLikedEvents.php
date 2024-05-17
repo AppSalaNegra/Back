@@ -23,6 +23,7 @@ final class UserGetLikedEvents extends UserAction
      *     path="/users/getLikedEvents",
      *     tags={"Users"},
      *     summary="Devuelve una lista de eventos que le gustan al usuario que envía la petición",
+     *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         description="Datos necesarios para eliminar un evento de la lista de eventos gustados del usuario",
@@ -65,7 +66,8 @@ final class UserGetLikedEvents extends UserAction
      *             )
      *         )
      *     ),
-     *     @OA\Response(response="400", description="Faltan parámetros en la solicitud")
+     *     @OA\Response(response="400", description="Bad request."),
+     *     @OA\Response(response="404", description="Usuario no encontrado"),
      * )
      */
     public function __construct(

@@ -17,6 +17,7 @@ final class GetEventsByCat extends EventAction
      *     path="/events/getByCat",
      *     tags={"Events"},
      *     summary="Obtiene eventos cuya categoría coincida con la pasada en la cabecera.",
+     *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         description="Datos del evento a crear",
@@ -59,10 +60,8 @@ final class GetEventsByCat extends EventAction
      *             )
      *         )
      *     ),
-     *     @OA\Response(
-     *         response="400",
-     *         description="Bad request: The category provided is unknown"
-     *     )
+     *     @OA\Response(response="400",description="Bad Request."),
+     *     @OA\Response(response="401",description="UNAUTHENTICATED")
      *   )
      * )
      */

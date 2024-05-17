@@ -38,8 +38,8 @@ class UserRegister extends UserAction
      *         )
      *     ),
      *     @OA\Response(response="200", description="Operación exitosa"),
-     *     @OA\Response(response="400", description="Faltan parámetros en la solicitud"),
-     *     @OA\Response(response="409", description="Ya existe un usuario con el mismo correo electrónico")
+     *     @OA\Response(response="400", description="Bad Request."),
+     *     @OA\Response(response="409", description="The email provided is already registered.")
      * )
      */
     protected function action(): Response

@@ -74,9 +74,17 @@
                         }
                     },
                     "400": {
-                        "description": "Bad request: The category provided is unknown"
+                        "description": "Bad Request."
+                    },
+                    "401": {
+                        "description": "UNAUTHENTICATED"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/events/get": {
@@ -120,10 +128,15 @@
                             }
                         }
                     },
-                    "500": {
-                        "description": "Server error"
+                    "401": {
+                        "description": "UNAUTHENTICATED"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/posts": {
@@ -164,10 +177,15 @@
                             }
                         }
                     },
-                    "500": {
-                        "description": "Server error"
+                    "401": {
+                        "description": "UNAUTHENTICATED"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/session/login": {
@@ -224,6 +242,12 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request."
+                    },
+                    "401": {
+                        "description": "invalid e-mail or username"
                     }
                 }
             }
@@ -264,9 +288,14 @@
                         "description": "Usuario no encontrado"
                     },
                     "400": {
-                        "description": "Faltan parámetros en la solicitud"
+                        "description": "Bad request."
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/users/changePassword": {
@@ -315,9 +344,14 @@
                         "description": "Usuario no encontrado, la contraseña actual es incorrecta."
                     },
                     "400": {
-                        "description": "Faltan parámetros en la solicitud"
+                        "description": "Bad Request."
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/users/dislike": {
@@ -362,9 +396,14 @@
                         "description": "Usuario o evento no encontrado"
                     },
                     "400": {
-                        "description": "Faltan parámetros en la solicitud"
+                        "description": "Bad request."
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/users/getLikedEvents": {
@@ -430,9 +469,17 @@
                         }
                     },
                     "400": {
-                        "description": "Faltan parámetros en la solicitud"
+                        "description": "Bad request."
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/users/like": {
@@ -477,9 +524,14 @@
                         "description": "Usuario o evento no encontrado"
                     },
                     "400": {
-                        "description": "Faltan parámetros en la solicitud"
+                        "description": "Bad request."
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/session/register": {
@@ -530,10 +582,10 @@
                         "description": "Operación exitosa"
                     },
                     "400": {
-                        "description": "Faltan parámetros en la solicitud"
+                        "description": "Bad Request."
                     },
                     "409": {
-                        "description": "Ya existe un usuario con el mismo correo electrónico"
+                        "description": "The email provided is already registered."
                     }
                 }
             }

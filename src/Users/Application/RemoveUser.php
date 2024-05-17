@@ -18,6 +18,7 @@ class RemoveUser extends UserAction
      *     path="/users/remove",
      *     tags={"Users"},
      *     summary="Elimina un usuario de la base de datos.",
+     *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         description="Datos necesarios para eliminar un usuario",
@@ -36,7 +37,7 @@ class RemoveUser extends UserAction
      *     ),
      *     @OA\Response(response="200", description="Operación exitosa"),
      *     @OA\Response(response="404", description="Usuario no encontrado"),
-     *     @OA\Response(response="400", description="Faltan parámetros en la solicitud")
+     *     @OA\Response(response="400", description="Bad request.")
      * )
      */
     public function __construct(UsersRepository $repository, private readonly FindUserById $finder)

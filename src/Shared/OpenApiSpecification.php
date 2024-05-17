@@ -16,7 +16,6 @@ namespace App\Shared;
  *      url="https://localhost:8080",
  *      description="Sala Negra App API"
  *  ),
- *
  * @OA\SecurityScheme(
  *       securityScheme="bearerAuth",
  *       name="bearer",
