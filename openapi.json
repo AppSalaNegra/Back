@@ -407,12 +407,12 @@
             }
         },
         "/users/getLikedEvents": {
-            "get": {
+            "post": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Devuelve una lista de eventos que le gustan al usuario que envía la petición",
-                "operationId": "2f9b9b91f75c85b325bec15e84c3631c",
+                "operationId": "c9ddf32bc31e2ea9f399320208f6d810",
                 "requestBody": {
                     "description": "Datos necesarios para eliminar un evento de la lista de eventos gustados del usuario",
                     "required": true,

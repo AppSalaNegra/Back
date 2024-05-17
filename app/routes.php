@@ -37,7 +37,7 @@ return function (App $app) {
     })->add(AuthMiddleware::class);
 
     $app->group('/users', function (Group $group) {
-        $group->get('/getLikedEvents', UserGetLikedEvents::class);
+        $group->post('/getLikedEvents', UserGetLikedEvents::class);
         $group->put('/like', UserLikeEvent::class);
         $group->put('/dislike', UserDislikeEvent::class);
         $group->post('/changePassword', UserChangePassword::class);

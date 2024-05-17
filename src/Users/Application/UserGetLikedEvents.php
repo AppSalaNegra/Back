@@ -19,7 +19,7 @@ use Slim\Exception\HttpBadRequestException;
 final class UserGetLikedEvents extends UserAction
 {
     /**
-     * @OA\Get(
+     * @OA\Post(
      *     path="/users/getLikedEvents",
      *     tags={"Users"},
      *     summary="Devuelve una lista de eventos que le gustan al usuario que envía la petición",
