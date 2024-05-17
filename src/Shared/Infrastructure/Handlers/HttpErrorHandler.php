@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Handlers;
 
-use App\Events\Domain\Exception\EventEncodeFailed;
 use App\Shared\Infrastructure\Actions\ActionError;
 use App\Shared\Infrastructure\Actions\ActionPayload;
+use App\Users\Domain\Exception\HttpConflict;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpException;
@@ -23,6 +23,7 @@ class HttpErrorHandler extends SlimErrorHandler
     /**
      * @inheritdoc Gestiona como Slim maneja las excepciones. Devuelve una respuesta JSON con un error.
      */
+
     protected function respond(): Response
     {
         $exception = $this->exception;
@@ -48,6 +49,8 @@ class HttpErrorHandler extends SlimErrorHandler
                 $error->setType(ActionError::BAD_REQUEST);
             } elseif ($exception instanceof HttpNotImplementedException) {
                 $error->setType(ActionError::NOT_IMPLEMENTED);
+            } elseif ($exception instanceof HttpConflict) {
+                $error->setType(ActionError::CONFLICT);
             }
         }
 
@@ -56,7 +59,7 @@ class HttpErrorHandler extends SlimErrorHandler
             && $exception instanceof Throwable
             && $this->displayErrorDetails
         ) {
-            $this->logger->error($exception->getMessage());
+            $this->logger->alert($exception->getMessage());
         }
 
         $payload = new ActionPayload($statusCode, null, $error);
