@@ -41,7 +41,7 @@ return function (App $app) {
         $group->put('/like', UserLikeEvent::class);
         $group->put('/dislike', UserDislikeEvent::class);
         $group->post('/changePassword', UserChangePassword::class);
-        $group->put('/remove', RemoveUser::class);
+        $group->delete('/remove', RemoveUser::class);
     })->add(AuthMiddleware::class);
 
     $app->get('/swagger', function (Request $request, Response $response) {
