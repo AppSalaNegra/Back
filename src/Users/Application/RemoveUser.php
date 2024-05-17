@@ -5,11 +5,12 @@ namespace App\Users\Application;
 use App\Users\Domain\FindUserById;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
-use OpenApi\Annotations as OA;
+use Slim\Exception\HttpBadRequestException;
 
 /*
  * Caso de uso "Eliminar usuario". Elimina un usuario de la base de datos.
  */
+
 class RemoveUser extends UserAction
 {
     /**
@@ -45,10 +46,17 @@ class RemoveUser extends UserAction
 
     protected function action(): Response
     {
-        $data = $this->getFormData();
+        $data   = $this->getFormData();
         $userId = $data['id'];
-        $user = $this->finder->findUserById($userId);
+        $user   = $this->finder->findUserById($userId);
         $this->repository->remove($user);
         return $this->respondWithData();
+    }
+
+    public function validateInput(array|null|object $data): void
+    {
+        if (empty($data['id'])) {
+            throw new HttpBadRequestException($this->request);
+        }
     }
 }

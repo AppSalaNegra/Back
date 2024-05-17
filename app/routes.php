@@ -20,7 +20,6 @@ use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
 return function (App $app) {
-
     $app->options('/{routes:.*}', function (Request $request, Response $response) {
         return $response;
     });

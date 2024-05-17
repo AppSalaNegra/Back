@@ -10,5 +10,5 @@ use Slim\Exception\HttpBadRequestException;
 
 class UnknowCategory extends HttpBadRequestException
 {
-    protected $message = "Bad request: The category provided is unknown";
+    protected $message = "The category provided is unknown";
 }
