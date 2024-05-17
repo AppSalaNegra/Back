@@ -6,6 +6,7 @@ use App\Events\Application\GetEventsByCat;
 use App\Events\Application\GetEventsFromToday;
 use App\Posts\Application\GetAllPosts;
 use App\Shared\Infrastructure\Middleware\AuthMiddleware;
+use App\Shared\Infrastructure\Swagger\Swagger;
 use App\Users\Application\Login\UserLogin;
 use App\Users\Application\RemoveUser;
 use App\Users\Application\UserChangePassword;
@@ -43,4 +44,19 @@ return function (App $app) {
         $group->post('/changePassword', UserChangePassword::class);
         $group->put('/remove', RemoveUser::class);
     })->add(AuthMiddleware::class);
+
+    $app->get('/swagger', function (Request $request, Response $response) {
+        $serverUrl = $request->getUri()->getScheme() . '://' . $request->getUri()->getHost();
+        $serverUrl .= $request->getUri()->getPort() ? ':' . $request->getUri()->getPort() : '';
+
+        $swagger = new Swagger(
+            $serverUrl,
+            'Local server',
+            __DIR__ . '/../openapi.json'
+        );
+
+        $response = $response->withHeader('Content-Type', 'text/html');
+        $response->getBody()->write($swagger->get());
+        return $response;
+    });
 };
