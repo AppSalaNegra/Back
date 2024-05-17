@@ -31,11 +31,6 @@ class HttpErrorHandler extends SlimErrorHandler
             ActionError::SERVER_ERROR,
             'An internal error has occurred while processing your request.'
         );
-        if ($exception instanceof EventEncodeFailed) {
-            $error->setDescription($exception->getMessage());
-            $statusCode = $exception->getCode();
-            $error->setType(ActionError::ENCODE_FAILED);
-        }
 
         if ($exception instanceof HttpException) {
             $statusCode = $exception->getCode();

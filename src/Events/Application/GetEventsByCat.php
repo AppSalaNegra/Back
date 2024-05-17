@@ -4,6 +4,7 @@ namespace App\Events\Application;
 
 use App\Events\Domain\Exception\UnknowCategory;
 use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Exception\HttpBadRequestException;
 
 /*
  * Caso de uso para obtener los eventos de la base de datos que coincidan con la categoría proporcionada.
@@ -68,7 +69,10 @@ final class GetEventsByCat extends EventAction
     protected function action(): Response
     {
         $data = $this->getFormData();
+        $this->validateInput($data);
+
         $cat = $data['cat'];
+
         $events = $this->repository->getByCat($this->getCatCode($cat));
         return $this->respondWithData($events);
     }
@@ -86,5 +90,12 @@ final class GetEventsByCat extends EventAction
             'Magia' => '6',
             default => throw new UnknowCategory($this->request),
         };
+    }
+
+    public function validateInput(array|null|object $data): void
+    {
+        if (empty($data['cat'])) {
+            throw new HttpBadRequestException($this->request);
+        }
     }
 }
