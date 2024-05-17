@@ -74,9 +74,17 @@
                         }
                     },
                     "400": {
-                        "description": "Bad request: The category provided is unknown"
+                        "description": "Bad Request."
+                    },
+                    "401": {
+                        "description": "UNAUTHENTICATED"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/events/get": {
@@ -120,10 +128,15 @@
                             }
                         }
                     },
-                    "500": {
-                        "description": "Server error"
+                    "401": {
+                        "description": "UNAUTHENTICATED"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/posts": {
@@ -164,10 +177,15 @@
                             }
                         }
                     },
-                    "500": {
-                        "description": "Server error"
+                    "401": {
+                        "description": "UNAUTHENTICATED"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/session/login": {
@@ -224,17 +242,23 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request."
+                    },
+                    "401": {
+                        "description": "invalid e-mail or username"
                     }
                 }
             }
         },
         "/users/remove": {
-            "put": {
+            "delete": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Elimina un usuario de la base de datos.",
-                "operationId": "bdeef0a557def2f1b8914411ee21af50",
+                "operationId": "deb4b5f5c4d34325e9e44263f9553dc6",
                 "requestBody": {
                     "description": "Datos necesarios para eliminar un usuario",
                     "required": true,
@@ -264,9 +288,14 @@
                         "description": "Usuario no encontrado"
                     },
                     "400": {
-                        "description": "Faltan parámetros en la solicitud"
+                        "description": "Bad request."
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/users/changePassword": {
@@ -315,9 +344,14 @@
                         "description": "Usuario no encontrado, la contraseña actual es incorrecta."
                     },
                     "400": {
-                        "description": "Faltan parámetros en la solicitud"
+                        "description": "Bad Request."
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/users/dislike": {
@@ -362,9 +396,14 @@
                         "description": "Usuario o evento no encontrado"
                     },
                     "400": {
-                        "description": "Faltan parámetros en la solicitud"
+                        "description": "Bad request."
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/users/getLikedEvents": {
@@ -430,9 +469,17 @@
                         }
                     },
                     "400": {
-                        "description": "Faltan parámetros en la solicitud"
+                        "description": "Bad request."
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/users/like": {
@@ -477,9 +524,14 @@
                         "description": "Usuario o evento no encontrado"
                     },
                     "400": {
-                        "description": "Faltan parámetros en la solicitud"
+                        "description": "Bad request."
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/session/register": {
@@ -530,16 +582,131 @@
                         "description": "Operación exitosa"
                     },
                     "400": {
-                        "description": "Faltan parámetros en la solicitud"
+                        "description": "Bad Request."
                     },
                     "409": {
-                        "description": "Ya existe un usuario con el mismo correo electrónico"
+                        "description": "The email provided is already registered."
                     }
                 }
             }
         }
     },
     "components": {
+        "schemas": {
+            "cat": {
+                "title": "Category",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 7
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Canalla"
+                    }
+                },
+                "type": "object"
+            },
+            "event": {
+                "title": "Event",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "startDateTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "finishDateTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "excerpt": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "thumbnail_url": {
+                        "type": "string"
+                    },
+                    "cats": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/cat"
+                        }
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "hierarchy": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "post": {
+                "title": "Post",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "dateTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "excerpt": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "thumbnail_url": {
+                        "type": "string"
+                    },
+                    "cats": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/cat"
+                        }
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "login": {
+                "title": "Login",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",

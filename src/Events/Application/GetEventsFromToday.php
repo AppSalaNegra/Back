@@ -15,6 +15,7 @@ final class GetEventsFromToday extends EventAction
      *     path="/events/get",
      *     tags={"Events"},
      *     summary="Obtiene todos los eventos desde la fecha de hoy.",
+     *     security={{"bearerAuth": {}}},
      *       @OA\Response(
      *          response="200",
      *          description="Lista de eventos",
@@ -46,10 +47,7 @@ final class GetEventsFromToday extends EventAction
      *              )
      *          )
      *       ),
-     *       @OA\Response(
-     *          response="500",
-     *          description="Server error"
-     *       )
+     *       @OA\Response(response="401",description="UNAUTHENTICATED"),
      *     )
      *   )
      * )

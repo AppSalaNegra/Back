@@ -52,9 +52,11 @@ class UserLogin extends UserAction
      *                       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
      *                   }
      *               }
-     *           ),
+     *           )
      *       )
-     *    ),
+     *     ),
+     *     @OA\Response(response="400",description="Bad Request."),
+     *     @OA\Response(response="401",description="invalid e-mail or username"),
      * )
      */
     public function __construct(UsersRepository $repository, private readonly Token $token)
