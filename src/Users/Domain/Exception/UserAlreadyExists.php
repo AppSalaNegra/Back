@@ -2,10 +2,7 @@
 
 namespace App\Users\Domain\Exception;
 
-use App\Shared\Domain\DomainException\DomainException;
-
-class UserAlreadyExists extends DomainException
+class UserAlreadyExists extends HttpConflict
 {
     public $message = 'The email provided is already registered.';
-    protected $code = '409';
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Actions;
 
-use App\Shared\Domain\DomainException\DomainRecordNotFoundException;
+use App\Shared\Domain\DomainException\DomainRecordNotFound;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpBadRequestException;
@@ -27,13 +27,13 @@ abstract class Action
 
         try {
             return $this->action();
-        } catch (DomainRecordNotFoundException $e) {
+        } catch (DomainRecordNotFound $e) {
             throw new HttpNotFoundException($this->request, $e->getMessage());
         }
     }
 
     /**
-     * @throws DomainRecordNotFoundException
+     * @throws DomainRecordNotFound
      * @throws HttpBadRequestException
      */
     abstract protected function action(): Response;

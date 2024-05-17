@@ -6,6 +6,7 @@ use App\Shared\Infrastructure\Handlers\HttpErrorHandler;
 use App\Shared\Infrastructure\Handlers\ShutdownHandler;
 use App\Shared\Infrastructure\ResponseEmitter\ResponseEmitter;
 use App\Shared\Infrastructure\Settings\SettingsInterface;
+use Psr\Log\LoggerInterface;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
@@ -39,8 +40,9 @@ $serverRequestCreator = ServerRequestCreatorFactory::create();
 $request = $serverRequestCreator->createServerRequestFromGlobals();
 
 // Create Error Handler
+$logger = $container->get(LoggerInterface::class);
 $responseFactory = $app->getResponseFactory();
-$errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
+$errorHandler = new HttpErrorHandler($callableResolver, $responseFactory, $logger);
 
 // Create Shutdown Handler
 $shutdownHandler = new ShutdownHandler($request, $errorHandler, $displayErrorDetails);

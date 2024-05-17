@@ -64,7 +64,7 @@ class UserRegister extends UserAction
     {
         $user = $this->repository->findByEmail($email);
         if (null !== $user) {
-            throw new UserAlreadyExists();
+            throw new UserAlreadyExists($this->request);
         }
     }
 
