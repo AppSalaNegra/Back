@@ -253,12 +253,12 @@
             }
         },
         "/users/remove": {
-            "put": {
+            "delete": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Elimina un usuario de la base de datos.",
-                "operationId": "bdeef0a557def2f1b8914411ee21af50",
+                "operationId": "deb4b5f5c4d34325e9e44263f9553dc6",
                 "requestBody": {
                     "description": "Datos necesarios para eliminar un usuario",
                     "required": true,
@@ -592,6 +592,121 @@
         }
     },
     "components": {
+        "schemas": {
+            "cat": {
+                "title": "Category",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 7
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Canalla"
+                    }
+                },
+                "type": "object"
+            },
+            "event": {
+                "title": "Event",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "startDateTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "finishDateTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "excerpt": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "thumbnail_url": {
+                        "type": "string"
+                    },
+                    "cats": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/cat"
+                        }
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "hierarchy": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "post": {
+                "title": "Post",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "dateTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "excerpt": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "thumbnail_url": {
+                        "type": "string"
+                    },
+                    "cats": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/cat"
+                        }
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "login": {
+                "title": "Login",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",
