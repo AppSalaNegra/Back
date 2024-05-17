@@ -7,6 +7,7 @@ use App\Users\Domain\FindUserById;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use OpenApi\Annotations as OA;
+use Slim\Exception\HttpBadRequestException;
 
 /*
  * Endpoint para cambio de contraseña de un usuario.
@@ -46,6 +47,8 @@ class UserChangePassword extends UserAction
     protected function action(): Response
     {
         $data = $this->getFormData();
+        $this->validateInput($data);
+
         $userId = $data['id'];
         $password = hash('sha256', $data['password']);
         $newPassword = $data['newPassword'];
@@ -58,5 +61,12 @@ class UserChangePassword extends UserAction
         $user->changePassword(hash('sha256', $newPassword));
         $this->repository->save($user);
         return $this->respondWithData();
+    }
+
+    public function validateInput(array|null|object $data): void
+    {
+        if (empty($data['id']) || empty($data['password']) || empty($data['newPassword'])) {
+            throw new HttpBadRequestException($this->request);
+        }
     }
 }

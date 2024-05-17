@@ -48,11 +48,11 @@ class Token
             try {
                 $decoded = JWT::decode($token, new Key(self::getSecret(), 'HS256'));
                 return $request->withAttribute('jwt_payload', (array) $decoded);
-            } catch (Exception $e) {
-                throw new InvalidToken('Invalid Token: ' . $e->getMessage());
+            } catch (Exception) {
+                throw new InvalidToken($request);
             }
         } else {
-            throw new NoTokenProvided();
+            throw new NoTokenProvided($request);
         }
     }
 

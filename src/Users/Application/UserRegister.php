@@ -6,6 +6,7 @@ use App\Users\Domain\Exception\UserAlreadyExists;
 use App\Users\Domain\User;
 use Psr\Http\Message\ResponseInterface as Response;
 use OpenApi\Annotations as OA;
+use Slim\Exception\HttpBadRequestException;
 
 /*
  * Registra un nuevo usuario en el sistema siempre y cuando no exista ya un usuario con el mismo email.
@@ -44,6 +45,7 @@ class UserRegister extends UserAction
     protected function action(): Response
     {
         $data = $this->getFormData();
+        $this->validateInput($data);
         $email = $data['email'];
         $firstName = $data['firstName'];
         $lastName = $data['lastName'];
@@ -63,6 +65,16 @@ class UserRegister extends UserAction
         $user = $this->repository->findByEmail($email);
         if (null !== $user) {
             throw new UserAlreadyExists();
+        }
+    }
+
+    public function validateInput(array|null|object $data): void
+    {
+        if (
+            empty($data['email']) || empty($data['firstName']) ||
+            empty($data['lastName']) || empty($data['password'])
+        ) {
+            throw new HttpBadRequestException($this->request);
         }
     }
 }

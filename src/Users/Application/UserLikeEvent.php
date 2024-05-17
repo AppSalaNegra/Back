@@ -7,6 +7,7 @@ use App\Users\Domain\FindUserById;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use OpenApi\Annotations as OA;
+use Slim\Exception\HttpBadRequestException;
 
 /*
  * Acción de un usuario de dar me gusta a un evento. Añade el evento a la lista de eventos que le gustan al usuario.
@@ -50,6 +51,7 @@ final class UserLikeEvent extends UserAction
     protected function action(): Response
     {
         $data = $this->getFormData();
+        $this->validateInput($data);
         $userId = $data['id'];
         $eventId = $data['eventId'];
 
@@ -58,5 +60,12 @@ final class UserLikeEvent extends UserAction
         $user->addLikedEvent($eventId);
         $this->repository->save($user);
         return $this->respondWithData();
+    }
+
+    public function validateInput(array|null|object $data): void
+    {
+        if (empty($data['id']) || empty($data['eventId'])) {
+            throw new HttpBadRequestException($this->request);
+        }
     }
 }

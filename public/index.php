@@ -6,7 +6,6 @@ use App\Shared\Infrastructure\Handlers\HttpErrorHandler;
 use App\Shared\Infrastructure\Handlers\ShutdownHandler;
 use App\Shared\Infrastructure\ResponseEmitter\ResponseEmitter;
 use App\Shared\Infrastructure\Settings\SettingsInterface;
-use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 

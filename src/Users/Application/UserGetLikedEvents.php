@@ -14,6 +14,7 @@ use App\Users\Domain\User;
 use App\Users\Domain\UsersRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use OpenApi\Annotations as OA;
+use Slim\Exception\HttpBadRequestException;
 
 final class UserGetLikedEvents extends UserAction
 {
@@ -78,6 +79,7 @@ final class UserGetLikedEvents extends UserAction
     protected function action(): Response
     {
         $data = $this->getFormData();
+        $this->validateInput($data);
         $id = $data['id'];
         $user = $this->userFinder->findUserById($id);
         return $this->respondWithData($this->getAllUserEvents($user));
@@ -93,5 +95,12 @@ final class UserGetLikedEvents extends UserAction
             $event = $this->eventFinder->findEventById($eventId);
             return $event->jsonSerialize();
         }, $likedEvents);
+    }
+
+    public function validateInput(array|null|object $data): void
+    {
+        if (empty($data['id'])) {
+            throw new HttpBadRequestException($this->request);
+        }
     }
 }
