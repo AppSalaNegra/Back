@@ -355,12 +355,12 @@
             }
         },
         "/users/dislike": {
-            "put": {
+            "post": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Elimina un evento de la lista de eventos gustados del usuario",
-                "operationId": "3c34686107aea58b6adf4de09776fb72",
+                "operationId": "a6db1a97a1ce84d24bc092208d6275a3",
                 "requestBody": {
                     "description": "Datos necesarios para eliminar un evento de la lista de eventos gustados del usuario",
                     "required": true,
@@ -483,12 +483,12 @@
             }
         },
         "/users/like": {
-            "put": {
+            "post": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Agrega un evento a la lista de eventos gustados del usuario",
-                "operationId": "9f2295e73fe17a9d50fb70e5e0eba8de",
+                "operationId": "42bd25941b76690784b659810f3e8fef",
                 "requestBody": {
                     "description": "Datos necesarios para agregar un evento a la lista de eventos gustados del usuario",
                     "required": true,

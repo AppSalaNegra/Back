@@ -38,8 +38,8 @@ return function (App $app) {
 
     $app->group('/users', function (Group $group) {
         $group->post('/getLikedEvents', UserGetLikedEvents::class);
-        $group->put('/like', UserLikeEvent::class);
-        $group->put('/dislike', UserDislikeEvent::class);
+        $group->post('/like', UserLikeEvent::class);
+        $group->post('/dislike', UserDislikeEvent::class);
         $group->post('/changePassword', UserChangePassword::class);
         $group->delete('/remove', RemoveUser::class);
     })->add(AuthMiddleware::class);

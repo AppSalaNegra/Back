@@ -15,7 +15,7 @@ use Slim\Exception\HttpBadRequestException;
 final class UserLikeEvent extends UserAction
 {
     /**
-     * @OA\Put(
+     * @OA\Post(
      *     path="/users/like",
      *     tags={"Users"},
      *     summary="Agrega un evento a la lista de eventos gustados del usuario",

@@ -16,7 +16,7 @@ use Slim\Exception\HttpBadRequestException;
 final class UserDislikeEvent extends UserAction
 {
     /**
-     * @OA\Put(
+     * @OA\Post(
      *     path="/users/dislike",
      *     tags={"Users"},
      *     summary="Elimina un evento de la lista de eventos gustados del usuario",
