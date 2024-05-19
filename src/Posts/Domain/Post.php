@@ -102,7 +102,10 @@ class Post implements JsonSerializable
             'title' => $this->title,
             'excerpt' => $this->excerpt,
             'url' => $this->url,
+            'slug' => $this->slug,
             'thumbnail_url' => $this->thumbnail_url,
+            'cats' => $this->cats,
+            'status' => $this->status,
         ];
     }
 }
