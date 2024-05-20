@@ -38,7 +38,7 @@ return function (App $app) {
     $app->group('/users', function (Group $group) {
         $group->post('/getLikedEvents', UserGetLikedEvents::class);
         $group->post('/changePassword', UserChangePassword::class);
-        $group->delete('/remove', RemoveUser::class);
+        $group->post('/remove', RemoveUser::class);
         $group->post('/update', UpdateUserEvents::class);
     })->add(AuthMiddleware::class);
 

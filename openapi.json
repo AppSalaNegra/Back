@@ -253,12 +253,12 @@
             }
         },
         "/users/remove": {
-            "delete": {
+            "post": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Elimina un usuario de la base de datos.",
-                "operationId": "deb4b5f5c4d34325e9e44263f9553dc6",
+                "operationId": "79ac1394c0133728adba071830dfc7f0",
                 "requestBody": {
                     "description": "Datos necesarios para eliminar un usuario",
                     "required": true,

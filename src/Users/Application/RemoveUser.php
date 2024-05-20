@@ -14,7 +14,7 @@ use Slim\Exception\HttpBadRequestException;
 class RemoveUser extends UserAction
 {
     /**
-     * @OA\Delete(
+     * @OA\Post(
      *     path="/users/remove",
      *     tags={"Users"},
      *     summary="Elimina un usuario de la base de datos.",
