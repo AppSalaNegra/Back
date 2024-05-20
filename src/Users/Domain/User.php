@@ -85,6 +85,11 @@ class User implements JsonSerializable
         $this->password = $newPassword;
     }
 
+    public function updateEvents(array $events): void
+    {
+        $this->likedEvents = $events;
+    }
+
     public function jsonSerialize(): array
     {
         return [

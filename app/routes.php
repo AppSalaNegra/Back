@@ -9,6 +9,7 @@ use App\Shared\Infrastructure\Middleware\AuthMiddleware;
 use App\Shared\Infrastructure\Swagger\Swagger;
 use App\Users\Application\Login\UserLogin;
 use App\Users\Application\RemoveUser;
+use App\Users\Application\UpdateUserEvents;
 use App\Users\Application\UserChangePassword;
 use App\Users\Application\UserDislikeEvent;
 use App\Users\Application\UserGetLikedEvents;
@@ -42,6 +43,7 @@ return function (App $app) {
         $group->post('/dislike', UserDislikeEvent::class);
         $group->post('/changePassword', UserChangePassword::class);
         $group->delete('/remove', RemoveUser::class);
+        $group->put('{id}', UpdateUserEvents::class);
     })->add(AuthMiddleware::class);
 
     $app->get('/swagger', function (Request $request, Response $response) {
