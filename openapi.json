@@ -298,25 +298,13 @@
                 ]
             }
         },
-        "/users/{id}": {
-            "put": {
+        "/users/update": {
+            "post": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Actualiza la lista de eventos del usuario",
-                "operationId": "db9253280b8871605bb043914bb56fce",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Id del usuario a actualizar",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                ],
+                "operationId": "81f1c1406663f2d5fdba25f1bb5be70a",
                 "requestBody": {
                     "description": "Datos necesarios para actualizar el usuario",
                     "required": true,
@@ -327,6 +315,11 @@
                                     "events"
                                 ],
                                 "properties": {
+                                    "id": {
+                                        "description": "ID del usuario",
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
                                     "events": {
                                         "description": "Lista de eventos",
                                         "type": "array",
@@ -414,58 +407,6 @@
                 ]
             }
         },
-        "/users/dislike": {
-            "post": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Elimina un evento de la lista de eventos gustados del usuario",
-                "operationId": "a6db1a97a1ce84d24bc092208d6275a3",
-                "requestBody": {
-                    "description": "Datos necesarios para eliminar un evento de la lista de eventos gustados del usuario",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "id",
-                                    "eventId"
-                                ],
-                                "properties": {
-                                    "id": {
-                                        "description": "ID del usuario",
-                                        "type": "string",
-                                        "format": "uuid"
-                                    },
-                                    "eventId": {
-                                        "description": "ID del evento a eliminar de la lista de eventos gustados del usuario",
-                                        "type": "string",
-                                        "format": "uuid"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Operación exitosa"
-                    },
-                    "404": {
-                        "description": "Usuario o evento no encontrado"
-                    },
-                    "400": {
-                        "description": "Bad request."
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
         "/users/getLikedEvents": {
             "post": {
                 "tags": [
@@ -533,58 +474,6 @@
                     },
                     "404": {
                         "description": "Usuario no encontrado"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/users/like": {
-            "post": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Agrega un evento a la lista de eventos gustados del usuario",
-                "operationId": "42bd25941b76690784b659810f3e8fef",
-                "requestBody": {
-                    "description": "Datos necesarios para agregar un evento a la lista de eventos gustados del usuario",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "id",
-                                    "eventId"
-                                ],
-                                "properties": {
-                                    "id": {
-                                        "description": "ID del usuario",
-                                        "type": "string",
-                                        "format": "uuid"
-                                    },
-                                    "eventId": {
-                                        "description": "ID del evento a agregar a la lista de eventos gustados del usuario",
-                                        "type": "string",
-                                        "format": "uuid"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Operación exitosa"
-                    },
-                    "404": {
-                        "description": "Usuario o evento no encontrado"
-                    },
-                    "400": {
-                        "description": "Bad request."
                     }
                 },
                 "security": [

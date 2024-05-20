@@ -11,9 +11,7 @@ use App\Users\Application\Login\UserLogin;
 use App\Users\Application\RemoveUser;
 use App\Users\Application\UpdateUserEvents;
 use App\Users\Application\UserChangePassword;
-use App\Users\Application\UserDislikeEvent;
 use App\Users\Application\UserGetLikedEvents;
-use App\Users\Application\UserLikeEvent;
 use App\Users\Application\UserRegister;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -39,11 +37,9 @@ return function (App $app) {
 
     $app->group('/users', function (Group $group) {
         $group->post('/getLikedEvents', UserGetLikedEvents::class);
-        $group->post('/like', UserLikeEvent::class);
-        $group->post('/dislike', UserDislikeEvent::class);
         $group->post('/changePassword', UserChangePassword::class);
         $group->delete('/remove', RemoveUser::class);
-        $group->put('{id}', UpdateUserEvents::class);
+        $group->post('/update', UpdateUserEvents::class);
     })->add(AuthMiddleware::class);
 
     $app->get('/swagger', function (Request $request, Response $response) {
