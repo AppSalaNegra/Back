@@ -252,27 +252,106 @@
                 }
             }
         },
-        "/users/remove": {
-            "post": {
+        "/users/{id}": {
+            "get": {
                 "tags": [
                     "Users"
                 ],
-                "summary": "Elimina un usuario de la base de datos.",
-                "operationId": "79ac1394c0133728adba071830dfc7f0",
+                "summary": "Devuelve una lista de eventos que le gustan al usuario que envía la petición",
+                "operationId": "c3b027a39d62e61b5868cf02318e8364",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de eventos que le han gustado al usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "0": {
+                                        "summary": "Encontrados eventos!",
+                                        "value": [
+                                            {
+                                                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                                "startDateTime": "dateTime",
+                                                "finishDateTime": "dateTime",
+                                                "title": "string",
+                                                "excerpt": "string",
+                                                "url": "string",
+                                                "slug": "string",
+                                                "thumbnail_url": "string",
+                                                "cats": "collection",
+                                                "status": "string",
+                                                "hierarchy": "string",
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "1": {
+                                        "summary": "No se encontraron eventos",
+                                        "value": []
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request."
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Actualiza la lista de eventos del usuario",
+                "operationId": "db9253280b8871605bb043914bb56fce",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
                 "requestBody": {
-                    "description": "Datos necesarios para eliminar un usuario",
+                    "description": "Datos necesarios para actualizar el usuario",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "id"
+                                    "events"
                                 ],
                                 "properties": {
-                                    "id": {
-                                        "description": "ID del usuario a eliminar",
-                                        "type": "string",
-                                        "format": "uuid"
+                                    "events": {
+                                        "description": "Lista de eventos",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
                                     }
                                 },
                                 "type": "object"
@@ -296,43 +375,25 @@
                         "bearerAuth": []
                     }
                 ]
-            }
-        },
-        "/users/update": {
-            "post": {
+            },
+            "delete": {
                 "tags": [
                     "Users"
                 ],
-                "summary": "Actualiza la lista de eventos del usuario",
-                "operationId": "81f1c1406663f2d5fdba25f1bb5be70a",
-                "requestBody": {
-                    "description": "Datos necesarios para actualizar el usuario",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "events"
-                                ],
-                                "properties": {
-                                    "id": {
-                                        "description": "ID del usuario",
-                                        "type": "string",
-                                        "format": "uuid"
-                                    },
-                                    "events": {
-                                        "description": "Lista de eventos",
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "summary": "Elimina un usuario de la base de datos.",
+                "operationId": "382ec7f51fe9f75a8e3eee140569c014",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
                         "description": "Operación exitosa"
@@ -398,82 +459,6 @@
                     },
                     "400": {
                         "description": "Bad Request."
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/users/getLikedEvents": {
-            "post": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Devuelve una lista de eventos que le gustan al usuario que envía la petición",
-                "operationId": "c9ddf32bc31e2ea9f399320208f6d810",
-                "requestBody": {
-                    "description": "Datos necesarios para eliminar un evento de la lista de eventos gustados del usuario",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "id"
-                                ],
-                                "properties": {
-                                    "id": {
-                                        "description": "ID del usuario",
-                                        "type": "string",
-                                        "format": "uuid"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Lista de eventos que le han gustado al usuario",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "examples": {
-                                    "0": {
-                                        "summary": "Encontrados eventos!",
-                                        "value": [
-                                            {
-                                                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                                "startDateTime": "dateTime",
-                                                "finishDateTime": "dateTime",
-                                                "title": "string",
-                                                "excerpt": "string",
-                                                "url": "string",
-                                                "slug": "string",
-                                                "thumbnail_url": "string",
-                                                "cats": "collection",
-                                                "status": "string",
-                                                "hierarchy": "string",
-                                                "type": "string"
-                                            }
-                                        ]
-                                    },
-                                    "1": {
-                                        "summary": "No se encontraron eventos",
-                                        "value": []
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request."
-                    },
-                    "404": {
-                        "description": "Usuario no encontrado"
                     }
                 },
                 "security": [

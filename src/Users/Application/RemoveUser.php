@@ -14,26 +14,20 @@ use Slim\Exception\HttpBadRequestException;
 class RemoveUser extends UserAction
 {
     /**
-     * @OA\Post(
-     *     path="/users/remove",
+     * @OA\Delete(
+     *     path="/users/{id}",
      *     tags={"Users"},
      *     summary="Elimina un usuario de la base de datos.",
      *     security={{"bearerAuth": {}}},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Datos necesarios para eliminar un usuario",
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *             @OA\Schema(
-     *                 required={"id"},
-     *                 @OA\Property(
-     *                      property="id",
-     *                      type="string",
-     *                      format="uuid",
-     *                      description="ID del usuario a eliminar"
-     *                 )
-     *             )
-     *         )
+     *     @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="Id del usuario",
+     *        required=true,
+     *        @OA\Schema(
+     *            type="string",
+     *            format="uuid"
+     *        )
      *     ),
      *     @OA\Response(response="200", description="Operación exitosa"),
      *     @OA\Response(response="404", description="Usuario no encontrado"),

@@ -10,11 +10,21 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 
 /**
- * @OA\Post(
- *     path="/users/update",
+ * @OA\Put(
+ *     path="/users/{id}",
  *     tags={"Users"},
  *     summary="Actualiza la lista de eventos del usuario",
  *     security={{"bearerAuth": {}}},
+ *      @OA\Parameter(
+ *          name="id",
+ *          in="path",
+ *          description="Id del usuario",
+ *          required=true,
+ *          @OA\Schema(
+ *              type="string",
+ *              format="uuid"
+ *          )
+ *      ),
  *     @OA\RequestBody(
  *         required=true,
  *         description="Datos necesarios para actualizar el usuario",
@@ -22,7 +32,6 @@ use Slim\Exception\HttpBadRequestException;
  *             mediaType="application/json",
  *             @OA\Schema(
  *                 required={"events"},
- *                 @OA\Property(property="id", type="string", format="uuid", description="ID del usuario"),
  *                 @OA\Property(
  *                     property="events",
  *                     type="array",
@@ -55,7 +64,6 @@ final class UpdateUserEvents extends UserAction
         $this->validateInput($data);
         $id     = $data['id'];
         $events = json_decode($data['events']);
-        var_dump($events);
         $user   = $this->userFinder->findUserById($id);
         $user->updateEvents($events);
         $this->repository->save($user);

@@ -19,20 +19,19 @@ use Slim\Exception\HttpBadRequestException;
 final class UserGetLikedEvents extends UserAction
 {
     /**
-     * @OA\Post(
-     *     path="/users/getLikedEvents",
+     * @OA\Get(
+     *     path="/users/{id}",
      *     tags={"Users"},
      *     summary="Devuelve una lista de eventos que le gustan al usuario que envía la petición",
      *     security={{"bearerAuth": {}}},
-     *     @OA\RequestBody(
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del usuario",
      *         required=true,
-     *         description="Datos necesarios para eliminar un evento de la lista de eventos gustados del usuario",
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *             @OA\Schema(
-     *                 required={"id"},
-     *                 @OA\Property(property="id", type="string", format="uuid", description="ID del usuario"),
-     *             )
+     *         @OA\Schema(
+     *             type="string",
+     *             format="uuid"
      *         )
      *     ),
      *     @OA\Response(
