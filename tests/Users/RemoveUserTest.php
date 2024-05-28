@@ -26,7 +26,7 @@ class RemoveUserTest extends TestCase
 
         $container->set(UsersRepository::class, $repository);
 
-        $request = $this->createRequest('PUT', '/users/remove')
+        $request = $this->createRequest('POST', '/users/remove')
             ->withParsedBody([
                 'id' => 'userId'
             ])

@@ -37,7 +37,7 @@ class UserGetLikedEventsTest extends TestCase
         $container->set(UsersRepository::class, $repository);
         $container->set(EventsRepository::class, $eventsRepository);
 
-        $request = $this->createRequest('GET', '/users/getLikedEvents')
+        $request = $this->createRequest('POST', '/users/getLikedEvents')
             ->withParsedBody([
                 'id' => 'userId'
             ])
@@ -67,7 +67,7 @@ class UserGetLikedEventsTest extends TestCase
         $container->set(UsersRepository::class, $repository);
         $container->set(EventsRepository::class, $eventsRepository);
 
-        $request = $this->createRequest('GET', '/users/getLikedEvents')->withParsedBody([
+        $request = $this->createRequest('POST', '/users/getLikedEvents')->withParsedBody([
                 'id' => 'userId'
             ])
             ->withHeader('Authorization', 'Bearer ' . $jwt);

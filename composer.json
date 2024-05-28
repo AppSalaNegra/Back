@@ -59,7 +59,7 @@
     },
     "scripts": {
         "start": "php -S localhost:8080 -t public",
-        "test": "phpunit",
+        "test": "phpunit --coverage-html documentation/phpunit/coverage --coverage-filter src/",
         "open-api": "./vendor/bin/openapi src -o openapi.json"
     }
 }
