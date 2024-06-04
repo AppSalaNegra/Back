@@ -16,20 +16,21 @@
 
 ## Instalar Composer
 
-Para instalar las dependencias necesitas [Composer](https://getcomposer.org/download/).
-Sigue las instrucciones del instalador, seleccionando la ruta donde se encuentra tu `php.exe`.
-Comprueba que todo funciona correctamente ejecutando el siguiente comando desde tu consola: `composer --version`
+1. Para instalar las dependencias necesitas [Composer](https://getcomposer.org/download/).
+2. Sigue las instrucciones del instalador, seleccionando la ruta donde se encuentra tu `php.exe`.
+3. Comprueba que todo funciona correctamente ejecutando el siguiente comando desde tu consola: `composer --version`
 
+![image](https://github.com/AppSalaNegra/Back/assets/113618615/2713c83d-73ff-4acb-955e-b39a14453c3e)
 ## Clona el repositorio
 
-Una vez instalados **PHP** y **Composer**, clona este repositorio en el directorio deseado utilizando `git clone`.
-Ahora, abre tu consola en el directorio donde hayas clonado el repositorio y ejecuta el siguiente comando: `composer install`.
+1. Una vez instalados **PHP** y **Composer**, clona este repositorio en el directorio deseado utilizando `git clone`.
+2. Ahora, abre tu consola en el directorio donde hayas clonado el repositorio y ejecuta el siguiente comando: `composer install`.
 > Verás que composer comienza a instalar las librerías necesarias para correr la aplicación
-Ya puedes iniciar el servidor en local utilizando el siguiente comando: `composer start`.
+3. Ya puedes iniciar el servidor en local utilizando el siguiente comando: `composer start`.
 
 
 ![image](https://github.com/AppSalaNegra/Back/assets/113618615/e62500ca-e313-42a3-9e18-ceff8240eb54)
-# Prueba a llamar al siguiente endpoint desde tu navegador favorito: `localhost:8080/swagger`
+4. Prueba a llamar al siguiente endpoint desde tu navegador favorito: `localhost:8080/swagger`
 > [!TIP]
 > Si todo ha ido bien, deberías ver la documentación de Swagger 😄
 
