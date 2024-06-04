@@ -30,6 +30,8 @@
 
 
 ![image](https://github.com/AppSalaNegra/Back/assets/113618615/e62500ca-e313-42a3-9e18-ceff8240eb54)
+
+
 4. Prueba a llamar al siguiente endpoint desde tu navegador favorito: `localhost:8080/swagger`
 > [!TIP]
 > Si todo ha ido bien, deberías ver la documentación de Swagger 😄
