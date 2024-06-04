@@ -4,7 +4,7 @@
 
 1. Para el desarrollo de esta aplicación se ha utilizado la versión [PHP 8.1.28](https://windows.php.net/download/).
 > En concreto, el zip en la sección **VS16 x64 Non Thread Safe (2024-Apr-10 10:01:54)**
-2. Crea una carpeta en tu disco local y extrae el zip. A continuación hay que instalar la última versión disponible de la extensión de [mongodb] para php (https://github.com/mongodb/mongo-php-driver/releases)
+2. Crea una carpeta en tu disco local y extrae el zip. A continuación hay que instalar la última versión disponible de la extensión de [mongodb](https://github.com/mongodb/mongo-php-driver/releases) para php
 > Concretamente, descargaremos el archivo .zip compatible con la versión de PHP instalada previamente **php_mongodb-1.19.1-8.1-nts-x64.zip**
 3. Una vez descargado, debes extraer el fichero `php_mongodb.dll` e incluirlo en la carpeta de extensiones de PHP.
 > [!TIP]
@@ -16,7 +16,7 @@
 
 ## Instalar Composer
 
-1. Para instalar las dependencias necesitas [Composer]. (https://getcomposer.org/download/).
+1. Para instalar las dependencias necesitas [Composer](https://getcomposer.org/download/).
 2. Sigue las instrucciones del instalador, seleccionando la ruta donde se encuentra tu `php.exe`.
 3. Comprueba que todo funciona correctamente ejecutando el siguiente comando desde tu consola: `composer --version`
 
