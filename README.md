@@ -11,7 +11,7 @@
 >  Por defecto esta carpeta se llama `ext`.
 ### 4. Hecho esto, debes incluir esta línea en el fichero `php.ini` en el apartado de extensiones: `extension=php_mongodb.dll`
 Si no encuentras un fichero `php.ini` en la carpeta de PHP, debes copiar el fichero `php.ini-development` y renombrarlo a `php.ini`.
-> [!ALERT]
+> [!WARNING]
 >  Es importante setear la ruta al directorio de PHP en las variables de entorno del sistema.
 ### 5. Ejecuta el siguiente comando en tu consola para verificar que se ha realizado la instalación correctamente: `php -v`
 
